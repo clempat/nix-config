@@ -1,72 +1,64 @@
-{config, lib, pkgs, inputs, user,...}:
+# Edit this configuration file to define what should be installed on
+# your system.  Help is available in the configuration.nix(5) man page
+# and in the NixOS manual (accessible by running ‘nixos-help’).
 
+{ config, pkgs, lib,... }:
 {
   imports =
-    [(import ./hardware-configuration.nix)] ++
-    [(import ../../modules/desktop/i3/default.nix)];
-
-  boot = {
-    kernelPackages = pkgs.linuxPackages_latest;
-
-    loader = {
-      systemd-boot = {
-        enable = true;
-        configurationLimit = 5;
-      };
-      efi = {
-        canTouchEfiVariables = true;
-        efiSysMountPoint = "/boot/efi";
-      };
-      timeout = 1;
-    };
-  };
-
-  environment = {
-    systemPackages = with pkgs; [
-      discord
+    [ # Include the results of the hardware scan.
+      ./hardware-configuration.nix
+      ../../modules/desktop/i3
     ];
+
+  # Bootloader.
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.efi.efiSysMountPoint = "/boot/efi";
+
+  networking.hostName = "nixos-desktop"; # Define your hostname.
+  #networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+
+  # Configure network proxy if necessary
+  # networking.proxy.default = "http://user:password@proxy:port/";
+  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
+
+  # Enable networking
+  networking.networkmanager.enable = true;
+
+  # Enable the X11 windowing system.
+  services.xserver.enable = true;
+ 
+  # NVIDIA
+  services.xserver.videoDrivers = [ "nvidia" ];
+  hardware.opengl.enable = true;
+  hardware.nvidia.modesetting.enable = true;
+
+  # Bluetooth
+  hardware.bluetooth.enable = true;
+  services.blueman.enable = true;
+  # Forces a reset for specified bluetooth usb dongle.
+  systemd.services.fix-generic-usb-bluetooth-dongle = {
+    description = "Fixes for generic USB bluetooth dongle.";
+    wantedBy = [ "post-resume.target" ];
+    after = [ "post-resume.target" ];
+    script = builtins.readFile ../../scripts/hack.usb.reset;
+    scriptArgs = "0bda:8771"; # Vendor ID and Product ID here
+    serviceConfig.Type = "oneshot";
   };
 
-  services = {
-    blueman.enable = true;
-    printing = {
-      enable = true;
-    };
 
-    avahi = {
-      enable = true;
-      nssmdns = true;
-      publish = {
-        enable = true;
-        addresses = true;
-        userServices = true;
-      };
-    };
-
-    # Set a password with `smbpasswd -a <user>`
-    samba = {
-      enable = true;
-      shares = {
-        share = {
-          "path" = "/home/${user}";
-          "guest ok" = "yes";
-          "read only" = "no";
-        };
-      };
-      openFirewall = true;
-    };
-
+  programs = {
+    dconf.enable = true;
+    gnupg.agent.enable = true;
   };
-  
 
-  nixpkgs.overlays = [
-    (self: super: {
-      discord = super.discord.overrideAttrs (
-        _: { src = builtins.fetchTarball {
-          url = "https://discord.com/api/download?platform=linux&format=tar.gz";
-          sha256 = "1pw9q4290yn62xisbkc7a7ckb1sa5acp91plp2mfpg7gp7v60zvz";
-        };}
-      );
-    })
-  ];
+  # Configure keymap in X11
+  services.xserver = {
+    layout = "us";
+    xkbVariant = "altgr-intl";
+  };
+
+  # Enable CUPS to print documents.
+  services.printing.enable = true;
+
 }

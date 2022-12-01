@@ -91,7 +91,7 @@
       #waybar           # Bar
       #
       # Desktop
-      #blueman          # Bluetooth
+      # blueman          # Bluetooth
       #deluge           # Torrents
       discord          # Chat
       #ffmpeg           # Video Support (dslr)

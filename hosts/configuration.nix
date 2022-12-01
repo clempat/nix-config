@@ -79,6 +79,15 @@
 
   programs.kdeconnect.enable = true;
 
+  programs.steam.enable = true;
+  nixpkgs.config.packageOverrides = pkgs: {
+    steam = pkgs.steam.override {
+      extraPkgs = pkgs: with pkgs; [
+        libgdiplus
+      ];
+    };
+  };
+
   programs.git = {
     enable = true;
     config = {
