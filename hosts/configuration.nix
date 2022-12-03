@@ -63,6 +63,7 @@
       sops
       go-task
       fluxcd
+      fzf
       kubectl
       kubectl-tree
       gitleaks
