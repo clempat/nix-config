@@ -2,10 +2,10 @@
 
 { 
   imports =                                   # Home Manager Modules
-    (import ../modules/editors) ++
-    (import ../modules/programs) ++
-    (import ../modules/services) ++
-    (import ../modules/shell);
+  #  (import ../modules/editors) ++
+    (import ../modules/programs);
+  #  (import ../modules/services) ++
+  #  (import ../modules/shell);
 
   home = {
     username = "${user}";
@@ -16,6 +16,9 @@
       btop              # Resource Manager
       pfetch            # Minimal fetch
       ranger            # File Manager
+      networkmanager
+      gnupg
+      pinentry
       
       # Video/Audio
       feh               # Image Viewer
@@ -24,11 +27,15 @@
       plex-media-player # Media Player
       vlc               # Media Player
       stremio           # Media Streamer
+      makemkv
+      jellyfin
 
       # Apps
       firefox           # Browser
       google-chrome     # Browser
       remmina           # XRDP & VNC Client
+      obsidian
+      todoist-electron
 
       # File Management
       okular            # PDF viewer
@@ -39,21 +46,22 @@
       unrar             # Rar files
 
       # General configuration
-      #git              # Repositories
+      git              # Repositories
       #killall          # Stop Applications
       #pciutils         # Computer utility info
       #pipewire         # Sound
-      #usbutils         # USB utility info
+      usbutils         # USB utility info
       #wacomtablet      # Wacom Tablet
       #wget             # Downloader
       #zsh              # Shell
+      gnome.gnome-keyring
       #
       # General home-manager
       #kitty            # Terminal Emulator
-      #dunst            # Notifications
+      dunst            # Notifications
       #doom emacs       # Text Editor
-      #flameshot        # Screenshot
-      #libnotify        # Dep for Dunst
+      flameshot        # Screenshot
+      libnotify        # Dep for Dunst
       #neovim           # Text Editor
       #rofi             # Menu
       #udiskie          # Auto Mounting
@@ -67,7 +75,7 @@
       #xterm            # Terminal
       #
       # Xorg home-manager
-      #picom            # Compositer
+      picom            # Compositer
       #polybar          # Bar
       #sxhkd            # Shortcuts
       #
@@ -85,11 +93,11 @@
       # Desktop
       #blueman          # Bluetooth
       #deluge           # Torrents
-      #discord          # Chat
+      discord          # Chat
       #ffmpeg           # Video Support (dslr)
       #gmtp             # Mount MTP (GoPro)
       #gphoto2          # Digital Photography
-      #handbrake        # Encoder
+      handbrake        # Encoder
       #heroic           # Game Launcher
       #hugo             # Static Website Builder
       #lutris           # Game Launcher
@@ -97,8 +105,9 @@
       #new-lg4ff        # Logitech Drivers
       #plex-media-player# Media Player
       #polymc           # MC Launcher
-      #steam            # Games
+      steam            # Games
       #simple-scan      # Scanning
+      _1password-gui
       # 
       # Laptop
       #blueman          # Bluetooth
@@ -107,7 +116,11 @@
       #simple-scan      # Scanning
       #
       # Flatpak
-      #obs-studio       # Recording/Live Streaming
+      obs-studio       # Recording/Live Streaming
+      # Media
+      libdvdcss
+      libdvdread
+      libdvdnav
     ];
     file.".config/wall".source = ../modules/themes/backgrounds/catpuccin.png;
     pointerCursor = {                         # This will set cursor systemwide so applications can not choose their own

@@ -2,19 +2,20 @@
 
 {
   services = {
+    gnome.gnome-keyring.enable = true;
+    picom.enable = true;
     xserver = {
       enable = true;
 
       layout = "us";
+      xkbVariant = "altgr-intl";
       xkbOptions = "eurosign:e";
       libinput.enable = true;
 
       desktopManager = {
         xterm.enable = false;
-        xfce = {
+        plasma5 = {
           enable = true;
-          noDesktop = true;
-          enableXfwm = false;
         };
       };
 
@@ -46,10 +47,6 @@
         };
       };
 
-      videoDrivers = [
-        "nvidia"
-      ];
-
     };
 
   };
@@ -62,6 +59,7 @@
     i3status
     i3lock
     i3blocks-gaps
+    maim
   ];
 
   environment.pathsToLink = ["/libexec"];

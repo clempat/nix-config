@@ -1,4 +1,1 @@
-[
-  ./kitty.nix
-  ./rofi.nix
-]
+[ ./kitty.nix ./rofi.nix ./nvim ./zsh ]

@@ -5,7 +5,7 @@
     enable = true;
     theme ="Nord";
     font.package = pkgs.meslo-lgs-nf;
-    font.name = "Meslo Nerdfonts";
+    font.name = "MesloLGS NF";
     settings = {
       background_opacity = "0.9";
       hide_window_decorations = "titlebar-only";

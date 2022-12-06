@@ -8,7 +8,7 @@
 
   users.users.${user} = {
     isNormalUser = true;
-    extraGroups = [ "networkmanager" "wheel" "video" "audio" ];
+    extraGroups = [ "networkmanager" "wheel" "video" "audio" "onepassword" ];
     shell = pkgs.zsh;
   };
 
@@ -56,8 +56,36 @@
       pciutils
       usbutils
       wget
+      vscode
+      volnoti
+      gcc
+      pre-commit
+      sops
+      go-task
+      fluxcd
+      kubectl
+      kubectl-tree
+      gitleaks
+      kustomize
+      helm
+      nodePackages.prettier
+      zsh-powerlevel10k
+      nixfmt
+      go
     ];
 
+  };
+
+  programs.kdeconnect.enable = true;
+
+  programs.git = {
+    enable = true;
+    config = {
+      user = {
+        email = "clement.patout@gmail.com";
+        name = "Clement Patout";
+      };
+    };
   };
 
   console = {
@@ -73,6 +101,7 @@
     };
   };
 
+  hardware.pulseaudio.enable = false;
   services = {
 
     pipewire = {
@@ -122,6 +151,39 @@
       channel = "https://nixos.org/channels/nixos-unstable";
     };
     stateVersion = "22.05";
+  };
+
+  nixpkgs.overlays = [
+    (self: super: {
+      discord = super.discord.overrideAttrs (_: {
+        src = builtins.fetchTarball {
+          url = "https://discord.com/api/download?platform=linux&format=tar.gz";
+          sha256 = "1pw9q4290yn62xisbkc7a7ckb1sa5acp91plp2mfpg7gp7v60zvz";
+        };
+      });
+    })
+  ];
+
+  # 1Password
+  users.groups.onepassword.gid = 44399;
+
+  security.wrappers = {
+    "1Password-BrowserSupport" = {
+      source =
+        "${pkgs._1password-gui}/share/1password/1Password-BrowserSupport";
+      owner = "root";
+      group = "onepassword";
+      setuid = false;
+      setgid = true;
+    };
+
+    "1Password-KeyringHelper" = {
+      source = "${pkgs._1password-gui}/share/1password/1Password-KeyringHelper";
+      owner = "root";
+      group = "onepassword";
+      setuid = true;
+      setgid = true;
+    };
   };
 
 }
