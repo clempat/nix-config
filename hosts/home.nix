@@ -100,12 +100,13 @@
       handbrake        # Encoder
       #heroic           # Game Launcher
       #hugo             # Static Website Builder
-      #lutris           # Game Launcher
+      lutris           # Game Launcher
       #mkvtoolnix       # Matroska Tool
       #new-lg4ff        # Logitech Drivers
       #plex-media-player# Media Player
       #polymc           # MC Launcher
       steam            # Games
+      wine
       #simple-scan      # Scanning
       _1password-gui
       # 
