@@ -31,7 +31,7 @@ in
   };
 
   boot.initrd.luks.devices."luks-785b470b-8d37-47ee-a3ea-8b926fdcda6d".keyFile = "/crypto_keyfile.bin";
-  networking.hostName = "nixos"; # Define your hostname.
+  networking.hostName = "nixos-laptop"; # Define your hostname.
   #networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary

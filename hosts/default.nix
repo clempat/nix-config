@@ -1,7 +1,7 @@
 { lib, inputs, system, home-manager, user, ...}:
 
 {
-  laptop = lib.nixosSystem {
+  nixos-laptop = lib.nixosSystem {
     inherit system;
     specialArgs = { inherit user inputs; };
     modules = [
