@@ -22,7 +22,7 @@
 
   };
 
-  desktop = lib.nixosSystem {
+  nixos-desktop = lib.nixosSystem {
     inherit system;
     specialArgs = { inherit user inputs; };
     modules = [
