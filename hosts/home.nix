@@ -123,6 +123,11 @@
       libdvdread
       libdvdnav
       nodejs
+      rustc
+      cargo
+
+      # Cypress
+      cypress
     ];
     file.".config/wall".source = ../modules/themes/backgrounds/catpuccin.png;
     pointerCursor = {                         # This will set cursor systemwide so applications can not choose their own

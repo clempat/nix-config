@@ -6,7 +6,7 @@
     source = builtins.fetchGit {
       url = https://github.com/clempat/NvChad.git;
       ref = "main";
-      rev = "a99b87ee32af8935f4d8839888ef9bb09a15a9bf";
+      rev = "217b1316d17071fc1683882baf96ea2db51bd82b";
       submodules = true;
     };
   };
