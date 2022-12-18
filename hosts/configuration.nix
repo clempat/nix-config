@@ -73,6 +73,11 @@
       zsh-powerlevel10k
       nixfmt
       go
+      libstdcxx5 
+      python311
+      ninja
+      sumneko-lua-language-server
+      cmake
     ];
 
   };
