@@ -37,7 +37,7 @@
       obsidian
       todoist-electron
       nextcloud-client
-      pcloud
+      # pcloud
 
       # File Management
       okular            # PDF viewer
