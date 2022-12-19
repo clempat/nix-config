@@ -36,6 +36,8 @@
       remmina           # XRDP & VNC Client
       obsidian
       todoist-electron
+      nextcloud-client
+      pcloud
 
       # File Management
       okular            # PDF viewer
