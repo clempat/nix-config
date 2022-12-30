@@ -8,7 +8,7 @@
 
   users.users.${user} = {
     isNormalUser = true;
-    extraGroups = [ "networkmanager" "wheel" "video" "audio" "onepassword" ];
+    extraGroups = [ "networkmanager" "wheel" "video" "audio" "onepassword" "docker" ];
     shell = pkgs.zsh;
   };
 
@@ -117,6 +117,8 @@
   };
 
   hardware.pulseaudio.enable = false;
+
+  virtualisation.docker.enable = true;
 
   services = {
 

@@ -23,7 +23,12 @@ in
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
-  boot.kernelParams = [ "i915.force_probe=46a6" ];
+  boot.kernelParams = [ 
+    "i915.force_probe=46a6" 
+    "tuxedo_keyboard.mode=0"
+    "tuxedo_keyboard.brightness=255"
+    "tuxedo_keyboard.color_left=0xff0a0a"
+  ];
 
   # Setup keyfile
   boot.initrd.secrets = {
@@ -50,6 +55,7 @@ in
     pkgs.light
   ];
   services.xserver.videoDrivers = [ "nvidia" ];
+  hardware.tuxedo-keyboard.enable = true;
   hardware.opengl.enable = true;
   hardware.nvidia.modesetting.enable = true;
   hardware.nvidia.prime.sync.allowExternalGpu = true;
