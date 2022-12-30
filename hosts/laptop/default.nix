@@ -53,6 +53,7 @@ in
   environment.systemPackages = [ 
     nvidia-offload 
     pkgs.light
+    pkgs.pmutils
   ];
   services.xserver.videoDrivers = [ "nvidia" ];
   hardware.tuxedo-keyboard.enable = true;
