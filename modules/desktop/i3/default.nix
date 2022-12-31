@@ -22,7 +22,8 @@
       displayManager = {
         lightdm = {
           enable = true;
-          background = pkgs.nixos-artwork.wallpapers.nineish-dark-gray.gnomeFilePath;
+          background = ../../themes/backgrounds/1.png;
+          greeter.enable = true;
           greeters = {
             gtk = {
               theme = {
