@@ -50,34 +50,35 @@
     };
 
     systemPackages = with pkgs; [
-      ripgrep
-      killall
-      neovim
-      pciutils
-      usbutils
-      wget
-      vscode
-      volnoti
-      gcc
-      pre-commit
-      sops
-      go-task
+      ansible
+      cmake
       fluxcd
       fzf
+      gcc
+      gitleaks
+      go
+      go-task
+      helm
+      killall
       kubectl
       kubectl-tree
-      gitleaks
       kustomize
-      helm
-      nodePackages.prettier
-      zsh-powerlevel10k
-      nixfmt
-      go
       libstdcxx5 
-      python311
+      neovim
       ninja
+      nixfmt
+      nodePackages.prettier
+      pciutils
+      pre-commit
+      python311
+      ripgrep
+      sops
       sumneko-lua-language-server
-      cmake
+      usbutils
+      volnoti
+      vscode
+      wget
+      zsh-powerlevel10k
     ];
 
   };
