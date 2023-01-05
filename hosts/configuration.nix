@@ -51,6 +51,7 @@
 
     systemPackages = with pkgs; [
       ansible
+      bash
       cmake
       fluxcd
       fzf
@@ -74,6 +75,7 @@
       ripgrep
       sops
       sumneko-lua-language-server
+      terraform
       usbutils
       volnoti
       vscode
@@ -118,6 +120,7 @@
   };
 
   hardware.pulseaudio.enable = false;
+  hardware.nvidia.forceFullCompositionPipeline = true;
 
   virtualisation.docker.enable = true;
 
