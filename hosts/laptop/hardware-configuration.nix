@@ -5,7 +5,8 @@
 
 {
   imports =
-    [ (modulesPath + "/installer/scan/not-detected.nix")
+    [
+      (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "thunderbolt" "nvme" "usb_storage" "sd_mod" ];
@@ -14,17 +15,20 @@
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/4e4abff3-9950-4c2a-b796-1029bb6e5eed";
+    {
+      device = "/dev/disk/by-uuid/4e4abff3-9950-4c2a-b796-1029bb6e5eed";
       fsType = "ext4";
     };
 
   fileSystems."/boot/efi" =
-    { device = "/dev/disk/by-uuid/CF96-E696";
+    {
+      device = "/dev/disk/by-uuid/CF96-E696";
       fsType = "vfat";
     };
 
   fileSystems."/home" =
-    { device = "/dev/disk/by-uuid/5f474166-81aa-4f60-a430-cec48ca89b26";
+    {
+      device = "/dev/disk/by-uuid/5f474166-81aa-4f60-a430-cec48ca89b26";
       fsType = "ext4";
     };
 
@@ -42,4 +46,5 @@
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+  hardware.video.hidpi.enable = lib.mkDefault true;
 }

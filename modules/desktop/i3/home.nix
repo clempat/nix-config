@@ -1,20 +1,26 @@
 { config, lib, pkgs, ... }:
 
-let 
+let
   mod = "Mod4";
   refresh_i3status = "killall -SIGUSR1 i3status";
   notify_volume = "if amixer get Master | grep -Fq '[off]' ; then volnoti-show -m; else volnoti-show $(amixer get Master | grep -Po '[0-9]+(?=%)' | head -1); fi";
-  ws1="1:";
-  ws2="2: Sizzy";
-  ws3="3: Perso ";
-  ws4="4: Pro ";
-  ws5="5: Communications";
-  ws6="6: Productivity";
-  ws7="7: 📢";
-  ws8="8";
-  ws9="9";
-  ws10="10: Music";
-in {
+  ws1 = "1:";
+  ws2 = "2: Sizzy";
+  ws3 = "3: Perso ";
+  ws4 = "4: Pro ";
+  ws5 = "5: Communications";
+  ws6 = "6: Productivity";
+  ws7 = "7: 📢";
+  ws8 = "8";
+  ws9 = "9";
+  ws10 = "10: Music";
+in
+{
+  home = {
+    file.".background-image" = {
+      source = ../../themes/backgrounds/1.png;
+    };
+  };
   xsession.windowManager.i3 = {
     enable = true;
     config = {
@@ -34,7 +40,7 @@ in {
       startup = [
         { command = "nm-applet"; notification = false; }
         { command = "picom --experimental-backend &"; always = true; notification = false; }
-        { command = "xrandr --output eDP-1 --mode 1920x1200"; notification = false; }
+        # { command = "xrandr --output eDP-1 --mode 1920x1200"; notification = false; }
         # { command = "xrandr --output eDP-1 --mode 2560x1600"; notification = false; }
         # { command = "bluetoothctl connect dc:d5:1c:52:d7:f8"; always = true; notification = false; } # Autocconect mouse
       ];
@@ -46,24 +52,24 @@ in {
       window = {
         hideEdgeBorders = "smart";
         commands = [
-          { command = "border pixel 0"; criteria = { class = ".*"; } ; } 
+          { command = "border pixel 0"; criteria = { class = ".*"; }; }
         ];
       };
 
       colors = {
-        focused = { border = "#6272A4"; childBorder = "#6272A4"; background = "#6272A4"; text = "#F8F8F2"; indicator = "#6272A4";};
-        focusedInactive = { border = "#44475A"; childBorder = "#44475A"; background = "#44475A"; text = "#F8F8F2"; indicator = "#44475A";};
-        unfocused = { border = "#282A36"; childBorder = "#282A36"; background = "#282A36"; text = "#BFBFBF"; indicator = "#282A36";};
-        urgent = { border = "#44475A"; childBorder = "#FF5555"; background = "#FF5555"; text = "#F8F8F2"; indicator = "#FF5555";};
-        placeholder = { border = "#282A36"; childBorder = "#282A36"; background = "#282A36"; text = "#F8F8F2"; indicator = "#282A36";};
+        focused = { border = "#6272A4"; childBorder = "#6272A4"; background = "#6272A4"; text = "#F8F8F2"; indicator = "#6272A4"; };
+        focusedInactive = { border = "#44475A"; childBorder = "#44475A"; background = "#44475A"; text = "#F8F8F2"; indicator = "#44475A"; };
+        unfocused = { border = "#282A36"; childBorder = "#282A36"; background = "#282A36"; text = "#BFBFBF"; indicator = "#282A36"; };
+        urgent = { border = "#44475A"; childBorder = "#FF5555"; background = "#FF5555"; text = "#F8F8F2"; indicator = "#FF5555"; };
+        placeholder = { border = "#282A36"; childBorder = "#282A36"; background = "#282A36"; text = "#F8F8F2"; indicator = "#282A36"; };
         background = "#F8F8F2";
       };
 
       assigns = {
-        "${ws1}" = [ 
-          { class = "Alacrotty"; } 
-          { class = "kitty"; } 
-          { class = "Konsole"; } 
+        "${ws1}" = [
+          { class = "Alacrotty"; }
+          { class = "kitty"; }
+          { class = "Konsole"; }
         ];
         "${ws2}" = [
           { class = "Sizzy"; }
@@ -115,7 +121,7 @@ in {
         # Orientation
         "${mod}+h" = "split h";
         "${mod}+v" = "split v";
-        
+
 
         # Layout
         "${mod}+s" = "layout stacking";

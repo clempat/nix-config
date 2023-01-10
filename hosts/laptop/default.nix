@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, lib,... }:
+{ config, pkgs, lib, ... }:
 let
   nvidia-offload = pkgs.writeShellScriptBin "nvidia-offload" ''
     export __NV_PRIME_RENDER_OFFLOAD=1
@@ -14,7 +14,8 @@ let
 in
 {
   imports =
-    [ # Include the results of the hardware scan.
+    [
+      # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ../../modules/desktop/i3
     ];
@@ -23,8 +24,8 @@ in
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
-  boot.kernelParams = [ 
-    "i915.force_probe=46a6" 
+  boot.kernelParams = [
+    "i915.force_probe=46a6"
     "tuxedo_keyboard.mode=0"
     "tuxedo_keyboard.brightness=255"
     "tuxedo_keyboard.color_left=0xff0a0a"
@@ -48,10 +49,17 @@ in
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
- 
+  services.xserver.dpi = 161;
+  environment.variables =
+    {
+      GDK_SCALE = "2";
+      GDK_DPI_SCALE = "0.5";
+      _JAVA_OPTIONS = "-Dsun.java2d.uiScale=2";
+    };
+
   # NVIDIA
-  environment.systemPackages = [ 
-    nvidia-offload 
+  environment.systemPackages = [
+    nvidia-offload
     pkgs.light
     pkgs.pmutils
   ];
@@ -69,7 +77,7 @@ in
 
   specialisation = {
     external-display.configuration = {
-      system.nixos.tags = [ "external-display"];
+      system.nixos.tags = [ "external-display" ];
       hardware.nvidia.prime.offload.enable = lib.mkForce false;
       hardware.nvidia.powerManagement.enable = lib.mkForce false;
     };
