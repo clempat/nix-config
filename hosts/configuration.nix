@@ -53,6 +53,7 @@
       ansible
       bash
       cmake
+      fd
       fluxcd
       fzf
       gcc
@@ -64,7 +65,7 @@
       kubectl
       kubectl-tree
       kustomize
-      libstdcxx5 
+      libstdcxx5
       neovim
       ninja
       nixfmt

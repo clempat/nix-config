@@ -1,8 +1,8 @@
 { config, lib, pkgs, user, ... }:
 
-{ 
-  imports =                                   # Home Manager Modules
-  #  (import ../modules/editors) ++
+{
+  imports = # Home Manager Modules
+    #  (import ../modules/editors) ++
     (import ../modules/programs);
   #  (import ../modules/services) ++
   #  (import ../modules/shell);
@@ -13,46 +13,47 @@
 
     packages = with pkgs; [
       # Terminal
-      btop              # Resource Manager
-      pfetch            # Minimal fetch
-      ranger            # File Manager
-      networkmanager
+      btop # Resource Manager
       gnupg
+      networkmanager
+      pfetch # Minimal fetch
       pinentry
-      
+      ranger # File Manager
+
       # Video/Audio
-      feh               # Image Viewer
-      mpv               # Media Player
-      pavucontrol       # Audio control
+      feh # Image Viewer
+      mpv # Media Player
+      pavucontrol # Audio control
       plex-media-player # Media Player
-      vlc               # Media Player
-      stremio           # Media Streamer
+      vlc # Media Player
+      stremio # Media Streamer
       makemkv
       jellyfin
 
       # Apps
-      firefox           # Browser
-      google-chrome     # Browser
-      remmina           # XRDP & VNC Client
+      firefox # Browser
+      google-chrome # Browser
+      remmina # XRDP & VNC Client
       obsidian
+      logseq
       todoist-electron
       nextcloud-client
       # pcloud
 
       # File Management
-      okular            # PDF viewer
+      okular # PDF viewer
       gnome.file-roller # Archive Manager
-      pcmanfm           # File Manager
-      rsync             # Syncer $ rsync -r dir1/ dir2/
-      unzip             # Zip files
-      unrar             # Rar files
+      pcmanfm # File Manager
+      rsync # Syncer $ rsync -r dir1/ dir2/
+      unzip # Zip files
+      unrar # Rar files
 
       # General configuration
-      git              # Repositories
+      git # Repositories
       #killall          # Stop Applications
       #pciutils         # Computer utility info
       #pipewire         # Sound
-      usbutils         # USB utility info
+      usbutils # USB utility info
       #wacomtablet      # Wacom Tablet
       #wget             # Downloader
       #zsh              # Shell
@@ -60,10 +61,10 @@
       #
       # General home-manager
       #kitty            # Terminal Emulator
-      dunst            # Notifications
+      dunst # Notifications
       #doom emacs       # Text Editor
-      flameshot        # Screenshot
-      libnotify        # Dep for Dunst
+      flameshot # Screenshot
+      libnotify # Dep for Dunst
       #neovim           # Text Editor
       #rofi             # Menu
       #udiskie          # Auto Mounting
@@ -77,7 +78,7 @@
       #xterm            # Terminal
       #
       # Xorg home-manager
-      picom            # Compositer
+      picom # Compositer
       #polybar          # Bar
       #sxhkd            # Shortcuts
       #
@@ -95,19 +96,19 @@
       # Desktop
       # blueman          # Bluetooth
       #deluge           # Torrents
-      discord          # Chat
+      discord # Chat
       #ffmpeg           # Video Support (dslr)
       #gmtp             # Mount MTP (GoPro)
       #gphoto2          # Digital Photography
-      handbrake        # Encoder
+      handbrake # Encoder
       #heroic           # Game Launcher
       #hugo             # Static Website Builder
-      lutris           # Game Launcher
+      lutris # Game Launcher
       #mkvtoolnix       # Matroska Tool
       #new-lg4ff        # Logitech Drivers
       #plex-media-player# Media Player
       #polymc           # MC Launcher
-      steam            # Games
+      steam # Games
       wine
       #simple-scan      # Scanning
       _1password-gui
@@ -119,7 +120,7 @@
       #simple-scan      # Scanning
       #
       # Flatpak
-      obs-studio       # Recording/Live Streaming
+      obs-studio # Recording/Live Streaming
       # Media
       libdvdcss
       libdvdread
@@ -136,7 +137,8 @@
       luarocks
     ];
     file.".config/wall".source = ../modules/themes/backgrounds/catpuccin.png;
-    pointerCursor = {                         # This will set cursor systemwide so applications can not choose their own
+    pointerCursor = {
+      # This will set cursor systemwide so applications can not choose their own
       name = "Dracula-cursors";
       package = pkgs.dracula-theme;
       size = 16;
@@ -148,7 +150,8 @@
     home-manager.enable = true;
   };
 
-  gtk = {                                     # Theming
+  gtk = {
+    # Theming
     enable = true;
     theme = {
       name = "Dracula";
@@ -159,7 +162,7 @@
       package = pkgs.papirus-icon-theme;
     };
     font = {
-      name = "JetBrains Mono Medium";         # or FiraCode Nerd Font Mono Medium
-    };                                        # Cursor is declared under home.pointerCursor
+      name = "JetBrains Mono Medium"; # or FiraCode Nerd Font Mono Medium
+    }; # Cursor is declared under home.pointerCursor
   };
 }
