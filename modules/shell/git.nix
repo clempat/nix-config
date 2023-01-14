@@ -21,7 +21,7 @@
         ff = "only";
       };
       init = {
-        defaultBranc = "main";
+        defaultBranch = "main";
       };
     };
 
