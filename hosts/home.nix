@@ -19,6 +19,7 @@
       pfetch # Minimal fetch
       pinentry
       ranger # File Manager
+      util-linux
 
       # Video/Audio
       feh # Image Viewer
@@ -29,6 +30,7 @@
       stremio # Media Streamer
       makemkv
       jellyfin
+      imagemagick
 
       # Apps
       firefox # Browser
@@ -57,12 +59,13 @@
       #wacomtablet      # Wacom Tablet
       #wget             # Downloader
       #zsh              # Shell
-      gnome.gnome-keyring
+      # gnome.gnome-keyring
       #
       # General home-manager
       #kitty            # Terminal Emulator
       dunst # Notifications
       #doom emacs       # Text Editor
+      scrot
       flameshot # Screenshot
       libnotify # Dep for Dunst
       #neovim           # Text Editor
@@ -111,8 +114,8 @@
       steam # Games
       wine
       #simple-scan      # Scanning
-      _1password-gui
-      _1password
+      # _1password-gui
+      # _1password
       # 
       # Laptop
       #blueman          # Bluetooth
@@ -137,7 +140,6 @@
       shellcheck
       luarocks
     ];
-    file.".config/wall".source = ../modules/themes/backgrounds/catpuccin.png;
     pointerCursor = {
       # This will set cursor systemwide so applications can not choose their own
       name = "Dracula-cursors";

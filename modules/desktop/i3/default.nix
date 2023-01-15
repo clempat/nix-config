@@ -83,12 +83,20 @@
 
   programs.zsh.enable = true;
 
+  programs.xss-lock = {
+    enable = true;
+    lockerCommand = "${pkgs.betterlockscreen}/bin/betterlockscreen -l blur";
+    # Not running inside a display manager, XDG_SEAT_PATH not defined
+    # lockerCommand = "${pkgs.lightdm}/bin/dm-tool switch-to-greeter";
+    # lockerCommand = "/run/current-system/sw/bin/dm-tool switch-to-greeter";
+  };
+
   environment.systemPackages = with pkgs; [
     xclip
     rofi
     i3status
-    i3lock
     i3blocks-gaps
+    betterlockscreen
     maim
   ];
 

@@ -16,7 +16,19 @@ let
   ws10 = "10: Music";
 in
 {
+  services = {
+    betterlockscreen = {
+      enable = true;
+      arguments = [
+        "blur 0,7"
+        "dim 10"
+      ];
+    };
+  };
   home = {
+    file.".background-image.blur.png" = {
+      source = ../../themes/backgrounds/background-blur.png;
+    };
     file.".background-image" = {
       source = ../../themes/backgrounds/1.png;
     };
@@ -40,6 +52,7 @@ in
       startup = [
         { command = "nm-applet"; notification = false; }
         { command = "picom --experimental-backend &"; always = true; notification = false; }
+        { command = "betterlockscreen -u ~/.background-image --fx dim,blur"; always = true; notification = false; }
         # { command = "xrandr --output eDP-1 --mode 1920x1200"; notification = false; }
         # { command = "xrandr --output eDP-1 --mode 2560x1600"; notification = false; }
         # { command = "bluetoothctl connect dc:d5:1c:52:d7:f8"; always = true; notification = false; } # Autocconect mouse
@@ -93,7 +106,7 @@ in
         "${mod}+Return" = "exec ${pkgs.kitty}/bin/kitty";
         "${mod}+d" = "exec ${pkgs.rofi}/bin/rofi -show drun";
         "${mod}+x" = "exec sh -c '${pkgs.maim}/bin/maim -s | xclip -selection clipboard -t image/png'";
-        "${mod}+Shift+x" = "exec sh -c '${pkgs.i3lock}/bin/i3lock -c 222222 & sleep 5 && xset dpms force of'";
+        "${mod}+Shift+x" = "exec sh -c '${pkgs.betterlockscreen}/bin/betterlockscreen -l blur & sleep 5 && xset dpms force of'";
         "${mod}+Shift+c" = "reload";
         "${mod}+Shift+r" = "restart";
         "Print" = "exec --no-startup-id flameshot gui";

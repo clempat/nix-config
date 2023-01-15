@@ -112,7 +112,12 @@
     keyMap = "us";
   };
 
+  programs._1password-gui.enable = true;
+  programs._1password.enable = true;
+
   security.rtkit.enable = true;
+  security.pam.services.kwallet.enableKwallet = true;
+
   sound = {
     enable = true;
     mediaKeys = {
@@ -188,25 +193,35 @@
   ];
 
   # 1Password
-  users.groups.onepassword.gid = 44399;
-
-  security.wrappers = {
-    "1Password-BrowserSupport" = {
-      source =
-        "${pkgs._1password-gui}/share/1password/1Password-BrowserSupport";
-      owner = "root";
-      group = "onepassword";
-      setuid = false;
-      setgid = true;
-    };
-
-    "1Password-KeyringHelper" = {
-      source = "${pkgs._1password-gui}/share/1password/1Password-KeyringHelper";
-      owner = "root";
-      group = "onepassword";
-      setuid = true;
-      setgid = true;
-    };
-  };
+  # users.groups.onepassword.gid = 44399;
+  #
+  # security.wrappers = {
+  #   "1Password-BrowserSupport" = {
+  #     source =
+  #       "${pkgs._1password-gui}/share/1password/1Password-BrowserSupport";
+  #     owner = "root";
+  #     group = "onepassword";
+  #     setuid = false;
+  #     setgid = true;
+  #   };
+  #
+  #
+  #   "1Password-HIDHelper" = {
+  #     source =
+  #       "${pkgs._1password-gui}/share/1password/1Password-HIDHelper";
+  #     owner = "root";
+  #     group = "onepassword";
+  #     setuid = false;
+  #     setgid = true;
+  #   };
+  #
+  #   "1Password-KeyringHelper" = {
+  #     source = "${pkgs._1password-gui}/share/1password/1Password-KeyringHelper";
+  #     owner = "root";
+  #     group = "onepassword";
+  #     setuid = true;
+  #     setgid = true;
+  #   };
+  # };
 
 }
