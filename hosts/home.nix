@@ -112,6 +112,7 @@
       wine
       #simple-scan      # Scanning
       _1password-gui
+      _1password
       # 
       # Laptop
       #blueman          # Bluetooth
