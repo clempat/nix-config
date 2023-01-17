@@ -51,8 +51,9 @@ in
 
       startup = [
         { command = "nm-applet"; notification = false; }
-        { command = "picom --experimental-backend &"; always = true; notification = false; }
+        { command = "picom &"; always = true; notification = false; }
         { command = "betterlockscreen -u ~/.background-image --fx dim,blur"; always = true; notification = false; }
+        { command = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1"; notification = false; }
         # { command = "xrandr --output eDP-1 --mode 1920x1200"; notification = false; }
         # { command = "xrandr --output eDP-1 --mode 2560x1600"; notification = false; }
         # { command = "bluetoothctl connect dc:d5:1c:52:d7:f8"; always = true; notification = false; } # Autocconect mouse

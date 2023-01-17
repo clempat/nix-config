@@ -5,7 +5,6 @@
 { config, pkgs, lib, inputs, user, ... }:
 
 {
-
   users.users.${user} = {
     isNormalUser = true;
     extraGroups = [ "networkmanager" "wheel" "video" "audio" "onepassword" "docker" ];
@@ -71,6 +70,7 @@
       nixfmt
       nodePackages.prettier
       pciutils
+      polkit_gnome
       pre-commit
       python311
       ripgrep
@@ -114,9 +114,11 @@
 
   programs._1password-gui.enable = true;
   programs._1password.enable = true;
+  programs._1password-gui.polkitPolicyOwners = [ user ];
 
   security.rtkit.enable = true;
   security.pam.services.kwallet.enableKwallet = true;
+  security.polkit.enable = true;
 
   sound = {
     enable = true;
@@ -191,5 +193,23 @@
       });
     })
   ];
+
+  systemd = {
+    user.services.polkit-gnome-authentication-agent-1 = {
+      unitConfig = {
+        Description = "polkit-gnome-authentication-agent-1";
+        Wants = [ "graphical-session.target" ];
+        WantedBy = [ "graphical-session.target" ];
+        After = [ "graphical-session.target" ];
+      };
+      serviceConfig = {
+        Type = "simple";
+        ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
+        Restart = "on-failure";
+        RestartSec = 1;
+        TimeoutStopSec = 10;
+      };
+    };
+  };
 
 }
