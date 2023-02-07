@@ -1,12 +1,16 @@
-{ config, lib, pkgs, user, ...}:
+{ config, lib, pkgs, user, ... }:
 
 {
   imports = [
     ../../modules/desktop/i3/home.nix
   ];
-  
-  services = {                         # Applets
-    blueman-applet.enable = true;         # Bluetooth
+
+
+  programs.git.signing.key = "35EAB9A8FEE12F8D";
+
+  services = {
+    # Applets
+    blueman-applet.enable = true; # Bluetooth
   };
 
 }

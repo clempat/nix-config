@@ -11,6 +11,10 @@
     shell = pkgs.zsh;
   };
 
+  networking.extraHosts = ''
+
+  '';
+
   # Set your time zone.
   time.timeZone = "Europe/Berlin";
 
@@ -59,7 +63,8 @@
       gitleaks
       go
       go-task
-      helm
+      jdk17_headless
+      kubernetes-helm
       killall
       kubectl
       kubectl-tree

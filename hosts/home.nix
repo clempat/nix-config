@@ -111,6 +111,7 @@
       #new-lg4ff        # Logitech Drivers
       #plex-media-player# Media Player
       #polymc           # MC Launcher
+      prismlauncher
       steam # Games
       wine
       #simple-scan      # Scanning

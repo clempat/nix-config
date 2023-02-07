@@ -1,15 +1,19 @@
-{ pkgs, user, ...}:
+{ pkgs, user, ... }:
 {
 
-  
+
   programs.git = {
     enable = true;
     userName = "Clement Patout";
     userEmail = "clement.patout@gmail.com";
 
+    signing = {
+      signByDefault = true;
+    };
+
     extraConfig = {
       core = {
-          editor = "nvim";
+        editor = "nvim";
       };
       color = {
         ui = true;
@@ -19,6 +23,7 @@
       };
       pull = {
         ff = "only";
+        rebase = true;
       };
       init = {
         defaultBranch = "main";
