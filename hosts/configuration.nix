@@ -7,7 +7,7 @@
 {
   users.users.${user} = {
     isNormalUser = true;
-    extraGroups = [ "networkmanager" "wheel" "video" "audio" "onepassword" "docker" ];
+    extraGroups = [ "networkmanager" "wheel" "video" "audio" "onepassword" "docker" "input" ];
     shell = pkgs.zsh;
   };
 

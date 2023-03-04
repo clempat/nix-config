@@ -63,6 +63,8 @@ in
     nvidia-offload
     pkgs.light
     pkgs.pmutils
+    pkgs.fusuma
+    pkgs.xdotool
   ];
   services.xserver.videoDrivers = [ "nvidia" ];
   hardware.tuxedo-keyboard.enable = true;
