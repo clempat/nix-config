@@ -12,7 +12,6 @@
   };
 
   networking.extraHosts = ''
-
   '';
 
   # Set your time zone.
@@ -33,6 +32,8 @@
     LC_TIME = "de_DE.utf8";
   };
 
+  services.languagetool.enable = true;
+
   fonts.fonts = with pkgs; [
     source-code-pro
     font-awesome
@@ -41,6 +42,8 @@
     (nerdfonts.override {
       fonts = [
         "FiraCode"
+        "Iosevka"
+        "FantasqueSansMono"
       ];
     })
   ];
@@ -194,6 +197,15 @@
         src = builtins.fetchTarball {
           url = "https://discord.com/api/download?platform=linux&format=tar.gz";
           sha256 = "1pw9q4290yn62xisbkc7a7ckb1sa5acp91plp2mfpg7gp7v60zvz";
+        };
+      });
+    })
+    (self: super: {
+      cypress = super.cypress.overrideAttrs (_: {
+        version = "12.5.1";
+        src = super.fetchzip {
+          url = "https://cdn.cypress.io/desktop/12.5.1/linux-x64/cypress.zip";
+          sha256 = "rdMlaCjUXvV05hbmoyFtTOUdZGWyFCQnTvkRIUH3myM=";
         };
       });
     })

@@ -16,15 +16,6 @@ let
   ws10 = "10: Music";
 in
 {
-  services = {
-    betterlockscreen = {
-      enable = true;
-      arguments = [
-        "blur 0,7"
-        "dim 10"
-      ];
-    };
-  };
   home = {
     file.".background-image.blur.png" = {
       source = ../../themes/backgrounds/background-blur.png;
@@ -33,7 +24,7 @@ in
       source = ../../themes/backgrounds/1.png;
     };
   };
-  xsession.windowManager.i3 = {
+  wayland.windowManager.sway = {
     enable = true;
     config = {
       modifier = mod;
@@ -54,6 +45,7 @@ in
         { command = "picom &"; always = true; notification = false; }
         { command = "betterlockscreen -u ~/.background-image --fx dim,blur"; always = true; notification = false; }
         { command = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1"; notification = false; }
+        { command = "exec sleep 5; systemctl --user start kanshi.service"; }
         # { command = "xrandr --output eDP-1 --mode 1920x1200"; notification = false; }
         # { command = "xrandr --output eDP-1 --mode 2560x1600"; notification = false; }
         # { command = "bluetoothctl connect dc:d5:1c:52:d7:f8"; always = true; notification = false; } # Autocconect mouse
@@ -167,13 +159,14 @@ in
         "${mod}+Shift+10" = "move container to workspace number ${ws10}";
 
         # Audio
-        XF86AudioRaiseVolume = "exec --no-startup-id \"amixer set Master 5%+ && ${refresh_i3status} && ${notify_volume}\"";
-        XF86AudioLowerVolume = "exec --no-startup-id \"amixer set Master 5%- && ${refresh_i3status} && ${notify_volume}\"";
+        XF86AudioRaiseVolume = "exec 'pactl set-sink-volume @DEFAULT_SINK@ +10%'";
+        XF86AudioLowerVolume = "exec 'pactl set-sink-volume @DEFAULT_SINK@ -10%'";
         # gradular volume control
-        "${mod}+XF86AudioRaiseVolume" = "exec \"amixer set Master 1%+ && ${refresh_i3status} && ${notify_volume}\"";
-        "${mod}+XF86AudioLowerVolume" = "exec \"amixer set Master 1%- && ${refresh_i3status} && ${notify_volume}\"";
+        "${mod}+XF86AudioRaiseVolume"  = "exec 'pactl set-sink-volume @DEFAULT_SINK@ +1%'";
+        "${mod}+XF86AudioLowerVolume"  = "exec 'pactl set-sink-volume @DEFAULT_SINK@ -1%'";
+
         # Mute
-        XF86AudioMute = "exec --no-startup-id \"amixer set Master toggle && ${refresh_i3status} && ${notify_volume}\"";
+        XF86AudioMute = "pactl set-sink-mute @DEFAULT_SINK@ toggle";
 
         # Light
         XF86MonBrightnessUp = "exec --no-startup-id light -A 10";
@@ -188,17 +181,12 @@ in
     };
   };
 
-  programs.i3status = {
-    enable = true;
-    modules = {
-      "volume master" = {
-        position = 1;
-        settings = {
-          format = "♪ %volume";
-          format_muted = "♪ muted (%volume)";
-          device = "default";
-        };
-      };
+  # kanshi systemd service
+  systemd.user.services.kanshi = {
+    description = "kanshi daemon";
+    serviceConfig = {
+      Type = "simple";
+      ExecStart = ''${pkgs.kanshi}/bin/kanshi -c kanshi_config_file'';
     };
   };
 }

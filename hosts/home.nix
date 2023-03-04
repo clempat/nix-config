@@ -49,6 +49,7 @@
       rsync # Syncer $ rsync -r dir1/ dir2/
       unzip # Zip files
       unrar # Rar files
+      rclone
 
       # General configuration
       git # Repositories
@@ -169,4 +170,5 @@
       name = "JetBrains Mono Medium"; # or FiraCode Nerd Font Mono Medium
     }; # Cursor is declared under home.pointerCursor
   };
+
 }

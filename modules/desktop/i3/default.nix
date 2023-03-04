@@ -94,6 +94,8 @@
   environment.systemPackages = with pkgs; [
     xclip
     rofi
+    rofi-calc
+    rofi-emoji
     i3status
     i3blocks-gaps
     betterlockscreen

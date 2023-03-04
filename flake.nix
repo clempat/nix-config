@@ -9,7 +9,7 @@
     };
   };
 
-  outputs = inputs @ { self, nixpkgs, home-manager }: 
+  outputs = inputs @ { self, nixpkgs, home-manager }:
     let
       system = "x86_64-linux";
 
@@ -22,7 +22,8 @@
 
       lib = nixpkgs.lib;
 
-    in {
+    in
+    {
 
       nixosConfigurations = (
         import ./hosts {
