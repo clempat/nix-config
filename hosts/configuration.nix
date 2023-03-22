@@ -65,6 +65,7 @@
       fd
       fluxcd
       fzf
+      gh
       gcc
       gitleaks
       go
