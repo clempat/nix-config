@@ -15,6 +15,11 @@
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
 
+
+  boot.kernelParams = [
+    "net.ipv4.tcp_mtu_probing=1"
+  ];
+
   networking.hostName = "nixos-desktop"; # Define your hostname.
   #networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
