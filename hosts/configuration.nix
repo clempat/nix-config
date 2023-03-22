@@ -59,6 +59,9 @@
       ansible
       bash
       cmake
+      dnsutils
+      esptool
+      esphome
       fd
       fluxcd
       fzf
