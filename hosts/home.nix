@@ -12,6 +12,7 @@
     homeDirectory = "/home/${user}";
 
     packages = with pkgs; [
+      xboxdrv
       # Terminal
       btop # Resource Manager
       gnupg
@@ -110,6 +111,7 @@
       lutris # Game Launcher
       #mkvtoolnix       # Matroska Tool
       #new-lg4ff        # Logitech Drivers
+      minecraft
       #plex-media-player# Media Player
       #polymc           # MC Launcher
       prismlauncher
@@ -141,6 +143,7 @@
       luajitPackages.luacheck
       shellcheck
       luarocks
+      lazygit
     ];
     pointerCursor = {
       # This will set cursor systemwide so applications can not choose their own

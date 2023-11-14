@@ -93,7 +93,7 @@
       volnoti
       vscode
       wget
-      zsh-powerlevel10k
+      spaceship-prompt
     ];
 
   };
@@ -108,6 +108,8 @@
       ];
     };
   };
+
+  nixpkgs.config.permittedInsecurePackages = [ "electron-21.4.0" ];
 
   programs.git = {
     enable = true;
