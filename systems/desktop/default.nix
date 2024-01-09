@@ -20,7 +20,7 @@
     "net.ipv4.tcp_mtu_probing=1"
   ];
 
-  networking.hostName = "nixos-desktop"; # Define your hostname.
+  networking.hostName = "desktop"; # Define your hostname.
   #networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary

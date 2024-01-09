@@ -1,34 +1,33 @@
-{ lib, inputs, system, home-manager, user, ...}:
+{ lib, inputs, system, home-manager, user, plasma-manager, hyprland, nur,...}:
 
 {
-  nixos-laptop = lib.nixosSystem {
+  tuxedo = lib.nixosSystem {
     inherit system;
-    specialArgs = { inherit user inputs; };
+    specialArgs = { inherit user inputs hyprland; };
     modules = [
-      ./laptop
+      nur.nixosModules.nur
+      ./tuxedo
       ./configuration.nix
-
 
       home-manager.nixosModules.home-manager {
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
         home-manager.extraSpecialArgs = { inherit user; };
         home-manager.users.${user} = {
-          imports = [(import ./home.nix)] ++ [(import ./laptop/home.nix)];
+          imports = [(import ./home.nix)];
         };
-
       }
     ];
 
   };
 
-  nixos-desktop = lib.nixosSystem {
+  desktop = lib.nixosSystem {
     inherit system;
-    specialArgs = { inherit user inputs; };
+    specialArgs = { inherit user inputs hyprland; };
     modules = [
+      nur.nixosModules.nur
       ./desktop
       ./configuration.nix
-
 
       home-manager.nixosModules.home-manager {
         home-manager.useGlobalPkgs = true;
@@ -37,7 +36,6 @@
         home-manager.users.${user} = {
           imports = [(import ./home.nix)] ++ [(import ./desktop/home.nix)];
         };
-
       }
     ];
 

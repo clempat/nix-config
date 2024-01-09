@@ -30,3 +30,23 @@ Check if default configuration is created under `/etc/nixos/configuration.nix` i
 
 Finally move everything to the home directory
 
+## Templates for module
+
+```nix
+{ config, lib, pkgs, user, ... }:
+let
+  cfg = config.mymodule.test;
+in
+{
+  options = {
+    mymodule.test.enable = lib.mkEnableOption "This is my test";
+  };
+
+  config = lib.mkIf cfg.enable {
+    # ...
+    home-manager.users.${user} = {
+      # ...
+    };
+  };
+}
+```

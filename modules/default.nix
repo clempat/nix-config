@@ -1,0 +1,11 @@
+[
+  ./git
+  ./ssh
+  ./_1password
+  ./flatpak
+  ./kde
+  ./kitty
+  ./firefox
+  ./tmux
+  ./zsh
+]

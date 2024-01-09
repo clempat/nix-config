@@ -1,9 +1,6 @@
 { pkgs, ... }:
 
 {
-  home.sessionPath = [
-    "$HOME/.local/share/nvim/mason/bin"
-  ];
   programs = {
     neovim = {
       enable = true;

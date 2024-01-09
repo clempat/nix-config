@@ -103,10 +103,4 @@
   ];
 
   environment.pathsToLink = [ "/libexec" ];
-
-  # Required for flatpak with windowmanagers
-  xdg.portal = {
-    enable = true;
-    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
-  };
 }

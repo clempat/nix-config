@@ -1,12 +1,6 @@
 { config, lib, pkgs, user, ... }:
 
 {
-  imports = # Home Manager Modules
-    #  (import ../modules/editors) ++
-    (import ../modules/programs) ++
-    (import ../modules/services);
-  #  (import ../modules/shell);
-
   home = {
     username = "${user}";
     homeDirectory = "/home/${user}";
@@ -34,8 +28,10 @@
       imagemagick
 
       # Apps
-      firefox # Browser
-      google-chrome # Browser
+      # firefox # Browser
+      # google-chrome # Browser
+      # floorp
+      
       remmina # XRDP & VNC Client
       obsidian
       logseq
@@ -53,7 +49,6 @@
       rclone
 
       # General configuration
-      git # Repositories
       #killall          # Stop Applications
       #pciutils         # Computer utility info
       #pipewire         # Sound
@@ -68,8 +63,8 @@
       dunst # Notifications
       #doom emacs       # Text Editor
       scrot
-      flameshot # Screenshot
-      libnotify # Dep for Dunst
+      #flameshot # Screenshot
+      #libnotify # Dep for Dunst
       #neovim           # Text Editor
       #rofi             # Menu
       #udiskie          # Auto Mounting
@@ -83,7 +78,7 @@
       #xterm            # Terminal
       #
       # Xorg home-manager
-      picom # Compositer
+      #picom # Compositer
       #polybar          # Bar
       #sxhkd            # Shortcuts
       #
@@ -158,7 +153,7 @@
     home-manager.enable = true;
   };
 
-  gtk = {
+  /* gtk = {
     # Theming
     enable = true;
     theme = {
@@ -172,6 +167,6 @@
     font = {
       name = "JetBrains Mono Medium"; # or FiraCode Nerd Font Mono Medium
     }; # Cursor is declared under home.pointerCursor
-  };
+  };*/
 
 }

@@ -53,7 +53,7 @@ in
         { command = "nm-applet"; notification = false; }
         { command = "picom &"; always = true; notification = false; }
         { command = "betterlockscreen -u ~/.background-image --fx dim,blur"; always = true; notification = false; }
-        { command = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1"; notification = false; }
+        { command = "${pkgs.polkit_gnome}/libexec/polkit-kde-authentication-agent-1"; notification = false; }
         { command = "exec --no-startup-id xset r rate 200 35"; always = true; notification = false; }
         # { command = "xrandr --output eDP-1 --mode 1920x1200"; notification = false; }
         # { command = "xrandr --output eDP-1 --mode 2560x1600"; notification = false; }

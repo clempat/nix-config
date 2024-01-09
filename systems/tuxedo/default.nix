@@ -17,14 +17,12 @@ in
     [
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      ../../modules/desktop/i3
-      ../../modules/services/yubikey
     ];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.efi.efiSysMountPoint = "/boot/efi";
+
   boot.kernelParams = [
     "i915.force_probe=46a6"
     "tuxedo_keyboard.mode=0"
@@ -32,30 +30,19 @@ in
     "tuxedo_keyboard.color_left=0xff0a0a"
   ];
 
-  # Setup keyfile
-  boot.initrd.secrets = {
-    "/crypto_keyfile.bin" = null;
-  };
-
-  boot.initrd.luks.devices."luks-785b470b-8d37-47ee-a3ea-8b926fdcda6d".keyFile = "/crypto_keyfile.bin";
-  networking.hostName = "nixos-laptop"; # Define your hostname.
-  #networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
+  networking.hostName = "tuxedo"; # Define your hostname.
 
   # Enable networking
   networking.networkmanager.enable = true;
 
-  # Enable the X11 windowing system.
+  # Try to optimize the screen
   services.xserver.enable = true;
-  services.xserver.dpi = 161;
+  services.xserver.dpi = 192;
   environment.variables =
     {
-      GDK_SCALE = "2";
-      GDK_DPI_SCALE = "0.5";
-      _JAVA_OPTIONS = "-Dsun.java2d.uiScale=2";
+      GDK_SCALE = "1";
+      GDK_DPI_SCALE = "1";
+      _JAVA_OPTIONS = "-Dsun.java2d.uiScale=1";
     };
 
   # NVIDIA
@@ -68,28 +55,31 @@ in
   ];
   services.xserver.videoDrivers = [ "nvidia" ];
   hardware.tuxedo-keyboard.enable = true;
-  hardware.opengl.enable = true;
-  hardware.nvidia.modesetting.enable = true;
-  hardware.nvidia.prime.sync.allowExternalGpu = true;
-  hardware.nvidia.prime = {
-    offload.enable = true;
-    intelBusId = "PCI:0:2:0";
-    nvidiaBusId = "PCI:1:0:0";
-
+  hardware.opengl = {
+    enable = true;
+    driSupport = true;
+    driSupport32Bit = true;
   };
+  hardware.nvidia = {
+    modesetting.enable = true;
+    powerManagement.enable = false;
+    powerManagement.finegrained = true;
+    open = false;
+    nvidiaSettings = true;
 
-  specialisation = {
-    external-display.configuration = {
-      system.nixos.tags = [ "external-display" ];
-      hardware.nvidia.prime.offload.enable = lib.mkForce false;
-      hardware.nvidia.powerManagement.enable = lib.mkForce false;
+    prime = {
+      offload = {
+        enable = true;
+        enableOffloadCmd = true;
+      };
+      intelBusId = "PCI:0:2:0";
+      nvidiaBusId = "PCI:1:0:0";
     };
   };
 
   programs = {
     dconf.enable = true;
     light.enable = true;
-    gnupg.agent.enable = true;
   };
 
   # Configure keymap in X11

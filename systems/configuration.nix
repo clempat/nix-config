@@ -5,10 +5,25 @@
 { config, pkgs, lib, inputs, user, ... }:
 
 {
+  imports =
+    (import ../modules);
+
+  mymodule.ssh.enable = true;
+  mymodule._1password.enable = true;
+  mymodule.git.enable = true;
+  mymodule.flatpak.enable = true;
+  mymodule.kde.enable = true;
+  services.xserver.displayManager.defaultSession = "plasmawayland";
+  mymodule.firefox.enable = true;
+  mymodule.tmux.enable = true;
+  mymodule.zsh.enable = true;
+
+  mymodule.kitty.enable = true;
+
   users.users.${user} = {
     isNormalUser = true;
     extraGroups = [ "networkmanager" "wheel" "video" "audio" "onepassword" "docker" "input" ];
-    shell = pkgs.zsh;
+    initialPassword = "changeme";
   };
 
   networking.extraHosts = ''
@@ -34,7 +49,7 @@
 
   services.languagetool.enable = true;
 
-  fonts.fonts = with pkgs; [
+  fonts.packages = with pkgs; [
     source-code-pro
     font-awesome
     corefonts
@@ -50,7 +65,6 @@
 
   environment = {
     variables = {
-      TERMINAL = "kitty";
       EDITOR = "nvim";
       VISUAL = "nvim";
     };
@@ -58,6 +72,7 @@
     systemPackages = with pkgs; [
       ansible
       bash
+      caffeine-ng
       cmake
       dnsutils
       esptool
@@ -79,7 +94,7 @@
       libstdcxx5
       neovim
       ninja
-      nixfmt
+      nixpkgs-fmt
       nodePackages.prettier
       pciutils
       polkit_gnome
@@ -109,26 +124,12 @@
     };
   };
 
-  nixpkgs.config.permittedInsecurePackages = [ "electron-21.4.0" ];
-
-  programs.git = {
-    enable = true;
-    config = {
-      user = {
-        email = "clement.patout@gmail.com";
-        name = "Clement Patout";
-      };
-    };
-  };
+  nixpkgs.config.permittedInsecurePackages = [ "electron-25.9.0" ];
 
   console = {
     font = "Lat2-Terminus16";
     keyMap = "us";
   };
-
-  programs._1password-gui.enable = true;
-  programs._1password.enable = true;
-  programs._1password-gui.polkitPolicyOwners = [ user ];
 
   security.rtkit.enable = true;
   security.pam.services.kwallet.enableKwallet = true;
@@ -156,18 +157,6 @@
       };
       pulse.enable = true;
     };
-
-    flatpak.enable = true;
-
-    openssh = {
-      enable = true;
-      allowSFTP = true;
-      # tmp for guacamole 
-      extraConfig = ''
-        HostKeyAlgorithms +ssh-rsa
-      '';
-    };
-
   };
 
   nix = {
@@ -194,7 +183,7 @@
       enable = true;
       channel = "https://nixos.org/channels/nixos-unstable";
     };
-    stateVersion = "22.05";
+    stateVersion = "23.11";
   };
 
   nixpkgs.overlays = [
@@ -202,16 +191,7 @@
       discord = super.discord.overrideAttrs (_: {
         src = builtins.fetchTarball {
           url = "https://discord.com/api/download?platform=linux&format=tar.gz";
-          sha256 = "1pw9q4290yn62xisbkc7a7ckb1sa5acp91plp2mfpg7gp7v60zvz";
-        };
-      });
-    })
-    (self: super: {
-      cypress = super.cypress.overrideAttrs (_: {
-        version = "12.5.1";
-        src = super.fetchzip {
-          url = "https://cdn.cypress.io/desktop/12.5.1/linux-x64/cypress.zip";
-          sha256 = "rdMlaCjUXvV05hbmoyFtTOUdZGWyFCQnTvkRIUH3myM=";
+          sha256 = "0gmqzzs9ac6f48m3qixp3l3bipf2zmywai0aksy3j48s1qqiwz3j";
         };
       });
     })
