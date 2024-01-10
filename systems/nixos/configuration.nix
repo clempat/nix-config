@@ -6,7 +6,8 @@
 
 {
   imports =
-    (import ../../modules);
+    (import ../../modules/shared.nix) ++
+    (import ../../modules/linuxOnly.nix);
 
   mymodule.ssh.enable = true;
   mymodule._1password.enable = true;
