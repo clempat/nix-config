@@ -1,12 +1,12 @@
-{ lib, inputs, nixpkgs, darwin, home-manager, vars, ...}:
+{ lib, inputs, nixpkgs, darwin, home-manager, user, ...}:
 
 let
-  system = "x86_64-darwin";
+  system = "aarch64-darwin";
 in
 {
   macbook = darwin.lib.darwinSystem {
     inherit system;
-    specialArgs = { inherit inputs vars; };
+    specialArgs = { inherit inputs user; };
     modules = [
       ./configuration.nix
       
