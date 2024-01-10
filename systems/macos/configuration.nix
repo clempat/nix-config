@@ -1,7 +1,8 @@
 { config, pkgs, user, ... }:
 
 {
-  imports = [ ../../modules ];
+  imports =
+    (import ../../modules);
 
   users.users.${user} = {            # MacOS User
     home = "/Users/${user}";
