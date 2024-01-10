@@ -2,8 +2,7 @@
 
 {
   imports =
-    (import ../../modules/shared.nix) ++
-    (import ../../modules/linuxOnly.nix);
+    (import ../../modules/shared.nix);
 
   users.users.${user} = {            # MacOS User
     home = "/Users/${user}";
