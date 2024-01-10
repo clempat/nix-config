@@ -116,7 +116,7 @@
     stateVersion = 4;
   };
 
-  home-manager.users.${vars.user} = {
+  home-manager.users.${user} = {
     home = {
       stateVersion = "23.11";
     };

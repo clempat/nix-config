@@ -40,11 +40,11 @@ Install Nix: https://nixos.org/download.html#nix-install-macos
 See more about nix-darwin on https://github.com/LnL7/nix-darwin#flakes
 
 ```bash
-mkdir -p /mnt/home/clement/workspace/perso/nix-config
-git clone https://github.com/clempat/nix-config.git /mnt/home/clement/workspace/perso/nix-config
+mkdir -p ~/workspace/perso/nix-config
+git clone https://github.com/clempat/nix-config.git ~/workspace/perso/nix-config
 ```
 ```bash
-NIX_SYSTEM=macos nix run nix-darwin -- switch --flake /mnt/home/clement/workspace/perso/nix-config#${NIX_SYSTEM}
+NIX_SYSTEM=macos nix run nix-darwin -- switch --flake ~/workspace/perso/nix-config#${NIX_SYSTEM}
 ```
 
 ## Templates for module
