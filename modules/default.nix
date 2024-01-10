@@ -8,4 +8,5 @@
   ./firefox
   ./tmux
   ./zsh
+  ./neovim
 ]

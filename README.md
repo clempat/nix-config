@@ -8,6 +8,8 @@ I have currently two hosts setup:
 
 ## Install on a new machine with live CD
 
+Follow the instructions on https://nixos.org/manual/nixos/stable/#sec-installation-manual to have all disks setup correctly. And generate the default nix config.
+
 ```bash
 sudo su
 ```
@@ -17,18 +19,33 @@ nix-env -iA nixos.git
 ```
 
 ```bash
-git clone https://github.com/clempat/nix-config.git /mnt/etc/nixos
+mkdir -p /mnt/home/clement/workspace/perso/nix-config
+git clone https://github.com/clempat/nix-config.git /mnt/home/clement/workspace/perso/nix-config
 ```
 
+Compare the generated hardware config to the one in the repository according to the target. Adapt if needed.
+
 ```bash
-nixos-install --flake .#clement
+NIX_SYSTEM=tuxedo nixos-install --flake /mnt/home/clement/workspace/perso/nix-config#${NIX_SYSTEM}
 ```
+
+Fix potential issue such as SHA256 or due do nix breaking changes. Then re-run the command above.
 
 Reboot
 
-Check if default configuration is created under `/etc/nixos/configuration.nix` if yes, delete it.
+## Install on MacOS
 
-Finally move everything to the home directory
+Install Nix: https://nixos.org/download.html#nix-install-macos
+
+See more about nix-darwin on https://github.com/LnL7/nix-darwin#flakes
+
+```bash
+mkdir -p /mnt/home/clement/workspace/perso/nix-config
+git clone https://github.com/clempat/nix-config.git /mnt/home/clement/workspace/perso/nix-config
+```
+```bash
+NIX_SYSTEM=macos nix run nix-darwin -- switch --flake /mnt/home/clement/workspace/perso/nix-config#${NIX_SYSTEM}
+```
 
 ## Templates for module
 

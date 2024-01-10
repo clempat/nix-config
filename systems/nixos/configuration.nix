@@ -6,7 +6,7 @@
 
 {
   imports =
-    (import ../modules);
+    (import ../../modules);
 
   mymodule.ssh.enable = true;
   mymodule._1password.enable = true;
@@ -17,6 +17,7 @@
   mymodule.firefox.enable = true;
   mymodule.tmux.enable = true;
   mymodule.zsh.enable = true;
+  mymodule.neovim.enable = true;
 
   mymodule.kitty.enable = true;
 

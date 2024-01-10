@@ -3,6 +3,7 @@ let
   cfg = config.mymodule._1password;
   ssh = config.home-manager.users.${user}.programs.ssh;
   git = config.home-manager.users.${user}.programs.git;
+  version = "8.10.23";
 in
 {
   options = {
@@ -16,14 +17,24 @@ in
     };
     programs._1password.enable = true;
 
+    nixpkgs.overlays = [
+      (self: super: {
+        _1password-gui = super._1password-gui.overrideAttrs (_: {
+          src = self.fetchurl {
+            url = "https://downloads.1password.com/linux/tar/stable/x86_64/1password-${version}.x64.tar.gz";
+            hash = "sha256-TqZ9AffyHl1mAKyZvADVGh5OXKZEGXjKSkXq7ZI/obA=";
+          };
+        });
+      })
+    ];
 
     home-manager.users.${user} = {
       systemd.user.sessionVariables.SSH_AUTH_SOCK = "~/.1password/agent.sock";
       programs.zsh.sessionVariables.SSH_AUTH_SOCK = "~/.1password/agent.sock";
+      
       programs.ssh = lib.mkIf ssh.enable {
         forwardAgent = true;
         extraConfig = ''
-          IdentitiesOnly yes
           IdentityAgent ~/.1password/agent.sock
         '';
       };

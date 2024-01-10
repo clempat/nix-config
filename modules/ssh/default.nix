@@ -1,7 +1,6 @@
 { config, lib, pkgs, user, ... }:
 let
   cfg = config.mymodule.ssh;
-  _1password = config.mymodule._1password;
 in
 {
   options = {

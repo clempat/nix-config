@@ -27,28 +27,39 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.home-manager.follows = "nixpkgs";
     };
+
+    darwin = {
+      # MacOS Package Management
+      url = "github:lnl7/nix-darwin/master";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    nixvim = {
+      # Neovim
+      url = "github:nix-community/nixvim/nixos-23.11";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = inputs @ { self, nixpkgs, home-manager, plasma-manager, hyprland, nur, ... }:
+  outputs = inputs @ { self, nixpkgs, nixpkgs-unstable, home-manager, plasma-manager, hyprland, nur, darwin, nixvim, ... }:
     let
-      system = "x86_64-linux";
-
       user = "clement";
-
-      pkgs = import nixpkgs {
-        inherit system;
-        config.allowUnfree = true;
-      };
-
-      lib = nixpkgs.lib;
-
     in
     {
 
       nixosConfigurations = (
-        import ./systems {
+        import ./systems/nixos {
           inherit (nixpkgs) lib;
-          inherit inputs user system home-manager plasma-manager hyprland nur;
+          inherit inputs nixpkgs nixpkgs-unstable user home-manager plasma-manager hyprland nur nixvim;
+        }
+      );
+
+
+      darwinConfigurations = (
+        # Darwin Configurations
+        import ./systems/macos {
+          inherit (nixpkgs) lib;
+          inherit inputs nixpkgs nixpkgs-unstable home-manager darwin user nixvim;
         }
       );
 
