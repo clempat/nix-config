@@ -46,7 +46,7 @@ mkdir -p ~/workspace/perso/nix-config
 git clone https://github.com/clempat/nix-config.git ~/workspace/perso/nix-config
 ```
 ```bash
-NIX_SYSTEM=macos nix run nix-darwin --extra-experimental-features nix-command --extra-experimental-features flakes  -- switch --flake ~/workspace/perso/nix-config#${NIX_SYSTEM}
+nix run nix-darwin --extra-experimental-features nix-command --extra-experimental-features flakes  -- switch --flake ~/workspace/perso/nix-config#macbook
 ```
 
 ## Templates for module
