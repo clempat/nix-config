@@ -1,7 +1,7 @@
 [
-  ./firefox
+  ./firefox/home.nix
   ./git
-  ./_1password
+  ./_1password/home.nix
   ./neovim
   ./ssh
   ./tmux
