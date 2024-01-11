@@ -1,15 +1,14 @@
-{ config, lib, inputs, ... }:
-let cfg = config.modules.kde;
+{ osConfig, lib, inputs, ... }:
+let cfg = osConfig.modules.kde;
 in
 {
   config = lib.mkIf cfg.enable {
-    imports = [ inputs.plasma-manager.homeManagerModules.plasma-manager ];
     programs.plasma = {
       enable = true;
       workspace = {
         theme = "dracula";
         colorScheme = "Dracula";
-        wallpaper = ../themes/backgrounds/trabi_wallpaper.jpg;
+        wallpaper = ../../themes/backgrounds/trabi_wallpaper.jpg;
       };
       shortcuts = {
         "ActivityManager"."switch-to-activity-bec65ecb-41e0-42bb-b894-26911f92bbe4" = [ ];

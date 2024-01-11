@@ -9,7 +9,7 @@
     ../../modules
   ] ++ (import ../../modules/nixos);
 
-  home-manager.users.${user}.imports =  (import ../../modules/home-manager);
+  home-manager.users.${user}.imports = [ inputs.plasma-manager.homeManagerModules.plasma-manager ] ++ (import ../../modules/home-manager);
 
   modules.ssh.enable = true;
   modules._1password.enable = true;

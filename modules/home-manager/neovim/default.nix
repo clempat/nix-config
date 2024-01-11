@@ -1,6 +1,6 @@
-{ lib, programs, config, ... }:
+{ lib, programs, osConfig, ... }:
 let
-  cfg = config.modules.neovim;
+  cfg = osConfig.modules.neovim;
 in
 {
   config = lib.mkIf cfg.enable {

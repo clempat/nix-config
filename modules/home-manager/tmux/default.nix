@@ -1,6 +1,6 @@
-{ config, lib, pkgs, ... }:
+{ osConfig, lib, pkgs, ... }:
 let
-  cfg = config.modules.tmux;
+  cfg = osConfig.modules.tmux;
 in
 {
   config = lib.mkIf cfg.enable {

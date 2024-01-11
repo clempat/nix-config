@@ -1,6 +1,7 @@
 [
   ./_1password
   ./firefox
+  ./git
   ./kde
   ./kitty
   ./neovim

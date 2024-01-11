@@ -1,6 +1,6 @@
-{ config, lib, pkgs, user, ... }:
+{ osConfig, lib, pkgs, user, ... }:
 let
-  cfg = config.modules.firefox;
+  cfg = osConfig.modules.firefox;
 in
 {
   config = lib.mkIf cfg.enable
@@ -36,7 +36,7 @@ in
               };
             };
 
-            extensions = with config.nur.repos.rycee.firefox-addons; [
+            extensions = with osConfig.nur.repos.rycee.firefox-addons; [
               aria2-integration
               buster-captcha-solver
               clearurls

@@ -1,5 +1,5 @@
-{ home, config, lib, pkgs, ... }:
-let cfg = config.modules.kitty;
+{ home, osConfig, lib, pkgs, ... }:
+let cfg = osConfig.modules.kitty;
 in
 {
   config = lib.mkIf cfg.enable

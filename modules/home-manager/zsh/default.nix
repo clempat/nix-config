@@ -1,5 +1,5 @@
-{ lib, config, pkgs, ... }:
-let cfg = config.modules.zsh;
+{ lib, osConfig, pkgs, ... }:
+let cfg = osConfig.modules.zsh;
 in
 {
   config = lib.mkIf cfg.enable

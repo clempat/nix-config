@@ -1,5 +1,5 @@
-{ lib, services, programs, config, ... }:
-let cfg = config.modules.ssh;
+{ lib, services, programs, osConfig, ... }:
+let cfg = osConfig.modules.ssh;
 in
 {
   config = lib.mkIf cfg.enable {

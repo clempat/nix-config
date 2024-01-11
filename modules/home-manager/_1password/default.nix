@@ -1,8 +1,8 @@
-{ systemd, programs, user, config, lib, pkgs, ... }:
+{ systemd, programs, user, osConfig, lib, pkgs, ... }:
 let
-  cfg = config.modules._1password;
-  ssh = config.home-manager.users.${user}.programs.ssh;
-  git = config.home-manager.users.${user}.programs.git;
+  cfg = osConfig.modules._1password;
+  ssh = osConfig.home-manager.users.${user}.programs.ssh;
+  git = osConfig.home-manager.users.${user}.programs.git;
 in
 {
   config = lib.mkIf cfg.enable
