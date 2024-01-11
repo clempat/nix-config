@@ -3,7 +3,7 @@
 if [[ $# -eq 1 ]]; then
 	selected=$1
 else
-	selected=$(find ~/ ~/workspace -mindepth 1 -maxdepth 2 -type d \( -not -path '*/\.*' -not -name '.*' \) -o -name ".config" | fzf)
+	selected=$(find ~/ ~/workspace -mindepth 1 -maxdepth 3 -type d \( -not -path '*/\.*' -not -name '.*' \) -o -name ".config" | fzf)
 fi
 
 if [[ -z $selected ]]; then
