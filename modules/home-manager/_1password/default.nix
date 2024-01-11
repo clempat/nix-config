@@ -1,20 +1,15 @@
-{ config, lib, pkgs, user, ... }:
+{ systemd, programs, user, config, lib, pkgs, ... }:
 let
-  cfg = config.mymodule._1password;
+  cfg = config.modules._1password;
   ssh = config.home-manager.users.${user}.programs.ssh;
   git = config.home-manager.users.${user}.programs.git;
-  version = "8.10.23";
 in
 {
-  options = {
-    mymodule._1password.enable = lib.mkEnableOption "Enable 1Password";
-  };
-
-  config = lib.mkIf cfg.enable {
-    home-manager.users.${user} = {
+  config = lib.mkIf cfg.enable
+    {
       systemd.user.sessionVariables.SSH_AUTH_SOCK = "~/.1password/agent.sock";
       programs.zsh.sessionVariables.SSH_AUTH_SOCK = "~/.1password/agent.sock";
-      
+
       programs.ssh = lib.mkIf ssh.enable {
         forwardAgent = true;
         extraConfig = ''
@@ -32,5 +27,4 @@ in
         signByDefault = lib.mkForce true;
       };
     };
-  };
 }

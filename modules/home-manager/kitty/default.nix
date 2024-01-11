@@ -1,16 +1,10 @@
-{ config, lib, pkgs, user, ... }:
-let
-  cfg = config.mymodule.kitty;
+{ home, config, lib, pkgs, ... }:
+let cfg = config.modules.kitty;
 in
 {
-  options = {
-    mymodule.kitty.enable = lib.mkEnableOption "Enable Kitty";
-  };
-
-  config = lib.mkIf cfg.enable {
-    environment.variables.TERMINAL = "kitty";
-
-    home-manager.users.${user} = {
+  config = lib.mkIf cfg.enable
+    {
+      home.sessionVariables.TERMINAL = "kitty";
       programs.kitty = {
         enable = true;
         theme = "Nord";
@@ -24,5 +18,4 @@ in
         };
       };
     };
-  };
 }

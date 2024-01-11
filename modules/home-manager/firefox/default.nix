@@ -1,14 +1,10 @@
 { config, lib, pkgs, user, ... }:
 let
-  cfg = config.mymodule.firefox;
+  cfg = config.modules.firefox;
 in
 {
-  options = {
-    mymodule.firefox.enable = lib.mkEnableOption "Enable Firefox";
-  };
-
-  config = lib.mkIf cfg.enable {
-    home-manager.users.${user} = {
+  config = lib.mkIf cfg.enable
+    {
       programs.firefox = {
         enable = true;
         profiles = {
@@ -22,7 +18,7 @@ in
               "browser.aboutConfig.showWarning" = false;
               "browser.compactmode.show" = true;
               "browser.cache.disk.enable" = true;
-              "browser.newtabpage.pinned" = [{    title = "Home Assistant";    url = "http://192.168.40.200:8123";  }];
+              "browser.newtabpage.pinned" = [{ title = "Home Assistant"; url = "http://192.168.40.200:8123"; }];
             };
             search = {
               force = true;
@@ -32,7 +28,7 @@ in
                 "Nix Packages" = { urls = [{ template = "https://search.nixos.org/packages"; params = [{ name = "type"; value = "packages"; } { name = "query"; value = "{searchTerms}"; }]; }]; icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg"; definedAliases = [ "@np" ]; };
                 "Ecosia" = {
                   urls = [{ template = "https://www.ecosia.org/search?q={searchTerms}"; }];
-                  iconUpdateURL = "https://www.ecosia.org/static/icons/favicon.ico"; 
+                  iconUpdateURL = "https://www.ecosia.org/static/icons/favicon.ico";
                   definedAliases = [ "@eco" ];
                 };
                 "Bing".metaData.hidden = true;
@@ -67,5 +63,4 @@ in
         };
       };
     };
-  };
 }

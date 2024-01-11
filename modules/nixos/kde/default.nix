@@ -1,12 +1,7 @@
-{ config, lib, pkgs, user, inputs, ... }:
-let
-  cfg = config.mymodule.kde;
+{ lib, config, services, environment, pkgs, ... }:
+let cfg = config.modules.kde;
 in
 {
-  options = {
-    mymodule.kde.enable = lib.mkEnableOption "Enable KDE";
-  };
-
   config = lib.mkIf cfg.enable {
     services.xserver.enable = true;
     services.xserver.displayManager.sddm.enable = true;
@@ -17,10 +12,6 @@ in
       konsole
       oxygen
     ];
-
-
-    home-manager.users.${user} = {
-      imports = [ inputs.plasma-manager.homeManagerModules.plasma-manager ./home.nix ];
-    };
   };
+
 }

@@ -1,21 +1,9 @@
-{ config, lib, pkgs, user, ... }:
-let
-  cfg = config.mymodule.zsh;
-  _1password = config.mymodule._1password;
+{ lib, config, pkgs, ... }:
+let cfg = config.modules.zsh;
 in
 {
-  options = {
-    mymodule.zsh.enable = lib.mkEnableOption "Enable ZSH";
-  };
-
-  config = lib.mkIf cfg.enable {
-    programs.zsh.enable = true;
-
-    environment.systemPackages = with pkgs; [ zsh spaceship-prompt ];
-    users.users.${user} = {
-      shell = pkgs.zsh;
-    };
-    home-manager.users.${user} = {
+  config = lib.mkIf cfg.enable
+    {
       programs.zsh = {
         enable = true;
         enableCompletion = true;
@@ -46,5 +34,4 @@ in
         ];
       };
     };
-  };
 }

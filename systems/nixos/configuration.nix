@@ -5,22 +5,24 @@
 { config, pkgs, lib, inputs, user, ... }:
 
 {
-  imports =
-    (import ../../modules/shared.nix) ++
-    (import ../../modules/linuxOnly.nix);
+  imports = [
+    ../../modules
+  ] ++ (import ../../modules/nixos);
 
-  mymodule.ssh.enable = true;
-  mymodule._1password.enable = true;
-  mymodule.git.enable = true;
-  mymodule.flatpak.enable = true;
-  mymodule.kde.enable = true;
+  home-manager.users.${user}.imports =  (import ../../modules/home-manager);
+
+  modules.ssh.enable = true;
+  modules._1password.enable = true;
+  modules.git.enable = true;
+  modules.flatpak.enable = true;
+  modules.kde.enable = true;
   services.xserver.displayManager.defaultSession = "plasmawayland";
-  mymodule.firefox.enable = true;
-  mymodule.tmux.enable = true;
-  mymodule.zsh.enable = true;
-  mymodule.neovim.enable = true;
+  modules.firefox.enable = true;
+  modules.tmux.enable = true;
+  modules.zsh.enable = true;
+  modules.neovim.enable = true;
 
-  mymodule.kitty.enable = true;
+  modules.kitty.enable = true;
 
   users.users.${user} = {
     isNormalUser = true;

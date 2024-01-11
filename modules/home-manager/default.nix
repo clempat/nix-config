@@ -1,0 +1,10 @@
+[
+  ./_1password
+  ./firefox
+  ./kde
+  ./kitty
+  ./neovim
+  ./ssh
+  ./tmux
+  ./zsh
+]

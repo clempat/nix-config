@@ -1,8 +1,9 @@
 { config, pkgs, user, ... }:
 
 {
-  imports =
-    (import ../../modules/shared.nix);
+  imports = [
+    ../../modules
+  ];
 
   users.users.${user} = {            # MacOS User
     home = "/Users/${user}";
@@ -14,13 +15,13 @@
     hostName = "MacBook";
   };
 
-  mymodule.ssh.enable = true;
-  mymodule.git.enable = true;
-  mymodule.firefox.enable = true;
-  mymodule.tmux.enable = true;
-  mymodule.zsh.enable = true;
-  mymodule.neovim.enable = true;
-  mymodule.kitty.enable = true;
+  modules.ssh.enable = true;
+  modules.git.enable = true;
+  modules.firefox.enable = true;
+  modules.tmux.enable = true;
+  modules.zsh.enable = true;
+  modules.neovim.enable = true;
+  modules.kitty.enable = true;
 
   fonts = {                               # Fonts
     fontDir.enable = true;
