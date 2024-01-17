@@ -1,11 +1,13 @@
 { osConfig, lib, system, pkgs, hyprland, vars, host, ... }:
 let
-  cfg = osConfig.modules.hyperland;
+  cfg = osConfig.modules.hyprland;
+  colors = import ../../themes/colors.nix;
   touchpad =
     if osConfig.modules.touchpad.enable then ''
         touchpad {
           middle_button_emulation=true
           tap-to-click=true
+          natural_scroll = false
         }
       }
     '' else "";
@@ -20,7 +22,19 @@ let
 in
 let
   hyprlandConf = with colors.scheme.default.hex; ''
-        general {
+    # monitor=[monitor-name],[resolution@framerate],[pos-x,y],[scale factor],transform,[rotation]
+    # Rotation Degrees Shorthand
+    # normal (no transforms) -> 0
+    # 90 degrees -> 1
+    # 180 degrees -> 2
+    # 270 degrees -> 3
+    # flipped -> 4
+    # flipped + 90 degrees -> 5
+    # flipped + 180 degrees -> 6
+    # flipped + 270 degrees -> 7
+    monitor=,highres,auto,1          # Automatic Configuration
+
+    general {
       border_size=2
       gaps_in=0
       gaps_out=0
@@ -92,7 +106,7 @@ let
     bindm=SUPER,mouse:272,movewindow
     bindm=SUPER,mouse:273,resizewindow
 
-    bind=SUPER,Return,exec,${pkgs.${vars.terminal}}/bin/${vars.terminal}
+    bind=SUPER,Return,exec,${pkgs.kitty}/bin/kitty
     bind=SUPER,Q,killactive,
     bind=SUPER,Escape,exit,
     bind=SUPER,S,exec,${pkgs.systemd}/bin/systemctl suspend
@@ -104,7 +118,7 @@ let
     bind=,F11,fullscreen,
     bind=SUPER,R,forcerendererreload
     bind=SUPERSHIFT,R,exec,${pkgs.hyprland}/bin/hyprctl reload
-    bind=SUPER,T,exec,${pkgs.${vars.terminal}}/bin/${vars.terminal} -e nvim
+    bind=SUPER,T,exec,${pkgs.kitty}/bin/kitty -e nvim
     bind=SUPER,K,exec,${pkgs.hyprland}/bin/hyprctl switchxkblayout keychron-k8-keychron-k8 next
 
     bind=SUPER,left,movefocus,l
@@ -173,15 +187,20 @@ let
     windowrulev2 = move 74% 74%, title:(Firefox)
     windowrulev2 = pin, title:^(Firefox)$
 
+    windowrule = float, ^(steam)$
+    windowrule = center, ^(steam)$
+    windowrule = size 1080 900, ^(steam)$
+
+
     exec-once=dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
     exec-once=${pkgs.waybar}/bin/waybar
     exec-once=${pkgs.eww-wayland}/bin/eww daemon
     #exec-once=$HOME/.config/eww/scripts/eww        # When running eww as a bar
     exec-once=${pkgs.blueman}/bin/blueman-applet
     exec-once=${pkgs.swaynotificationcenter}/bin/swaync
-    ${execute}
   '';
-  {
+in
+{
   config = lib.mkIf cfg.enable {
     xdg.configFile."hypr/hyprland.conf".text = hyprlandConf;
 
@@ -231,4 +250,4 @@ let
       };
     };
   };
-  }
+}

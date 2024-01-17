@@ -2,10 +2,10 @@
 #  System Menu
 #
 
-{ confosConfigig, lib, pkgs, vars, ... }:
+{ osConfig, lib, pkgs, vars, ... }:
 
 let
-  colors = import ../../theming/colors.nix;
+  colors = import ../../themes/colors.nix;
 in
 {
   config = lib.mkIf (osConfig.modules.wlwm.enable) {

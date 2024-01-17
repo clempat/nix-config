@@ -2,29 +2,32 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, lib, inputs, user, ... }:
+{ config, pkgs, lib, inputs, vars, ... }:
 
 {
   imports = [
     ../../modules
   ] ++ (import ../../modules/nixos);
 
-  home-manager.users.${user}.imports = [ inputs.plasma-manager.homeManagerModules.plasma-manager ] ++ (import ../../modules/home-manager);
+  home-manager.users.${vars.user}.imports = [ inputs.plasma-manager.homeManagerModules.plasma-manager ] ++ (import ../../modules/home-manager);
 
   modules.ssh.enable = true;
   modules._1password.enable = true;
   modules.git.enable = true;
   modules.flatpak.enable = true;
-  modules.kde.enable = true;
-  services.xserver.displayManager.defaultSession = "plasmawayland";
+  modules.kde.enable = false;
+  # services.xserver.displayManager.defaultSession = "plasmawayland";
   modules.firefox.enable = true;
   modules.tmux.enable = true;
   modules.zsh.enable = true;
   modules.neovim.enable = true;
+  modules.nvidia.enable = true;
+  modules.hyprland.enable = true;
+  modules.touchpad.enable = true;
 
   modules.kitty.enable = true;
 
-  users.users.${user} = {
+  users.users.${vars.user} = {
     isNormalUser = true;
     extraGroups = [ "networkmanager" "wheel" "video" "audio" "onepassword" "docker" "input" ];
     initialPassword = "changeme";

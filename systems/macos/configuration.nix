@@ -1,12 +1,12 @@
-{ config, pkgs, user, ... }:
+{ config, pkgs, vars, ... }:
 
 {
   imports = [
     ../../modules
   ];
 
-  users.users.${user} = {            # MacOS User
-    home = "/Users/${user}";
+  users.users.${vars.user} = {            # MacOS User
+    home = "/Users/${vars.user}";
     shell = pkgs.zsh;                     # Default Shell
   };
 
@@ -125,7 +125,7 @@
     stateVersion = 4;
   };
 
-  home-manager.users.${user} = {
+  home-manager.users.${vars.user} = {
     home = {
       stateVersion = "23.11";
     };

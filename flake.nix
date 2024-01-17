@@ -43,14 +43,17 @@
 
   outputs = inputs @ { self, nixpkgs, nixpkgs-unstable, home-manager, plasma-manager, hyprland, nur, darwin, nixvim, ... }:
     let
-      user = "clement";
+      vars = {
+        user = "clement";
+        email = "clement.patout@gmail.com";
+      };
     in
     {
 
       nixosConfigurations = (
         import ./systems/nixos {
           inherit (nixpkgs) lib;
-          inherit inputs nixpkgs nixpkgs-unstable user home-manager plasma-manager hyprland nur nixvim;
+          inherit inputs nixpkgs nixpkgs-unstable vars home-manager plasma-manager hyprland nur nixvim;
         }
       );
 
@@ -59,7 +62,7 @@
         # Darwin Configurations
         import ./systems/macos {
           inherit (nixpkgs) lib;
-          inherit inputs nixpkgs nixpkgs-unstable home-manager darwin user nixvim;
+          inherit inputs nixpkgs nixpkgs-unstable home-manager darwin vars nixvim;
         }
       );
 

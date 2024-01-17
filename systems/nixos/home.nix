@@ -2,11 +2,11 @@
 
 {
   home = {
-    username = "${user}";
-    homeDirectory = "/home/${user}";
+    username = "${vars.user}";
+    homeDirectory = "/home/${vars.user}";
 
     packages = with pkgs; [
-      xboxdrv
+      xboxdrv # xbox controller
       # Terminal
       btop # Resource Manager
       gnupg
@@ -61,8 +61,7 @@
       # General home-manager
       #kitty            # Terminal Emulator
       dunst # Notifications
-      #doom emacs       # Text Editor
-      scrot
+      # scrot
       #flameshot # Screenshot
       #libnotify # Dep for Dunst
       #neovim           # Text Editor
@@ -133,7 +132,7 @@
       cargo
 
       # Cypress
-      cypress
+      # cypress
 
       luajitPackages.luacheck
       shellcheck

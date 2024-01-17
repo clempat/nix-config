@@ -2,15 +2,11 @@
 #  Bar
 #
 
-{ osConfig, lib, pkgs, vars, host, hyprland, ... }:
+{ osConfig, lib, pkgs, vars, hyprland, ... }:
 let
-  colors = import ../../theming/colors.nix;
+  colors = import ../../themes/colors.nix;
 in
-with host;
 let
-  output = [
-    mainMonitor
-  ];
   modules-left = [
     "custom/menu"
     "hyprland/workspaces"
@@ -37,6 +33,7 @@ let
   headset = sinkBuiltIn;
   speaker = sinkVideocard;
 in
+with colors.scheme.default;
 {
   config = lib.mkIf (osConfig.modules.wlwm.enable) {
     programs.waybar = {
@@ -129,7 +126,6 @@ in
           layer = "top";
           position = "top";
           height = 27;
-          output = output;
 
           tray = { spacing = 5; };
           modules-left = modules-left;

@@ -22,7 +22,7 @@ in
     specialArgs = { inherit user unstable inputs hyprland; };
     modules = [
       nur.nixosModules.nur
-      ./tuxedo
+      ./tuxedo/configuration.nix
       ./configuration.nix
 
       home-manager.nixosModules.home-manager
@@ -30,7 +30,7 @@ in
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
         home-manager.extraSpecialArgs = { inherit user; };
-        home-manager.users.${user} = {
+        home-manager.users.${vars.user} = {
           imports = [ (import ./home.nix) ];
         };
       }
@@ -51,7 +51,7 @@ in
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
         home-manager.extraSpecialArgs = { inherit user; };
-        home-manager.users.${user} = {
+        home-manager.users.${vars.user} = {
           imports = [ (import ./home.nix) ] ++ [ (import ./desktop/home.nix) ];
         };
       }
