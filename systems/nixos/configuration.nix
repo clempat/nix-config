@@ -89,6 +89,7 @@
       gitleaks
       go
       go-task
+      insomnia
       jdk17_headless
       kubernetes-helm
       killall

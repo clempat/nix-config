@@ -35,6 +35,8 @@ Reboot
 
 ## Install on MacOS
 
+Make sure you use the same username on the Mac than in the configuration.
+
 Install Nix: https://nixos.org/download.html#nix-install-macos
 
 See more about nix-darwin on https://github.com/LnL7/nix-darwin#flakes
@@ -45,27 +47,33 @@ mkdir -p ~/workspace/perso/nix-config
 ```bash
 git clone https://github.com/clempat/nix-config.git ~/workspace/perso/nix-config
 ```
+
+Install brew.sh
+```bash
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
+
 ```bash
 nix run nix-darwin --extra-experimental-features nix-command --extra-experimental-features flakes  -- switch --flake ~/workspace/perso/nix-config#macbook
 ```
 
 ## Templates for module
 
+Add the module option in ./modules/default.nix
 ```nix
-{ config, lib, pkgs, user, ... }:
-let
-  cfg = config.mymodule.test;
+zsh.enable = lib.mkEnableOption "Enable ZSH";
+```
+
+Add the nix file either in darwin, home-manager or nixos with:
+```nix
+{ lib, osConfig, pkgs, ... }:
+let cfg = osConfig.modules.zsh;
 in
 {
-  options = {
-    mymodule.test.enable = lib.mkEnableOption "This is my test";
-  };
-
-  config = lib.mkIf cfg.enable {
-    # ...
-    home-manager.users.${user} = {
-      # ...
+  config = lib.mkIf cfg.enable
+    {
+     #...
     };
-  };
 }
+
 ```

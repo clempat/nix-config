@@ -19,6 +19,7 @@ in
               "browser.compactmode.show" = true;
               "browser.cache.disk.enable" = true;
               "browser.newtabpage.pinned" = [{ title = "Home Assistant"; url = "http://192.168.40.200:8123"; }];
+              "browser.ctrlTab.sortByRecentlyUsed" = true;
             };
             search = {
               force = true;

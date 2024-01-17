@@ -78,6 +78,11 @@
       "bartender"
       "arc"
       "home-assistant"
+      "firefox"
+      "kitty"
+      "raindropio"
+      "raycast"
+      "cleanshot"
     ];
   };
 
