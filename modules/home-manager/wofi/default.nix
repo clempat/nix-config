@@ -2,13 +2,13 @@
 #  System Menu
 #
 
-{ config, lib, pkgs, vars, ... }:
+{ confosConfigig, lib, pkgs, vars, ... }:
 
 let
   colors = import ../../theming/colors.nix;
 in
 {
-  config = lib.mkIf (config.wlwm.enable) {
+  config = lib.mkIf (osConfig.modules.wlwm.enable) {
     home = {
       packages = with pkgs; [
         wofi

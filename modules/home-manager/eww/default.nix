@@ -2,10 +2,10 @@
 #  Bar
 #
 
-{ config, lib, pkgs, vars, ... }:
+{ osConfig, lib, pkgs, vars, ... }:
 
 {
-  config = lib.mkIf (config.wlwm.enable) {
+  config = lib.mkIf (osConfig.modules.wlwm.enable) {
     home.file.".config/eww" = {
       source = ./config;
       recursive = true;

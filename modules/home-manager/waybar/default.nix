@@ -2,7 +2,7 @@
 #  Bar
 #
 
-{ config, lib, pkgs, vars, host, hyprland, ... }:
+{ osConfig, lib, pkgs, vars, host, hyprland, ... }:
 let
   colors = import ../../theming/colors.nix;
 in
@@ -38,7 +38,7 @@ let
   speaker = sinkVideocard;
 in
 {
-  config = lib.mkIf (config.wlwm.enable) {
+  config = lib.mkIf (osConfig.modules.wlwm.enable) {
     programs.waybar = {
       enable = true;
       package = pkgs.waybar;

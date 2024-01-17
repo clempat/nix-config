@@ -1,4 +1,4 @@
-{ config, lib, system, pkgs, hyprland, vars, host, ... }:
+{ osConfig, lib, system, pkgs, hyprland, vars, host, ... }:
 let
   cfg = osConfig.modules.hyperland;
   touchpad =
@@ -217,10 +217,10 @@ let
           #!/bin/sh
 
           if grep open /proc/acpi/button/lid/LID/state; then
-            ${config.programs.hyprland.package}/bin/hyprctl keyword monitor "eDP-1, 1920x1080, 0x0, 1"
+            ${osConfig.programs.hyprland.package}/bin/hyprctl keyword monitor "eDP-1, 1920x1080, 0x0, 1"
           else
             if [[ `hyprctl monitors | grep "Monitor" | wc -l` != 1 ]]; then
-              ${config.programs.hyprland.package}/bin/hyprctl keyword monitor "eDP-1, disable"
+              ${osConfig.programs.hyprland.package}/bin/hyprctl keyword monitor "eDP-1, disable"
             else
               ${pkgs.swaylock}/bin/swaylock -f
               ${pkgs.systemd}/bin/systemctl sleep
