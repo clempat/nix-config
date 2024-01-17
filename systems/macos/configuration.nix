@@ -105,6 +105,7 @@
         KeyRepeat = 1;
         NSAutomaticCapitalizationEnabled = false;
         NSAutomaticSpellingCorrectionEnabled = false;
+        "com.apple.swipescrolldirection" = false;
       };
       dock = {
         autohide = true;
