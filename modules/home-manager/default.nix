@@ -8,4 +8,8 @@
   ./ssh
   ./tmux
   ./zsh
+  ./wofi
+  ./waybar
+  ./hyprland
+  ./eww
 ]

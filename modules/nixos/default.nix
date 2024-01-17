@@ -6,4 +6,6 @@
   ./kitty
   ./ssh
   ./zsh
+  ./hyprland
+  ./waybar
 ]

@@ -11,6 +11,10 @@
     ssh.enable = lib.mkEnableOption "Enable SSH";
     tmux.enable = lib.mkEnableOption "Enable TMUX";
     zsh.enable = lib.mkEnableOption "Enable ZSH";
+    nvidia.enable = lib.mkEnableOption "Enable Nvidia support";
+    touchpad.enable = lib.mkEnableOption "Enable Touchpad";
+    hyprland.enable = lib.mkEnableOption "Enable Hyprland";
+    wlwm.enable = lib.mkEnableOption "Enable Wayland Window Manager";
   };
   config = { };
 }
