@@ -83,6 +83,7 @@
       "raindropio"
       "raycast"
       "cleanshot"
+      "utm"
     ];
   };
 
