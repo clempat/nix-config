@@ -1,4 +1,4 @@
-{ osConfig, lib, pkgs, user, ... }:
+{ osConfig, lib, pkgs, ... }:
 let
   cfg = osConfig.modules.firefox;
 in

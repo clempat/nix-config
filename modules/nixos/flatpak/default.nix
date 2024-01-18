@@ -1,4 +1,4 @@
-{ config, lib, pkgs, user, ... }:
+{ config, lib, pkgs, ... }:
 let cfg = config.modules.flatpak;
 in
 {

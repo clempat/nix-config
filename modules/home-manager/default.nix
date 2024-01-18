@@ -8,8 +8,9 @@
   ./ssh
   ./tmux
   ./zsh
-  ./wofi
+  ./rofi
   ./waybar
   ./hyprland
   ./eww
+  ./swaync
 ]

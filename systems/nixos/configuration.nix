@@ -2,14 +2,14 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, lib, inputs, vars, ... }:
+{ config, pkgs, lib, inputs, user, ... }:
 
 {
   imports = [
     ../../modules
   ] ++ (import ../../modules/nixos);
 
-  home-manager.users.${vars.user}.imports = [ inputs.plasma-manager.homeManagerModules.plasma-manager ] ++ (import ../../modules/home-manager);
+  home-manager.users.${user}.imports = [ inputs.plasma-manager.homeManagerModules.plasma-manager ] ++ (import ../../modules/home-manager);
 
   modules.ssh.enable = true;
   modules._1password.enable = true;
@@ -27,7 +27,7 @@
 
   modules.kitty.enable = true;
 
-  users.users.${vars.user} = {
+  users.users.${user} = {
     isNormalUser = true;
     extraGroups = [ "networkmanager" "wheel" "video" "audio" "onepassword" "docker" "input" ];
     initialPassword = "changeme";
@@ -74,6 +74,7 @@
     variables = {
       EDITOR = "nvim";
       VISUAL = "nvim";
+      POLKIT_BIN = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
     };
 
     systemPackages = with pkgs; [
@@ -152,6 +153,20 @@
 
   hardware.pulseaudio.enable = false;
   hardware.nvidia.forceFullCompositionPipeline = true;
+
+  # Bluetooth
+  hardware.bluetooth = {
+    enable = true;
+    settings = {
+      General = {
+        Enable = "Source,Sink,Media,Socket";
+        AutoEnable = true;
+        ControllerMode = "bredr";
+      };
+    };
+  };
+
+  services.blueman.enable = true;
 
   virtualisation.docker.enable = true;
 

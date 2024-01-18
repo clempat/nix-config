@@ -1,4 +1,4 @@
-{ lib, config, programs, environment, vars, pkgs, ... }:
+{ lib, config, programs, environment, user, pkgs, ... }:
 let cfg = config.modules.zsh;
 in
 {
@@ -6,7 +6,7 @@ in
     programs.zsh.enable = true;
 
     environment.systemPackages = with pkgs; [ zsh spaceship-prompt ];
-    users.users.${vars.user} = {
+    users.users.${user} = {
       shell = pkgs.zsh;
     };
   };

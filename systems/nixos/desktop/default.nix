@@ -38,9 +38,6 @@
   hardware.opengl.enable = true;
   hardware.nvidia.modesetting.enable = true;
 
-  # Bluetooth
-  hardware.bluetooth.enable = true;
-  services.blueman.enable = true;
   # Forces a reset for specified bluetooth usb dongle.
   systemd.services.fix-generic-usb-bluetooth-dongle = {
     description = "Fixes for generic USB bluetooth dongle.";

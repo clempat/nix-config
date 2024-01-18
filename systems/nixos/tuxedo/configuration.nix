@@ -30,20 +30,17 @@ in
     "tuxedo_keyboard.color_left=0xff0a0a"
   ];
 
+  boot.extraModprobeConfig = ''
+    blacklist nouveau
+    options nouveau modeset=0
+  '';
+
+  boot.blacklistedKernelModules = ["nouveau" "nvidia" "nvidia-drm" "nvidia_modeset" ];
+
   networking.hostName = "tuxedo"; # Define your hostname.
 
   # Enable networking
   networking.networkmanager.enable = true;
-
-  # Try to optimize the screen
-  services.xserver.enable = true;
-  services.xserver.dpi = 192;
-  environment.variables =
-    {
-      GDK_SCALE = "1";
-      GDK_DPI_SCALE = "1";
-      _JAVA_OPTIONS = "-Dsun.java2d.uiScale=1";
-    };
 
   # NVIDIA
   environment.systemPackages = [
@@ -59,7 +56,14 @@ in
     enable = true;
     driSupport = true;
     driSupport32Bit = true;
+    extraPackages = with pkgs; [
+      intel-media-driver
+      vaapiIntel
+      vaapiVdpau
+      libvdpau-va-gl
+    ];
   };
+
   hardware.nvidia = {
     modesetting.enable = true;
     powerManagement.enable = false;
@@ -82,11 +86,6 @@ in
     light.enable = true;
   };
 
-  # Configure keymap in X11
-  services.xserver = {
-    layout = "us";
-    xkbVariant = "altgr-intl";
-  };
 
   # Enable CUPS to print documents.
   services.printing.enable = true;

@@ -1,253 +1,209 @@
-{ osConfig, lib, system, pkgs, hyprland, vars, host, ... }:
+{ osConfig, config, lib, pkgs, ... }:
 let
   cfg = osConfig.modules.hyprland;
-  colors = import ../../themes/colors.nix;
-  touchpad =
-    if osConfig.modules.touchpad.enable then ''
-        touchpad {
-          middle_button_emulation=true
-          tap-to-click=true
-          natural_scroll = false
-        }
-      }
-    '' else "";
-  gestures =
-    if osConfig.modules.touchpad.enable then ''
-      gestures {
-        workspace_swipe=true
-        workspace_swipe_fingers=3
-        workspace_swipe_distance=100
-      }
-    '' else "";
-in
-let
-  hyprlandConf = with colors.scheme.default.hex; ''
-    # monitor=[monitor-name],[resolution@framerate],[pos-x,y],[scale factor],transform,[rotation]
-    # Rotation Degrees Shorthand
-    # normal (no transforms) -> 0
-    # 90 degrees -> 1
-    # 180 degrees -> 2
-    # 270 degrees -> 3
-    # flipped -> 4
-    # flipped + 90 degrees -> 5
-    # flipped + 180 degrees -> 6
-    # flipped + 270 degrees -> 7
-    monitor=,highres,auto,1          # Automatic Configuration
-
-    general {
-      border_size=2
-      gaps_in=0
-      gaps_out=0
-      col.active_border=0x99${active}
-      col.inactive_border=0x66${inactive}
-      layout=dwindle
-    }
-
-    decoration {
-      rounding=0
-      active_opacity=1
-      inactive_opacity=1
-      fullscreen_opacity=1
-      drop_shadow=false
-    }
-
-    animations {
-      enabled = false
-      bezier = overshot, 0.05, 0.9, 0.1, 1.05
-      bezier = smoothOut, 0.5, 0, 0.99, 0.99
-      bezier = smoothIn, 0.5, -0.5, 0.68, 1.5
-      bezier = rotate,0,0,1,1
-      animation = windows, 1, 4, overshot, slide
-      animation = windowsIn, 1, 2, smoothOut
-      animation = windowsOut, 1, 0.5, smoothOut
-      animation = windowsMove, 1, 3, smoothIn, slide
-      animation = border, 1, 5, default
-      animation = fade, 1, 4, smoothIn
-      animation = fadeDim, 1, 4, smoothIn
-      animation = workspaces, 1, 4, default
-      animation = borderangle, 1, 20, rotate, loop
-    }
-
-    input {
-      kb_layout=us
-      #kb_layout=us,us
-      #kb_variant=,dvorak
-      #kb_options=caps:ctrl_modifier
-      kb_options=caps:escape
-      follow_mouse=1
-      repeat_delay=250
-      numlock_by_default=1
-      accel_profile=flat
-      sensitivity=0.8
-      ${touchpad}
-    }
-
-    ${gestures}
-
-    dwindle {
-      pseudotile=false
-      force_split=2
-      preserve_split=true
-    }
-
-    misc {
-      disable_hyprland_logo=true
-      disable_splash_rendering=true
-      mouse_move_enables_dpms=true
-      key_press_enables_dpms=true
-      background_color=0x111111
-    }
-
-    debug {
-      damage_tracking=2
-    }
-
-
-    bindm=SUPER,mouse:272,movewindow
-    bindm=SUPER,mouse:273,resizewindow
-
-    bind=SUPER,Return,exec,${pkgs.kitty}/bin/kitty
-    bind=SUPER,Q,killactive,
-    bind=SUPER,Escape,exit,
-    bind=SUPER,S,exec,${pkgs.systemd}/bin/systemctl suspend
-    bind=SUPER,L,exec,${pkgs.swaylock}/bin/swaylock
-    bind=SUPER,E,exec,XDG_BACKEND=x11 ${pkgs.pcmanfm}/bin/pcmanfm
-    bind=SUPER,F,togglefloating,
-    bind=SUPER,Space,exec, pkill wofi || ${pkgs.wofi}/bin/wofi --show drun
-    bind=SUPER,P,pseudo,
-    bind=,F11,fullscreen,
-    bind=SUPER,R,forcerendererreload
-    bind=SUPERSHIFT,R,exec,${pkgs.hyprland}/bin/hyprctl reload
-    bind=SUPER,T,exec,${pkgs.kitty}/bin/kitty -e nvim
-    bind=SUPER,K,exec,${pkgs.hyprland}/bin/hyprctl switchxkblayout keychron-k8-keychron-k8 next
-
-    bind=SUPER,left,movefocus,l
-    bind=SUPER,right,movefocus,r
-    bind=SUPER,up,movefocus,u
-    bind=SUPER,down,movefocus,d
-
-    bind=SUPERSHIFT,left,movewindow,l
-    bind=SUPERSHIFT,right,movewindow,r
-    bind=SUPERSHIFT,up,movewindow,u
-    bind=SUPERSHIFT,down,movewindow,d
-
-    bind=ALT,1,workspace,1
-    bind=ALT,2,workspace,2
-    bind=ALT,3,workspace,3
-    bind=ALT,4,workspace,4
-    bind=ALT,5,workspace,5
-    bind=ALT,6,workspace,6
-    bind=ALT,7,workspace,7
-    bind=ALT,8,workspace,8
-    bind=ALT,9,workspace,9
-    bind=ALT,0,workspace,10
-    bind=ALT,right,workspace,+1
-    bind=ALT,left,workspace,-1
-
-    bind=ALTSHIFT,1,movetoworkspace,1
-    bind=ALTSHIFT,2,movetoworkspace,2
-    bind=ALTSHIFT,3,movetoworkspace,3
-    bind=ALTSHIFT,4,movetoworkspace,4
-    bind=ALTSHIFT,5,movetoworkspace,5
-    bind=ALTSHIFT,6,movetoworkspace,6
-    bind=ALTSHIFT,7,movetoworkspace,7
-    bind=ALTSHIFT,8,movetoworkspace,8
-    bind=ALTSHIFT,9,movetoworkspace,9
-    bind=ALTSHIFT,0,movetoworkspace,10
-    bind=ALTSHIFT,right,movetoworkspace,+1
-    bind=ALTSHIFT,left,movetoworkspace,-1
-
-    binde=SUPERCTRL,right,resizeactive,60 0
-    binde=SUPERCTRL,left,resizeactive,-60 0
-    binde=SUPERCTRL,up,resizeactive,0 -60
-    binde=SUPERCTRL,down,resizeactive,0 60
-
-
-    bind=SUPER,Z,layoutmsg,togglesplit
-
-    bind=,print,exec,${pkgs.grimblast}/bin/grimblast --notify --freeze --wait 1 copysave area ~/Pictures/$(date +%Y-%m-%dT%H%M%S).png
-    bind=,XF86AudioLowerVolume,exec,${pkgs.pamixer}/bin/pamixer -d 10
-    bind=,XF86AudioRaiseVolume,exec,${pkgs.pamixer}/bin/pamixer -i 10
-    bind=,XF86AudioMute,exec,${pkgs.pamixer}/bin/pamixer -t
-    bind=SUPER_L,c,exec,${pkgs.pamixer}/bin/pamixer --default-source -t
-    bind=CTRL,F10,exec,${pkgs.pamixer}/bin/pamixer -t
-    bind=,XF86AudioMicMute,exec,${pkgs.pamixer}/bin/pamixer --default-source -t
-    bind=,XF86MonBrightnessDown,exec,${pkgs.light}/bin/light -U 10
-    bind=,XF86MonBrightnessUP,exec,${pkgs.light}/bin/light -A 10
-
-    windowrulev2=float,title:^(Volume Control)$
-    windowrulev2 = keepaspectratio,class:^(firefox)$,title:^(Picture-in-Picture)$
-    windowrulev2 = noborder,class:^(firefox)$,title:^(Picture-in-Picture)$
-    windowrulev2 = float, title:^(Picture-in-Picture)$
-    windowrulev2 = size 24% 24%, title:(Picture-in-Picture)
-    windowrulev2 = move 75% 75%, title:(Picture-in-Picture)
-    windowrulev2 = pin, title:^(Picture-in-Picture)$
-    windowrulev2 = float, title:^(Firefox)$
-    windowrulev2 = size 24% 24%, title:(Firefox)
-    windowrulev2 = move 74% 74%, title:(Firefox)
-    windowrulev2 = pin, title:^(Firefox)$
-
-    windowrule = float, ^(steam)$
-    windowrule = center, ^(steam)$
-    windowrule = size 1080 900, ^(steam)$
-
-
-    exec-once=dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
-    exec-once=${pkgs.waybar}/bin/waybar
-    exec-once=${pkgs.eww-wayland}/bin/eww daemon
-    #exec-once=$HOME/.config/eww/scripts/eww        # When running eww as a bar
-    exec-once=${pkgs.blueman}/bin/blueman-applet
-    exec-once=${pkgs.swaynotificationcenter}/bin/swaync
-  '';
 in
 {
   config = lib.mkIf cfg.enable {
-    xdg.configFile."hypr/hyprland.conf".text = hyprlandConf;
+    home.file.".config/hypr/hyprland.conf".text = ''
+      # monitor=[monitor-name],[resolution@framerate],[pos-x,y],[scale factor],transform,[rotation]
+      # Rotation Degrees Shorthand
+      # normal (no transforms) -> 0
+      # 90 degrees -> 1
+      # 180 degrees -> 2
+      # 270 degrees -> 3
+      # flipped -> 4
+      # flipped + 90 degrees -> 5
+      # flipped + 180 degrees -> 6
+      # flipped + 270 degrees -> 7
+      monitor=,highres,auto,1          # Automatic Configuration
 
-    programs.swaylock.settings = {
-      #image = "$HOME/.config/wall";
-      color = "000000f0";
-      font-size = "24";
-      indicator-idle-visible = false;
-      indicator-radius = 100;
-      indicator-thickness = 20;
-      inside-color = "00000000";
-      inside-clear-color = "00000000";
-      inside-ver-color = "00000000";
-      inside-wrong-color = "00000000";
-      key-hl-color = "79b360";
-      line-color = "000000f0";
-      line-clear-color = "000000f0";
-      line-ver-color = "000000f0";
-      line-wrong-color = "000000f0";
-      ring-color = "ffffff50";
-      ring-clear-color = "bbbbbb50";
-      ring-ver-color = "bbbbbb50";
-      ring-wrong-color = "b3606050";
-      text-color = "ffffff";
-      text-ver-color = "ffffff";
-      text-wrong-color = "ffffff";
-      show-failed-attempts = true;
-    };
+      windowrule = float, ^(steam)$
+      windowrule = center, ^(steam)$
+      windowrule = size 1080 900, ^(steam)$
 
-    home.file = {
-      ".config/hypr/script/clamshell.sh" = {
-        text = ''
-          #!/bin/sh
+      input {
+          kb_layout = us
+          kb_options=caps:super
+          follow_mouse = 1
 
-          if grep open /proc/acpi/button/lid/LID/state; then
-            ${osConfig.programs.hyprland.package}/bin/hyprctl keyword monitor "eDP-1, 1920x1080, 0x0, 1"
-          else
-            if [[ `hyprctl monitors | grep "Monitor" | wc -l` != 1 ]]; then
-              ${osConfig.programs.hyprland.package}/bin/hyprctl keyword monitor "eDP-1, disable"
-            else
-              ${pkgs.swaylock}/bin/swaylock -f
-              ${pkgs.systemd}/bin/systemctl sleep
-            fi
-          fi
-        '';
-        executable = true;
-      };
-    };
+          touchpad {
+              natural_scroll = false
+          }
+
+          sensitivity = 0 # -1.0 - 1.0, 0 means no modification.
+      }
+
+      gestures {
+          workspace_swipe = true
+          workspace_swipe_fingers = 3
+      }
+
+      # Ensure Mouse or Keyboard Inputs Turn On Displays
+      misc {
+          mouse_move_enables_dpms = true
+          key_press_enables_dpms = false
+      } 
+
+      animations {
+          enabled = yes
+
+          # Define Settings For Animation Bezier Curve
+          bezier = wind, 0.05, 0.9, 0.1, 1.05
+          bezier = winIn, 0.1, 1.1, 0.1, 1.1
+          bezier = winOut, 0.3, -0.3, 0, 1
+          bezier = liner, 1, 1, 1, 1
+
+          animation = windows, 1, 6, wind, slide
+          animation = windowsIn, 1, 6, winIn, slide
+          animation = windowsOut, 1, 5, winOut, slide
+          animation = windowsMove, 1, 5, wind, slide
+          animation = border, 1, 1, liner
+          animation = borderangle, 1, 30, liner, loop
+          animation = fade, 1, 10, default
+          animation = workspaces, 1, 5, wind
+      }
+
+      # Set Environment Variables
+      env = NIXOS_OZONE_WL, 1
+      env = NIXPKGS_ALLOW_UNFREE, 1
+      env = XDG_CURRENT_DESKTOP, Hyprland
+      env = XDG_SESSION_TYPE, wayland
+      env = XDG_SESSION_DESKTOP, Hyprland
+      env = GDK_BACKEND, wayland
+      env = CLUTTER_BACKEND, wayland
+      env = SDL_VIDEODRIVER, x11
+      env = XCURSOR_SIZE, 24
+      env = XCURSOR_THEME, Bibata-Modern-Ice
+      env = QT_QPA_PLATFORM, wayland
+      env = QT_WAYLAND_DISABLE_WINDOWDECORATION, 1
+      env = QT_AUTO_SCREEN_SCALE_FACTOR, 1
+      env = MOZ_ENABLE_WAYLAND, 1
+      env = LIBVA_DRIVER_NAME,nvidia
+      env = GBM_BACKEND,nvidia-drm
+      env = __GLX_VENDOR_LIBRARY_NAME,nvidia
+      env = WLR_NO_HARDWARE_CURSORS,1
+      env = WLR_DRM_DEVICES,/dev/dri/card0:/dev/dri/card1
+
+      exec-once = $POLKIT_BIN
+      exec-once = dbus-update-activation-environment --systemd --all
+      exec-once = systemctl --user import-environment QT_QPA_PLATFORMTHEME WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
+      exec-once = hyprctl setcursor Bibata-Modern-Ice 24
+      exec-once = swww init
+      exec-once = waybar
+      exec-once = swaync
+      exec-once = wallsetter
+      exec-once = swayidle -w timeout 150 'hyprctl dispatch dpms off' resume 'hyprctl dispatch dpms on'
+
+      $mainMod = ALT
+      # Sound Control Keybinds
+      bind = , XF86AudioRaiseVolume,			exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+
+      bind = , XF86AudioLowerVolume,			exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
+      bind = , XF86AudioMute,				    exec, pactl set-sink-mute @DEFAULT_SINK@ toggle
+      bind = , XF86AudioMicMute,			    exec, pactl set-source-mute @DEFAULT_SOURCE@ toggle
+      # Brightness Control Keybinds
+      bind = , XF86MonBrightnessDown, 		exec, brightnessctl set 5%-
+      bind = , XF86MonBrightnessUp,   		exec, brightnessctl set +5%
+      # System Application Keybinds
+      bind = $mainMod,		Return,	        exec, kitty
+      bind = $mainMod,		D,	        exec, rofi -show drun
+      bind = $mainMod SHIFT,	W,		        exec, kitty -e amfora
+      bind = $mainMod SHIFT,	S,		        exec, web-search
+      bind = $mainMod,		W,		        exec, firefox
+      bind = $mainMod,		E,		        exec, emopicker9000
+      bind = $mainMod,		S,		        exec, grim -g "$(slurp)"
+      bind = $mainMod SHIFT,	D,			exec, discord
+      bind = $mainMod,		O,		        exec, obs
+      bind = $mainMod,		G,		        exec, gimp
+      bind = $mainMod SHIFT,	G,		        exec, godot4
+      bind = $mainMod,		T,		        exec, thunar
+      bind = $mainMod,		M,		        exec, ario
+      # Hyprland Keybinds
+      bind = $mainMod,		Q,		        killactive,
+      bind = $mainMod,		P,		        pseudo, # dwindle
+      bind = $mainMod SHIFT,	I,		        togglesplit, # dwindle
+      bind = $mainMod,	    F,		        fullscreen,
+      bind = $mainMod SHIFT,	F,		        togglefloating,
+      bind = $mainMod SHIFT,	C,		        exit,
+      # Move window with mainMod + shift + arrow keys
+      bind = $mainMod SHIFT,	left,			movewindow, l
+      bind = $mainMod SHIFT,	right,			movewindow, r
+      bind = $mainMod SHIFT,	up,			    movewindow, u
+      bind = $mainMod SHIFT,	down,			movewindow, d
+      bind = $mainMod SHIFT,	h,			    movewindow, l
+      bind = $mainMod SHIFT,	l,			    movewindow, r
+      bind = $mainMod SHIFT,	k,			    movewindow, u
+      bind = $mainMod SHIFT,	j,			    movewindow, d
+      # Move focus with mainMod + arrow keys
+      bind = $mainMod,		left,		    movefocus, l
+      bind = $mainMod,		right,		    movefocus, r
+      bind = $mainMod,		up,		        movefocus, u
+      bind = $mainMod,		down,		    movefocus, d
+      bind = $mainMod,		h,		        movefocus, l
+      bind = $mainMod,		l,		        movefocus, r
+      bind = $mainMod,		k,		        movefocus, u
+      bind = $mainMod,		j,		        movefocus, d
+      # Switch workspaces with mainMod + [0-6]
+      bind = $mainMod,		1,		        workspace, 1
+      bind = $mainMod,		2,		        workspace, 2
+      bind = $mainMod,		3,		        workspace, 3
+      bind = $mainMod,		4,		        workspace, 4
+      bind = $mainMod,		5,		        workspace, 5
+      bind = $mainMod,		6,		        workspace, 6
+      bind = $mainMod,		7,		        workspace, 7
+      bind = $mainMod,		8,		        workspace, 8
+      bind = $mainMod,		9,		        workspace, 9
+      bind = $mainMod,		0,		        workspace, 10
+      # Move active window to a workspace with mainMod + SHIFT + [0-6]
+      bind = $mainMod SHIFT,	1,		        movetoworkspace, 1
+      bind = $mainMod SHIFT,	2,		        movetoworkspace, 2
+      bind = $mainMod SHIFT,	3,		        movetoworkspace, 3
+      bind = $mainMod SHIFT,	4,		        movetoworkspace, 4
+      bind = $mainMod SHIFT,	5,		        movetoworkspace, 5
+      bind = $mainMod SHIFT,	6,		        movetoworkspace, 6
+      bind = $mainMod SHIFT,	7,		        movetoworkspace, 7
+      bind = $mainMod SHIFT,	8,		        movetoworkspace, 8
+      bind = $mainMod SHIFT,	9,		        movetoworkspace, 9
+      bind = $mainMod SHIFT,	0,		        movetoworkspace, 10
+      # Scroll through existing workspaces with mainMod + scroll
+      bind = $mainMod,		mouse_down,     workspace, e+1
+      bind = $mainMod,		mouse_up,	    workspace, e-1
+      # Move/resize windows with mainMod + LMB/RMB and dragging
+      bindm = $mainMod,		mouse:272,	    movewindow
+      bindm = $mainMod,		mouse:273,	    resizewindow
+
+      dwindle {
+          pseudotile = true # master switch for pseudotiling. Enabling is bound to mainMod + P in the keybinds section below
+          preserve_split = true # you probably want this
+      }
+
+      master {
+          new_is_master = true
+      }
+
+      general {
+          gaps_in = 4
+          gaps_out = 8
+          border_size = 3
+          col.active_border = rgba(${config.colorScheme.colors.base0C}ff) rgba(${config.colorScheme.colors.base0D}ff) 45deg
+          col.inactive_border = rgba(${config.colorScheme.colors.base00}cc) rgba(${config.colorScheme.colors.base01}cc) 45deg
+          layout = dwindle
+          resize_on_border = true
+      }
+
+      decoration {
+          rounding = 10
+          drop_shadow = false
+
+          blur {
+              enabled = true
+              size = 5
+              passes = 3
+              new_optimizations = on
+              ignore_opacity = on
+          }
+      }
+
+    '';
+
   };
 }

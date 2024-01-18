@@ -1,19 +1,19 @@
-{ config, lib, system, pkgs, hyprland, vars, host, ... }:
+{ config, lib, pkgs, inputs, ... }:
 let
   cfg = config.modules.hyprland;
   nvidia = config.modules.nvidia;
-  exec = if nvidia.enanble then "exec dbus-launch nvidia-offload Hyprland" else "exec dbus-launch Hyprland";
+  exec = if nvidia.enable then "exec dbus-launch nvidia-offload Hyprland" else "exec dbus-launch Hyprland";
 in
 {
   config = lib.mkIf cfg.enable {
     modules.wlwm.enable = true; # Wayland Window Manager
-    loginShellInit = ''
-      if [ -z $DISPLAY ] && [ "$(tty)" = "/dev/tty1" ]; then
-        ${exec}
-      fi
-    '';
-    
+
     environment = {
+      #loginShellInit = ''
+      #  if [ -z $DISPLAY ] && [ "$(tty)" = "/dev/tty1" ]; then
+      #    ${exec}
+      #  fi
+      #'';
       variables = {
         XDG_CURRENT_DESKTOP = "Hyprland";
         XDG_SESSION_TYPE = "wayland";
@@ -35,6 +35,8 @@ in
         swaylock # Lock Screen
         wl-clipboard # Clipboard
         wlr-randr # Monitor Settings
+        swaynotificationcenter # notification
+	      swww # wallpaper
       ];
     };
 
@@ -48,7 +50,7 @@ in
       hyprland = {
         # Window Manager
         enable = true;
-        package = hyprland.packages.${pkgs.system}.hyprland;
+        package = inputs.hyprland.packages.${pkgs.system}.hyprland;
       };
     };
 
