@@ -10,7 +10,7 @@
     gimp obs-studio blender kdenlive meson hugo gnumake ninja go
     nodejs godot_4 rustup pavucontrol audacity zeroad xonotic
     openra font-awesome symbola noto-fonts-color-emoji material-icons
-    spotify brightnessctl swayidle swaylock vim wget curl neovide neovim todoist-electron lazygit
+    spotify brightnessctl swayidle swaylock vim wget curl neovide todoist-electron lazygit tmux
     (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
     # Import Scripts
     (import ./../scripts/emopicker9000.nix { inherit pkgs; })

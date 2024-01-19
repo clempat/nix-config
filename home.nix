@@ -15,6 +15,9 @@
   # Import Program Configurations
   imports = [
     inputs.nix-colors.homeManagerModules.default
+    inputs.hyprland.homeManagerModules.default
+    inputs.nixvim.homeManagerModules.nixvim
+
     # Enable &/ Configure Programs
     ./config/home/git.nix
     ./config/home/waybar.nix
@@ -29,6 +32,8 @@
     ./config/home/gtk-qt.nix
     ./config/home/firefox.nix
     ./config/home/_1password.nix
+    ./config/home/tmux.nix
+    ./config/home/neovim.nix
 
     # Install Programs & Scripts For User
     ./config/home/packages.nix
@@ -51,4 +56,6 @@
   };
 
   programs.home-manager.enable = true;
+  services.ssh-agent.enable = true;
+  programs.ssh.enable = true;
 }
