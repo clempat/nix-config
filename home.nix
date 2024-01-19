@@ -16,6 +16,7 @@
   imports = [
     inputs.nix-colors.homeManagerModules.default
     # Enable &/ Configure Programs
+    ./config/home/git.nix
     ./config/home/waybar.nix
     ./config/home/swaync.nix
     ./config/home/swaylock.nix
@@ -27,6 +28,7 @@
     ./config/home/zsh.nix
     ./config/home/gtk-qt.nix
     ./config/home/firefox.nix
+    ./config/home/_1password.nix
 
     # Install Programs & Scripts For User
     ./config/home/packages.nix
@@ -38,13 +40,6 @@
   # Define Settings For Xresources
   xresources.properties = {
     "Xcursor.size" = 24;
-  };
-
-  # Install & Configure Git
-  programs.git = {
-    enable = true;
-    userName = "${gitUsername}";
-    userEmail = "${gitEmail}";
   };
 
   # Create XDG Dirs
