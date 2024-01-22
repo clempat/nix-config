@@ -1,6 +1,6 @@
 { inputs, config, pkgs, username,
   hostname, gitUsername, theLocale,
-  theTimezone, wallpaperDir, wallpaperGit, ... }:
+  theTimezone, wallpaperDir, wallpaperGit, lib, deviceProfile, ... }:
 
 {
   imports =
@@ -11,6 +11,7 @@
       ./config/system/amd-opengl.nix
       ./config/system/programs.nix
       ./config/system/polkit.nix
+      ./config/system/services.nix
     ];
 
   # Enable Electron
@@ -58,18 +59,9 @@
 
   # Steam Configuration
   programs.steam = {
-    enable = true;
+    enable = deviceProfile != "vm";
     remotePlay.openFirewall = true;
     dedicatedServer.openFirewall = true;
-  };
-
-  environment.sessionVariables = rec {
-    POLKIT_BIN = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
-  };
-
-  programs.hyprland = {
-    enable = true;
-    package = inputs.hyprland.packages.${pkgs.system}.hyprland;
   };
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -80,40 +72,15 @@
     enableSSHSupport = true;
   };
 
-  # List services that you want to enable:
-  services.openssh.enable = true;
-  services.fstrim.enable = true;
-  services.xserver = {
-    enable = true;
-    layout = "us";
-    xkbVariant = "";
-    libinput.enable = true;
-    videoDrivers = [ "nvidia" ];
-    displayManager.gdm = {
-      enable = true;
-      wayland = true;
-    };
+
+  environment.sessionVariables = rec {
+    POLKIT_BIN = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
   };
-  services.pipewire = {
+
+  programs.hyprland = {
     enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-    jack.enable = true;
+    package = inputs.hyprland.packages.${pkgs.system}.hyprland;
   };
-  hardware.pulseaudio.enable = false;
-  sound.enable = true;
-  security.rtkit.enable = true;
-  services.gnome.gnome-keyring.enable = true;
-  security.pam.services.gdm.enableGnomeKeyring = true;
-  security.pam.services.sddm.enableGnomeKeyring = true;
-  security.pam.services.login.enableGnomeKeyring = true;
-  # security.pam.services.gdm.enableKwallet = true;
-  # security.pam.services.sddm.enableKwallet = true;
-  # security.pam.services.login.enableKwallet = true;
-  programs.thunar.enable = true;
-  services.gvfs.enable = true;
-  services.tumbler.enable = true;
 
   # Optimization settings and garbage collection automation
   nix = {

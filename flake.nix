@@ -52,7 +52,7 @@
           inherit wallpaperDir; inherit wallpaperGit;
           inherit deviceProfile;
         };
-	    modules = [ ./default.nix
+	    modules = [ ./system.nix
 	  nur.nixosModules.nur
           home-manager.nixosModules.home-manager {
 	        home-manager.extraSpecialArgs = { inherit username; 
