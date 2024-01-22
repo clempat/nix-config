@@ -7,7 +7,7 @@
     swww grim slurp lm_sensors unzip unrar gnome.file-roller
     obsidian libnotify swaynotificationcenter rofi-wayland imv v4l-utils
     ydotool cliphist wl-clipboard socat cowsay lsd pkg-config transmission-gtk mpv
-    gimp obs-studio blender kdenlive meson hugo gnumake ninja go
+    gimp obs-studio kdenlive meson hugo gnumake ninja go
     nodejs godot_4 rustup pavucontrol audacity zeroad xonotic
     font-awesome symbola noto-fonts-color-emoji material-icons
     brightnessctl swayidle swaylock-effects vim wget curl lazygit tmux
