@@ -85,7 +85,6 @@ in with lib; {
             ignore_opacity = on
         }
       }
-      exec-once = $POLKIT_BIN
       exec-once = dbus-update-activation-environment --systemd --all
       exec-once = systemctl --user import-environment QT_QPA_PLATFORMTHEME WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
       exec-once = hyprctl setcursor Bibata-Modern-Ice 24
@@ -93,6 +92,8 @@ in with lib; {
       exec-once = waybar
       exec-once = swaync
       exec-once = wallsetter
+      exec-once = nextcloud
+      exec-once = 1password
       exec-once = ${pkgs.swayidle}/bin/swayidle -w timeout 300 '${pkgs.swaylock}/bin/swaylock -f' timeout 600 '${pkgs.systemd}/bin/systemctl suspend' after-resume 'hyprctl dispatch dpms on' before-sleep '${pkgs.swaylock}/bin/swaylock -f && hyprctl dispatch dpms off'
       dwindle {
         pseudotile = true

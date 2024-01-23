@@ -22,13 +22,13 @@
 
 
         # reload config file
-        bind r source-file ~/.tmux.conf \; display ".tmux.conf reloaded!"
-        bind -n C-f display-popup -E "~/.local/bin/tmux-sessionizer"
+        bind r source-file ~/.config/tmux/tmux.conf \; display ".tmux.conf reloaded!"
+        bind -n C-f display-popup -E "tmux-sessionizer"
 
         bind-key -r i run-shell "tmux neww ~/.local/bin/tmux-cht.sh"
-        bind-key -r F run-shell "~/.local/bin/tmux-sessionizer ~/workspace/enpal/EnpalCustomerPortal"
-        bind-key -r J run-shell "~/.local/bin/tmux-sessionizer ~/workspace/perso/home-assistant"
-        bind-key -r K run-shell "~/.local/bin/tmux-sessionizer ~/workspace/perso/home-cluster"
+        bind-key -r F run-shell "tmux-sessionizer ~/workspace/enpal/EnpalCustomerPortal"
+        bind-key -r J run-shell "tmux-sessionizer ~/workspace/perso/home-assistant"
+        bind-key -r K run-shell "tmux-sessionizer ~/workspace/perso/home-cluster"
 
         # This will open the pane with same directory
         bind '"' split-window -h -c '#{pane\_current\_path}'  # Split panes horizontal  

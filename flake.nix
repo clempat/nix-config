@@ -5,7 +5,6 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11";
     home-manager.url = "github:nix-community/home-manager/release-23.11";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
-    hyprland.url = "github:hyprwm/Hyprland";
     nix-colors.url = "github:misterio77/nix-colors";
     nur.url = "github:nix-community/NUR";
     nixvim.url = "github:nix-community/nixvim/nixos-23.11";
@@ -22,7 +21,9 @@
     gitUsername = "Clement Patout";
     gitEmail = "clement.patout@gmail.com";
     theLocale = "en_US.UTF-8";
+    theLCVariables = "fr_FR.UTF-8";
     theTimezone = "Europe/BErlin";
+    theKBDLayout = "us";
     theme = "dracula";
     browser = "firefox";
     wallpaperGit = "https://gitlab.com/Zaney/my-wallpapers.git";
@@ -50,7 +51,8 @@
           inherit gitUsername; inherit theTimezone;
           inherit gitEmail; inherit theLocale;
           inherit wallpaperDir; inherit wallpaperGit;
-          inherit deviceProfile;
+          inherit deviceProfile; inherit theKBDLayout;
+          inherit theLCVariables;
         };
 	    modules = [ ./system.nix
 	  nur.nixosModules.nur
@@ -60,8 +62,9 @@
               inherit inputs; inherit theme;
               inherit browser; inherit wallpaperDir;
               inherit wallpaperGit; inherit flakeDir;
-              inherit deviceProfile;
+              inherit deviceProfile; inherit theKBDLayout;
               inherit (inputs.nix-colors.lib-contrib {inherit pkgs;}) gtkThemeFromScheme;
+              inherit theLCVariables;
             };
 	        home-manager.useGlobalPkgs = true;
 	        home-manager.useUserPackages = true;

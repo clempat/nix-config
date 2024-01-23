@@ -8,7 +8,7 @@
     obsidian libnotify swaynotificationcenter rofi-wayland imv v4l-utils
     ydotool cliphist wl-clipboard socat cowsay lsd pkg-config transmission-gtk mpv
     gimp obs-studio kdenlive meson hugo gnumake ninja go
-    nodejs godot_4 rustup pavucontrol audacity zeroad xonotic
+    nodejs godot_4 rustup pavucontrol audacity
     font-awesome symbola noto-fonts-color-emoji material-icons
     brightnessctl swayidle swaylock-effects vim wget curl lazygit tmux
     (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })

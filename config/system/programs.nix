@@ -17,6 +17,7 @@
     fzf
     gcc
     gitleaks
+    gnome.gnome-keyring
     go
     go-task
     hyprshade
@@ -25,10 +26,10 @@
     kubectl-tree
     kubernetes-helm
     kustomize
-    gnome.gnome-keyring
-    # libsForQt5.kwallet
-    # libsForQt5.kwallet-pam
-    # libsForQt5.kwalletmanager
+    libsForQt5.qt5ct
+    libsForQt5.qtstyleplugin-kvantum
+    libsForQt5.qt5.qtgraphicaleffects
+    nextcloud-client
     polkit_gnome
     ripgrep
     sops

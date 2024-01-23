@@ -15,7 +15,6 @@
   # Import Program Configurations
   imports = [
     inputs.nix-colors.homeManagerModules.default
-    inputs.hyprland.homeManagerModules.default
     inputs.nixvim.homeManagerModules.nixvim
 
     # Enable &/ Configure Programs
@@ -45,14 +44,6 @@
   # Define Settings For Xresources
   xresources.properties = {
     "Xcursor.size" = 24;
-  };
-
-  # Create XDG Dirs
-  xdg = {
-    userDirs = {
-        enable = true;
-        createDirectories = true;
-    };
   };
 
   programs.home-manager.enable = true;

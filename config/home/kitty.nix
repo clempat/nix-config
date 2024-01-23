@@ -50,8 +50,6 @@
       inactive_tab_background #${config.colorScheme.colors.base08}
       inactive_tab_font_style bold
       tab_bar_background #${config.colorScheme.colors.base00}
-
-      map ctrl+f tmux-sessionizer
     '';
   };
 }

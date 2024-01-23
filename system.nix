@@ -1,17 +1,12 @@
-{ inputs, config, pkgs, username,
+{ config, pkgs, username,
   hostname, gitUsername, theLocale,
-  theTimezone, wallpaperDir, wallpaperGit, lib, deviceProfile, ... }:
+  theTimezone, wallpaperDir, wallpaperGit, lib, deviceProfile, theLCVariables, ... }:
 
 {
   imports =
     [
       ./hardware.nix
-      ./config/system/boot.nix
-      ./config/system/intel-opengl.nix
-      ./config/system/amd-opengl.nix
-      ./config/system/programs.nix
-      ./config/system/polkit.nix
-      ./config/system/services.nix
+      ./config/system
     ];
 
   # Enable Electron
@@ -22,7 +17,7 @@
   # Enable networking
   networking.hostName = "${hostname}"; # Define your hostname
   networking.networkmanager.enable = true;
-  systemd.services.NetworkManager-wait-online.enable = true;
+  programs.nm-applet.enable = true;
 
   # Set your time zone
   time.timeZone = "${theTimezone}";
@@ -34,15 +29,15 @@
   # Select internationalisation properties
   i18n.defaultLocale = "${theLocale}";
   i18n.extraLocaleSettings = {
-    LC_ADDRESS = "${theLocale}";
-    LC_IDENTIFICATION = "${theLocale}";
-    LC_MEASUREMENT = "${theLocale}";
-    LC_MONETARY = "${theLocale}";
-    LC_NAME = "${theLocale}";
-    LC_NUMERIC = "${theLocale}";
-    LC_PAPER = "${theLocale}";
-    LC_TELEPHONE = "${theLocale}";
-    LC_TIME = "${theLocale}";
+    LC_ADDRESS = "${theLCVariables}";
+    LC_IDENTIFICATION = "${theLCVariables}";
+    LC_MEASUREMENT = "${theLCVariables}";
+    LC_MONETARY = "${theLCVariables}";
+    LC_NAME = "${theLCVariables}";
+    LC_NUMERIC = "${theLCVariables}";
+    LC_PAPER = "${theLCVariables}";
+    LC_TELEPHONE = "${theLCVariables}";
+    LC_TIME = "${theLCVariables}";
   };
 
   # Define a user account.
@@ -50,7 +45,7 @@
     homeMode = "755";
     isNormalUser = true;
     description = "${gitUsername}";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "video" "audio" "onepassword" "docker" "input" ];
     packages = with pkgs; [];
   };
 
@@ -79,7 +74,7 @@
 
   programs.hyprland = {
     enable = true;
-    package = inputs.hyprland.packages.${pkgs.system}.hyprland;
+    xwayland.enable = true;
   };
 
   # Optimization settings and garbage collection automation
@@ -93,6 +88,7 @@
   };
 
   hardware.opengl.enable = lib.mkDefault true;
+  programs.dconf.enable = true;
 
   system.stateVersion = "23.11";
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
