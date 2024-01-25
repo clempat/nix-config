@@ -36,6 +36,7 @@
 
     plugins = {
       oil.enable = true;
+      neo-tree.enable = true;
       lint = {
         enable = true;
         lintersByFt = {
@@ -179,8 +180,26 @@
       {
         mode = "n";
         key = "-";
-        action = "reuire('oil).open()";
+        action = "<cmd>Oil<CR>";
         options.desc = "Open parent directory";
+      }
+      {
+        mode = "n";
+        key = "<leader>gg";
+        action = "<cmd>LazyGit<CR>";
+        options.desc = "Open lazygit";
+      }
+      {
+        mode = "n";
+        key = "<leader>ee";
+        action = "<cmd>Neotree toggle<CR>";
+        options.desc = "Toggle file explorer";
+      }
+      {
+        mode = "n";
+        key = "<leader>ef";
+        action = "<cmd>Neotree reveal<CR>";
+        options.desc = "Reveal file in explorer";
       }
     ];
 
@@ -229,7 +248,6 @@
       {
         plugin = lazygit-nvim;
         config = ''
-          lua vim.keymap.set("n", "<leader>gg", "<cmd>LazyGit<CR>");
         '';
       }
 

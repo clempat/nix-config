@@ -3,14 +3,60 @@
 {
   # Install Packages For The User
   home.packages = with pkgs; [
-    pkgs."${browser}" neofetch lolcat cmatrix htop btop libvirt
-    swww grim slurp lm_sensors unzip unrar gnome.file-roller
-    obsidian libnotify swaynotificationcenter rofi-wayland imv v4l-utils
-    ydotool cliphist wl-clipboard socat cowsay lsd pkg-config transmission-gtk mpv
-    gimp obs-studio kdenlive meson hugo gnumake ninja go
-    nodejs godot_4 rustup pavucontrol audacity
-    font-awesome symbola noto-fonts-color-emoji material-icons
-    brightnessctl swayidle swaylock-effects vim wget curl lazygit tmux
+    audacity
+    brightnessctl
+    btop
+    cliphist
+    cmatrix
+    cowsay
+    curl
+    font-awesome
+    gimp
+    gnome.file-roller
+    gnumake
+    go
+    godot_4
+    grim
+    htop
+    hugo
+    imv
+    kdenlive
+    lazygit
+    libnotify
+    libvirt
+    lm_sensors
+    lolcat
+    lsd
+    material-icons
+    meson
+    mpv
+    neofetch
+    ninja
+    nodejs
+    noto-fonts-color-emoji
+    obs-studio
+    obsidian
+    pavucontrol
+    pkg-config
+    pkgs."${browser}"
+    rofi-wayland
+    rustup
+    slurp
+    socat
+    swayidle
+    swaylock-effects
+    swaynotificationcenter
+    swww
+    symbola
+    tmux
+    transmission-gtk
+    unrar
+    unzip
+    v4l-utils
+    vim
+    wget
+    wl-clipboard
+    ydotool
     (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
 
     # Import Scripts
@@ -21,8 +67,12 @@
     (import ./../scripts/themechange.nix { inherit pkgs; inherit flakeDir; })
     (import ./../scripts/theme-selector.nix { inherit pkgs; })
     (import ./../scripts/tmux-sessionizer.nix { inherit pkgs; })
+    (import ./../scripts/kn.nix { inherit pkgs; })
 
   ] ++ (if (deviceProfile != "vm") then [
-    discord logseq spotify todoist-electron 
-  ] else []);
+    discord
+    logseq
+    spotify
+    todoist-electron
+  ] else [ ]);
 }
