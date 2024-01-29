@@ -3,6 +3,7 @@
 {
   imports = [
     ./programs/_1password.nix
+    ./programs/firefox.nix
   ];
 
   # List System Programs
@@ -26,6 +27,7 @@
     kubectl-tree
     kubernetes-helm
     kustomize
+    libsForQt5.okular
     libsForQt5.qt5ct
     libsForQt5.qtstyleplugin-kvantum
     libsForQt5.qt5.qtgraphicaleffects
@@ -33,5 +35,6 @@
     polkit_gnome
     ripgrep
     sops
+    tailscale-systray
   ];
 }

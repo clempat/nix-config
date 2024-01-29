@@ -1,6 +1,17 @@
-{ config, pkgs, username,
-  hostname, gitUsername, theLocale,
-  theTimezone, wallpaperDir, wallpaperGit, lib, deviceProfile, theLCVariables, ... }:
+{ config
+, pkgs
+, username
+, hostname
+, gitUsername
+, theLocale
+, theTimezone
+, wallpaperDir
+, wallpaperGit
+, lib
+, deviceProfile
+, theLCVariables
+, ...
+}:
 
 {
   imports =
@@ -46,7 +57,7 @@
     isNormalUser = true;
     description = "${gitUsername}";
     extraGroups = [ "networkmanager" "wheel" "video" "audio" "onepassword" "docker" "input" ];
-    packages = with pkgs; [];
+    packages = with pkgs; [ ];
   };
 
   # Allow unfree packages

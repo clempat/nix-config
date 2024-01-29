@@ -4,7 +4,7 @@
   services.xserver = {
     enable = true;
     layout = "${theKBDLayout}";
-    xkbVariant = "";
+    xkbVariant = "altgr-intl";
     libinput.enable = true;
     displayManager.sddm = {
       enable = true;
@@ -14,8 +14,9 @@
     };
   };
 
-  environment.systemPackages = let themes = pkgs.callPackage ../pkgs/sddm-sugar-dark.nix {}; in [ 
-    themes.sddm-sugar-dark 
-  ];
+  environment.systemPackages = let themes = pkgs.callPackage ../pkgs/sddm-sugar-dark.nix { }; in
+    [
+      themes.sddm-sugar-dark
+    ];
 }
 

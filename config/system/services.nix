@@ -34,6 +34,7 @@
   hardware.bluetooth.enable = true; # enables support for Bluetooth
   hardware.bluetooth.powerOnBoot = true; # powers up the default Bluetooth controller on boot
   services.blueman.enable = true;
+  services.tailscale.enable = true;
 
   services.gnome.gnome-keyring.enable = true;
   security.pam.services.swaylock = { };

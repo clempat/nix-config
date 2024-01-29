@@ -15,9 +15,15 @@ with lib; {
       concatStrings [
         ''
           monitor=,highres,auto,1
+
+          windowrule = workspace 1, class:(kitty)
+          windowrule = workspace 2, class:(firefox)
           windowrule = float, ^(steam)$
           windowrule = center, ^(steam)$
           windowrule = size 1080 900, ^(steam)$
+          windowrule = float,title:(Picture-in-Picture)
+          windowrule = move onscreen 100% 100%,title:(Picture-in-Picture)
+          windowrule = pin,title:(Picture-in-Picture)
           general {
             gaps_in = 6
             gaps_out = 8
@@ -96,8 +102,8 @@ with lib; {
           exec-once = waybar
           exec-once = swaync
           exec-once = wallsetter
-          exec-once = nextcloud
-          exec-once = 1password
+          exec-once = nextcloud --background
+          exec-once = 1password --silent
           exec-once = ${pkgs.swayidle}/bin/swayidle -w timeout 300 '${pkgs.swaylock}/bin/swaylock -f' timeout 600 '${pkgs.systemd}/bin/systemctl suspend' after-resume 'hyprctl dispatch dpms on' before-sleep '${pkgs.swaylock}/bin/swaylock -f && hyprctl dispatch dpms off'
           dwindle {
             pseudotile = true
@@ -169,6 +175,9 @@ with lib; {
           bind = ,XF86AudioLowerVolume,exec,wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
           bind = ,XF86MonBrightnessDown,exec,brightnessctl set 5%-
           bind = ,XF86MonBrightnessUp,exec,brightnessctl set +5%
+          # Move/resize windows with mainMod + LMB/RMB and dragging
+          bindm = ${modifier}, mouse:272, movewindow
+          bindm = ${modifier}, mouse:273, resizewindow
         ''
       ];
   };
