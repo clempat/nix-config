@@ -1,4 +1,4 @@
-{ pkgs, config, lib, browser, deviceProfile, ... }:
+{ pkgs, config, lib, browser, deviceProfile, theKBDLayout, theKBDVariant, ... }:
 
 let
   theme = config.colorScheme.colors;
@@ -34,7 +34,8 @@ with lib; {
             resize_on_border = true
           }
           input {
-            kb_layout = us
+            kb_layout = ${theKBDLayout}
+            kb_variant = ${theKBDVariant}
             kb_options=caps:super
             follow_mouse = 1
             touchpad {
@@ -104,7 +105,7 @@ with lib; {
           exec-once = wallsetter
           exec-once = nextcloud --background
           exec-once = 1password --silent
-          exec-once = ${pkgs.swayidle}/bin/swayidle -w timeout 300 '${pkgs.swaylock}/bin/swaylock -f' timeout 600 '${pkgs.systemd}/bin/systemctl suspend' after-resume 'hyprctl dispatch dpms on' before-sleep '${pkgs.swaylock}/bin/swaylock -f && hyprctl dispatch dpms off'
+          exec-once = swayidle -w timeout 720 'swaylock -f' timeout 800 'hyprctl dispatch dpms off' resume 'hyprctl dispatch dpms on' before-sleep 'swaylock -f -c 000000'
           dwindle {
             pseudotile = true
             preserve_split = true
@@ -178,6 +179,7 @@ with lib; {
           # Move/resize windows with mainMod + LMB/RMB and dragging
           bindm = ${modifier}, mouse:272, movewindow
           bindm = ${modifier}, mouse:273, resizewindow
+          bind = ${modifier}CTRL,l,exec,swaylock
         ''
       ];
   };

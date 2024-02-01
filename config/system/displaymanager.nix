@@ -1,10 +1,10 @@
-{ pkgs, config, theKBDLayout, ... }:
+{ pkgs, config, theKBDLayout, theKBDVariant, ... }:
 
 {
   services.xserver = {
     enable = true;
     layout = "${theKBDLayout}";
-    xkbVariant = "altgr-intl";
+    xkbVariant = "${theKBDVariant}";
     libinput.enable = true;
     displayManager.sddm = {
       enable = true;

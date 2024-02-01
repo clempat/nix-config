@@ -20,7 +20,7 @@
     };
     theme = {
       name = "${config.colorScheme.slug}";
-      package = gtkThemeFromScheme {scheme = config.colorScheme;};
+      package = gtkThemeFromScheme { scheme = config.colorScheme; };
     };
     iconTheme = {
       name = "Papirus-Dark";
@@ -31,10 +31,10 @@
       package = pkgs.bibata-cursors;
     };
     gtk3.extraConfig = {
-      gtk-application-prefer-dark-theme=1;
+      gtk-application-prefer-dark-theme = 1;
     };
     gtk4.extraConfig = {
-      gtk-application-prefer-dark-theme=1;
+      gtk-application-prefer-dark-theme = 1;
     };
   };
 
@@ -42,9 +42,9 @@
   qt = {
     enable = true;
     platformTheme = "gtk";
-    style = {
-        name = "adwaita-dark";
-        package = pkgs.adwaita-qt;
-    };
+    # style = {
+    #   name = "adwaita-dark";
+    #   package = pkgs.adwaita-qt;
+    # };
   };
 }
