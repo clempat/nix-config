@@ -1,68 +1,85 @@
 {
-  description = "My basic flake";
+  description = "ZaneyOS";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11";
-    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-
-    home-manager = {
-      # User Environment Manager
-      url = "github:nix-community/home-manager/release-23.11";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    hyprland = {
-      # Official Hyprland Flake
-      url = "github:hyprwm/Hyprland"; # Requires "hyprland.nixosModules.default" to be added the host modules
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
-
-    nur = {
-      # NUR Community Packages
-      url = "github:nix-community/NUR"; # Requires "nur.nixosModules.nur" to be added to the host modules
-    };
-
-    plasma-manager = {
-      url = "github:pjones/plasma-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.home-manager.follows = "nixpkgs";
-    };
-
-    darwin = {
-      # MacOS Package Management
-      url = "github:lnl7/nix-darwin/master";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    nixvim = {
-      # Neovim
-      url = "github:nix-community/nixvim/nixos-23.11";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    home-manager.url = "github:nix-community/home-manager/release-23.11";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    nix-colors.url = "github:misterio77/nix-colors";
+    nur.url = "github:nix-community/NUR";
+    nixvim.url = "github:nix-community/nixvim/nixos-23.11";
+    nixvim.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = inputs @ { self, nixpkgs, nixpkgs-unstable, home-manager, plasma-manager, hyprland, nur, darwin, nixvim, ... }:
+  outputs = inputs@{ nixpkgs, home-manager, nur, ... }:
     let
-      user = "clement";
+      system = "x86_64-linux";
+
+      # User Variables
+      hostname = "tuxedo";
+      username = "clement";
+      gitUsername = "Clement Patout";
+      gitEmail = "clement.patout@gmail.com";
+      theLocale = "en_US.UTF-8";
+      theLCVariables = "fr_FR.UTF-8";
+      theTimezone = "Europe/Berlin";
+      theKBDLayout = "us";
+      theKBDVariant = "altgr-intl";
+      theme = "dracula";
+      browser = "firefox";
+      wallpaperGit = "https://gitlab.com/Zaney/my-wallpapers.git";
+      wallpaperDir = "/home/${username}/Pictures/Wallpapers";
+      flakeDir = "/home/${username}/workspace/github/Zaney/zaneyos";
+      # Configuration option profile
+      # default options amd-desktop, intel-laptop, vm (WIP)
+      deviceProfile = "intel-laptop";
+
+      pkgs = import nixpkgs {
+        inherit system;
+        overlays = [
+          nur.overlay
+        ];
+        config = {
+          allowUnfree = true;
+        };
+      };
     in
     {
-
-      nixosConfigurations = (
-        import ./systems/nixos {
-          inherit (nixpkgs) lib;
-          inherit inputs nixpkgs nixpkgs-unstable user home-manager plasma-manager hyprland nur nixvim;
-        }
-      );
-
-
-      darwinConfigurations = (
-        # Darwin Configurations
-        import ./systems/macos {
-          inherit (nixpkgs) lib;
-          inherit inputs nixpkgs nixpkgs-unstable home-manager darwin user nixvim;
-        }
-      );
-
+      nixosConfigurations = {
+        "${hostname}" = nixpkgs.lib.nixosSystem {
+          specialArgs = {
+            inherit system; inherit inputs;
+            inherit username; inherit hostname;
+            inherit gitUsername; inherit theTimezone;
+            inherit gitEmail; inherit theLocale;
+            inherit wallpaperDir; inherit wallpaperGit;
+            inherit deviceProfile; inherit theKBDLayout;
+            inherit theLCVariables; inherit theKBDVariant;
+          };
+          modules = [
+            ./system.nix
+            nur.nixosModules.nur
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.extraSpecialArgs = {
+                inherit username;
+                inherit gitUsername; inherit gitEmail;
+                inherit inputs; inherit theme;
+                inherit browser; inherit wallpaperDir;
+                inherit wallpaperGit; inherit flakeDir;
+                inherit deviceProfile; inherit theKBDLayout;
+                inherit (inputs.nix-colors.lib-contrib { inherit pkgs; }) gtkThemeFromScheme;
+                inherit theLCVariables; inherit theKBDVariant;
+              };
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.users.${username} = import ./home.nix;
+              nixpkgs.overlays = [
+                nur.overlay
+              ];
+            }
+          ];
+        };
+      };
     };
-
 }
