@@ -37,6 +37,7 @@
     plugins = {
       oil.enable = true;
       neo-tree.enable = true;
+      fugitive.enable = true;
       lint = {
         enable = true;
         lintersByFt = {
