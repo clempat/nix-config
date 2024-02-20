@@ -15,6 +15,7 @@ with lib; {
       concatStrings [
         ''
           monitor=,highres,auto,1
+          monitor=desc:Dell Inc. DELL U3415W F1T1W0170CPL,preferred,-2280x0, 1
 
           windowrule = workspace 1, class:(kitty)
           windowrule = workspace 2, class:(firefox)

@@ -9,6 +9,7 @@
     nur.url = "github:nix-community/NUR";
     nixvim.url = "github:nix-community/nixvim/nixos-23.11";
     nixvim.inputs.nixpkgs.follows = "nixpkgs";
+    hyprland.url = "github:hyprwm/Hyprland";
   };
 
   outputs = inputs@{ nixpkgs, home-manager, nur, ... }:

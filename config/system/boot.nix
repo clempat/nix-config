@@ -6,6 +6,6 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   # This is for OBS Virtual Cam Support - v4l2loopback setup
-  boot.kernelModules = [ "v4l2loopback" ];
+  boot.kernelModules = [ "v4l2loopback" "sg" ];
   boot.extraModulePackages = [ config.boot.kernelPackages.v4l2loopback ];
 }

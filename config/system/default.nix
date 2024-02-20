@@ -9,6 +9,8 @@
     ./polkit.nix
     ./programs.nix
     ./services.nix
+    ./flatpak.nix
+    ./logitech.nix
   ];
 }
 

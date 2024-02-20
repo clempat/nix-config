@@ -17,6 +17,7 @@
     go
     godot_4
     grim
+    handbrake
     htop
     hugo
     imv
@@ -27,6 +28,7 @@
     lm_sensors
     lolcat
     lsd
+    makemkv
     material-icons
     meson
     mpv
