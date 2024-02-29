@@ -6,10 +6,12 @@
   services.fstrim.enable = true;
   xdg.portal = {
     enable = true;
+    config = {
+      common.default = "gtk";
+    };
     extraPortals = [
       pkgs.xdg-desktop-portal-gtk
       # pkgs.xdg-desktop-portal-hyprland
-      pkgs.xdg-desktop-portal
     ];
     configPackages = [
       pkgs.xdg-desktop-portal-gtk
@@ -44,5 +46,11 @@
   # security.pam.services.gdm.enableKwallet = true;
   # security.pam.services.sddm.enableKwallet = true;
   # security.pam.services.login.enableKwallet = true;
+  security.pam.services.swaylock = {
+    text = ''
+      auth include login
+    '';
+  };
+
 }
 

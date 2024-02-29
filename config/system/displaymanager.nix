@@ -17,6 +17,7 @@
   environment.systemPackages = let themes = pkgs.callPackage ../pkgs/sddm-sugar-dark.nix { }; in
     [
       themes.sddm-sugar-dark
+      pkgs.libsForQt5.qt5.qtgraphicaleffects
     ];
 }
 

@@ -1,7 +1,17 @@
-{ config, pkgs, inputs, username,
-  gitUsername, gitEmail, gtkThemeFromScheme,
-  theme, browser, wallpaperDir, wallpaperGit,
-  flakeDir, ... }:
+{ config
+, pkgs
+, inputs
+, username
+, gitUsername
+, gitEmail
+, gtkThemeFromScheme
+, theme
+, browser
+, wallpaperDir
+, wallpaperGit
+, flakeDir
+, ...
+}:
 
 {
   # Home Manager Settings
@@ -33,6 +43,7 @@
     ./config/home/_1password.nix
     ./config/home/tmux.nix
     ./config/home/neovim.nix
+    ./config/home/atuin.nix
 
     # Install Programs & Scripts For User
     ./config/home/packages.nix

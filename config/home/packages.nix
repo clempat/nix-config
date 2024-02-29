@@ -6,6 +6,7 @@
     audacity
     brightnessctl
     btop
+    bottles
     cliphist
     cmatrix
     cowsay
@@ -38,9 +39,11 @@
     noto-fonts-color-emoji
     obs-studio
     obsidian
+    onlyoffice-bin
     pavucontrol
     pkg-config
     pkgs."${browser}"
+    python311Packages.pyvips
     rofi-wayland
     rustup
     slurp
@@ -57,6 +60,7 @@
     v4l-utils
     vim
     wget
+    winetricks
     wl-clipboard
     ydotool
     (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
@@ -72,6 +76,7 @@
     (import ./../scripts/theme-selector.nix { inherit pkgs; })
     (import ./../scripts/tmux-sessionizer.nix { inherit pkgs; })
     (import ./../scripts/kn.nix { inherit pkgs; })
+    (import ./../scripts/nvidia-offload.nix { inherit pkgs; })
 
   ] ++ (if (deviceProfile != "vm") then [
     discord

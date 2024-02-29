@@ -30,11 +30,12 @@
     libsForQt5.okular
     libsForQt5.qt5ct
     libsForQt5.qtstyleplugin-kvantum
-    libsForQt5.qt5.qtgraphicaleffects
     nextcloud-client
     polkit_gnome
+    prettierd
     ripgrep
     sops
     tailscale-systray
+    teams-for-linux
   ];
 }

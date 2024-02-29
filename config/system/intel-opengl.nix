@@ -1,13 +1,4 @@
 { pkgs, config, lib, deviceProfile, ... }:
-let
-  nvidia-offload = pkgs.writeShellScriptBin "nvidia-offload" ''
-    export __NV_PRIME_RENDER_OFFLOAD=1
-    export __NV_PRIME_RENDER_OFFLOAD_PROVIDER=NVIDIA-G0
-    export __GLX_VENDOR_LIBRARY_NAME=nvidia
-    export __VK_LAYER_NV_optimus=NVIDIA_only
-    exec "$@"
-  '';
-in
 lib.mkIf ("${deviceProfile}" == "intel-laptop") {
   nixpkgs.config.packageOverrides = pkgs: {
     vaapiIntel = pkgs.vaapiIntel.override { enableHybridCodec = true; };
@@ -21,22 +12,17 @@ lib.mkIf ("${deviceProfile}" == "intel-laptop") {
       vaapiIntel
       vaapiVdpau
       libvdpau-va-gl
-      nvidia-vaapi-driver
     ];
     driSupport = true;
     driSupport32Bit = true;
   };
 
-  # Nvidia
-  lib.mkMerge = {
-    environment.systemPackages = [
-      nvidia-offload
-    ];
-  };
+  services.xserver.videoDrivers = [ "nvidia" ];
+
   hardware.nvidia = {
     modesetting.enable = true;
     powerManagement.enable = false;
-    powerManagement.finegrained = true;
+    powerManagement.finegrained = false;
     open = false;
     nvidiaSettings = true;
 

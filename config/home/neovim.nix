@@ -38,6 +38,7 @@
       oil.enable = true;
       neo-tree.enable = true;
       fugitive.enable = true;
+      which-key.enable = true;
       lint = {
         enable = true;
         lintersByFt = {
@@ -58,13 +59,33 @@
       };
       lsp = {
         enable = true;
+        keymaps.diagnostic = {
+          "<leader>j" = "goto_next";
+          "<leader>k" = "goto_prev";
+        };
+        keymaps.lspBuf = {
+          # "gR" = "references";
+          # "gr" = "references";
+          # "gD" = "definitions";
+          # "gd" = "definitions";
+          # "K" = "hover";
+          # "<C-k>" = "signature_help";
+          # "<leader>rn" = "rename";
+          # "<leader>ca" = "code_action";
+          # "<leader>cf" = "formatting";
+          # "<leader>cd" = "document_diagnostics";
+          # "<leader>cw" = "workspace_diagnostics";
+        };
         servers = {
+          gopls.enable = true;
           tsserver.enable = true;
           lua-ls = {
             enable = true;
             settings.telemetry.enable = false;
           };
           rnix-lsp.enable = true;
+          terraformls.enable = true;
+          html.enable = true;
         };
       };
       lsp-format.enable = true;
@@ -74,17 +95,17 @@
           lspFallback = true;
         };
         formattersByFt = {
-          javascript = [ "prettier" ];
-          typescript = [ "prettier" ];
-          javascriptreact = [ "prettier" ];
-          typescriptreact = [ "prettier" ];
-          svelte = [ "prettier" ];
-          css = [ "prettier" ];
-          html = [ "prettier" ];
-          json = [ "prettier" ];
-          yaml = [ "prettier" ];
-          markdown = [ "prettier" ];
-          graphql = [ "prettier" ];
+          javascript = [ "prettierd" ];
+          typescript = [ "prettierd" ];
+          javascriptreact = [ "prettierd" ];
+          typescriptreact = [ "prettierd" ];
+          svelte = [ "prettierd" ];
+          css = [ "prettierd" ];
+          html = [ "prettierd" ];
+          json = [ "prettierd" ];
+          yaml = [ "prettierd" ];
+          markdown = [ "prettierd" ];
+          graphql = [ "prettierd" ];
           lua = [ "stylua" ];
           python = [ "isort" "black" ];
         };
