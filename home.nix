@@ -25,7 +25,6 @@
   # Import Program Configurations
   imports = [
     inputs.nix-colors.homeManagerModules.default
-    inputs.nixvim.homeManagerModules.nixvim
 
     # Enable &/ Configure Programs
     ./config/home/git.nix
