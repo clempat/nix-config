@@ -1,3 +1,3 @@
-# ZaneyOS 🟰 Best ❄️ NixOS Configs
+# Nix Config
 
-This configuration is based on the awesome [ZaneyOS Configuration](https://gitlab.com/Zaney/zaneyos)
+WIP
