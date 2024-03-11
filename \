@@ -1,0 +1,83 @@
+{ inputs, ... }:
+let
+  stateVersion = "23.11";
+  defaultGit = {
+    extraConfig.github.user = "clempat";
+    userEmail = "2178406+clempat@users.noreply.github.com";
+    userName = "Clément Patout";
+  };
+  defaultUsername = "clement";
+in {
+
+  geist-mono = { lib, stdenvNoCC, fetchzip, }:
+    stdenvNoCC.mkDerivation {
+      pname = "geist-mono";
+      version = "3.1.1";
+
+      src = fetchzip {
+        hash = "sha256-GzWly6hGshy8DYZNweejvPymcxQSIU7oGUmZEhreMCM=";
+        stripRoot = false;
+        url =
+          "https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/GeistMono.zip";
+      };
+
+      postInstall = ''
+        install -Dm444 *.otf -t $out/share/fonts
+      '';
+    };
+
+  mkDarwin = { hostname, git ? defaultGit, username ? defaultUsername, system }:
+    inputs.nix-darwin.lib.darwinSystem {
+      inherit system;
+      specialArgs = {
+        inherit self inputs outputs stateVersion hostname desktop username git
+          isDarwin;
+      };
+      modules = [
+        (import ../host/darwin/configuration.nix { inherit username; })
+
+        inputs.home-manager.darwinModules.home-manager
+        {
+          home-manager.useGlobalPkgs = true;
+          home-manager.useUserPackages = true;
+          home-manager.users.${username} = { pkgs, ... }: {
+            imports = [ ../home ];
+          };
+        }
+      ];
+    };
+
+  # Helper function for generating home-manager configs
+  mkHome =
+    { git ? defaultGit, hostname, username ? defaultUsername, desktop ? null }:
+    inputs.home-manager.lib.homeManagerConfiguration {
+      pkgs = inputs.unstable.legacyPackages.x86_64-linux;
+      extraSpecialArgs = {
+        inherit self inputs outputs stateVersion hostname desktop username git
+          isDarwin;
+      };
+      modules = [
+        inputs.hypridle.homeManagerModules.default
+        inputs.hyprlock.homeManagerModules.default
+        (homeBase { inherit git; })
+        (homeKitty { })
+        (homeYabai { })
+        (homeTmux { })
+        (homeFireFox { })
+      ];
+    };
+
+  # Helper function for generating host configs
+  mkHost = { hostname, desktop ? null, pkgsInput ? inputs.unstable }:
+    pkgsInput.lib.nixosSystem {
+      specialArgs = {
+        inherit self inputs outputs stateVersion username hostname desktop;
+      };
+      modules = [
+        inputs.agenix.nixosModules.default
+        inputs.lanzaboote.nixosModules.lanzaboote
+        inputs.libations.nixosModules.libations
+        ../host
+      ];
+    };
+}

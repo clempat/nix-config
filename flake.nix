@@ -1,43 +1,87 @@
 {
-  description = "My Nixos configuration Linux/Darwin";
-
+  description = "clement's nixos configuration";
   inputs = {
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
-    home-manager.url = "github:nix-community/home-manager";
-    nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11";
+    unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+
+    nix-darwin.inputs.nixpkgs.follows = "unstable";
     nix-darwin.url = "github:LnL7/nix-darwin";
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nix-colors.url = "github:misterio77/nix-colors";
-    nur.url = "github:nix-community/NUR";
+
+    hypridle.url = "github:hyprwm/hypridle";
+    hypridle.inputs.nixpkgs.follows = "unstable";
     hyprland.url = "github:hyprwm/Hyprland";
+    hyprland.inputs.nixpkgs.follows = "unstable";
+    hyprland-contrib.url = "github:hyprwm/contrib";
+    hyprland-contrib.inputs.nixpkgs.follows = "unstable";
+    hyprlock.url = "github:hyprwm/hyprlock";
+    hyprlock.inputs.nixpkgs.follows = "unstable";
+
+    disko.url = "github:nix-community/disko";
+    disko.inputs.nixpkgs.follows = "unstable";
+
+    lanzaboote.url = "github:nix-community/lanzaboote";
+    lanzaboote.inputs.nixpkgs.follows = "unstable";
+
+    home-manager.url = "github:nix-community/home-manager";
+    home-manager.inputs.nixpkgs.follows = "unstable";
+
+    nur.url = "github:nix-community/NUR";
     clement-nvim.url = "github:clempat/nvim-config";
     tmux-sessionx.url = "github:omerxx/tmux-sessionx";
   };
 
-  outputs = inputs@{ self, flake-parts, nixpkgs, home-manager, nur, ... }:
+  outputs = { self, nixpkgs, unstable, ... }@inputs:
     let
-      mkDarwin = self.lib.mkDarwin { };
-      mkNixos = self.lib.mkNixos { };
-    in flake-parts.lib.mkFlake { inherit inputs; } {
-      flake = {
-        darwinConfigurations = {
-          aarch64 = mkDarwin { system = "aarch64-darwin"; };
-          x86_64 = mkDarwin { system = "x86_64-darwin"; };
-        };
+      inherit (self) outputs;
+      stateVersion = "23.11";
+      username = "clement";
 
-        lib = import ./lib { inherit inputs; };
+      libx =
+        import ./lib { inherit self inputs outputs stateVersion username; };
+    in {
 
-        nixosConfiguration = { x86_64 = mkNixos { system = "x86_64-linux"; }; };
-      };
-
-      systems =
-        [ "aarch64-darwin" "aarch64-linux" "x86_64-darwin" "x86_64-linux" ];
-
-      perSystem = { config, self', inputs', pkgs, system, ... }: {
-        packages = {
-          geist-mono =
-            self.lib.geist-mono { inherit (pkgs) fetchzip lib stdenvNoCC; };
+      darwinConfigurations = let username = "clementpatout";
+      in {
+        "${username}@mondo" = libx.mkDarwin {
+          inherit username;
+          hostname = "MONDO-1325.local";
+          system = "aarch64-darwin";
         };
       };
+
+      # nix build .#homeConfigurations."clement@tuxedo".activationPackage
+      homeConfigurations = {
+        # Desktop machines
+        "${username}@tuxedo" = libx.mkHome {
+          hostname = "tuxedo";
+          desktop = "hyprland";
+        };
+      };
+
+      # nix build .#nixosConfigurations.clement.config.system.build.toplevel
+      nixosConfigurations = {
+        # Desktop machines
+        tuxedo = libx.mkHost {
+          hostname = "tuxedo";
+          desktop = "hyprland";
+        };
+      };
+
+      # Custom packages; acessible via 'nix build', 'nix shell', etc
+      packages = libx.forAllSystems (system:
+        let pkgs = unstable.legacyPackages.${system};
+        in import ./pkgs { inherit pkgs; });
+
+      # Custom overlays
+      overlays = import ./overlays { inherit inputs; };
+
+      # Devshell for bootstrapping
+      # Accessible via 'nix develop' or 'nix-shell' (legacy)
+      devShells = libx.forAllSystems (system:
+        let pkgs = unstable.legacyPackages.${system};
+        in import ./shell.nix { inherit pkgs; });
+
+      formatter = libx.forAllSystems (system: self.packages.${system}.nixfmt);
     };
 }

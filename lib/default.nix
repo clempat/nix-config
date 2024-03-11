@@ -1,14 +1,14 @@
-{ inputs, ... }:
+{ self, inputs, outputs, ... }:
 let
+  stateVersion = "23.11";
   defaultGit = {
     extraConfig.github.user = "clempat";
     userEmail = "2178406+clempat@users.noreply.github.com";
     userName = "Clément Patout";
   };
-  defaultUsername = "clementpatout";
-  homeManagerNixos = import ./nixos/home-manager.nix { inherit inputs; };
-  homeManagerShared = import ./shared/home-manager.nix { inherit inputs; };
+  defaultUsername = "clement";
 in {
+
   geist-mono = { lib, stdenvNoCC, fetchzip, }:
     stdenvNoCC.mkDerivation {
       pname = "geist-mono";
@@ -26,51 +26,61 @@ in {
       '';
     };
 
-  mkDarwin = { git ? defaultGit, username ? defaultUsername, }:
-    { system }:
-    inputs.nix-darwin.lib.darwinSystem {
-      inherit system;
-      modules = [
-        (import ./darwin/configuration.nix { inherit username; })
+  mkDarwin = let isDarwin = true;
+  in { hostname, git ? defaultGit, username ? defaultUsername, system
+  , desktop ? null }:
+  inputs.nix-darwin.lib.darwinSystem {
+    inherit system;
+    specialArgs = {
+      inherit self inputs outputs stateVersion hostname username git desktop
+        isDarwin;
+    };
+    modules = [
+      (import ../host/darwin/configuration.nix)
 
-        inputs.home-manager.darwinModules.home-manager
-        {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          home-manager.users.${username} = { pkgs, ... }: {
-            imports = [ (homeManagerShared { inherit git; }) ];
-          };
-        }
+      inputs.home-manager.darwinModules.home-manager
+      {
+        home-manager.useGlobalPkgs = true;
+        home-manager.useUserPackages = true;
+        home-manager.extraSpecialArgs = {
+          inherit self inputs isDarwin desktop git stateVersion outputs username
+            system;
+        };
+        home-manager.users.${username} = import ../home;
+      }
+    ];
+  };
+
+  # Helper function for generating home-manager configs
+  mkHome =
+    { hostname, username ? defaultUsername, desktop ? null, git ? defaultGit }:
+    inputs.home-manager.lib.homeManagerConfiguration {
+      pkgs = inputs.unstable.legacyPackages.x86_64-linux;
+      extraSpecialArgs = {
+        inherit self inputs outputs stateVersion hostname desktop username git;
+      };
+      modules = [
+        inputs.hypridle.homeManagerModules.default
+        inputs.hyprlock.homeManagerModules.default
+        ../home
       ];
     };
 
-  mkNixos = { desktop ? true, git ? defaultGit, machine ? "tuxedo"
-    , username ? defaultUsername, }:
-    { system }:
-    inputs.nixpkgs.lib.nixosSystem {
-      inherit system;
-      modules = [
-        # Scripts
-        (import ./../scripts/nvidia-offload.nix)
-        (import ./../scripts/theme-selector.nix)
-
-        # Configuration
-        (import ./nixos/hardware/${machine}/${system}.nix)
-        (import ./nixos/hardware/${machine}/boot.nix)
-        (import ./nixos/configuration.nix { inherit inputs desktop username; })
-        (import ./nixos/configuration-desktop.nix { inherit username; })
-
-        inputs.home-manager.nixosModules.home-manager
-        {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          home-manager.users."${username}" = { pkgs, ... }: {
-            imports = [
-              (homeManagerNixos { inherit desktop; })
-              (homeManagerShared { inherit git; })
-            ];
-          };
-        }
-      ];
+  # Helper function for generating host configs
+  mkHost = { hostname, desktop ? null, pkgsInput ? inputs.unstable
+    , username ? defaultUsername }:
+    pkgsInput.lib.nixosSystem {
+      specialArgs = {
+        inherit self inputs outputs stateVersion username hostname desktop;
+      };
+      modules = [ inputs.lanzaboote.nixosModules.lanzaboote ../host/nixos ];
     };
+
+  forAllSystems = inputs.nixpkgs.lib.genAttrs [
+    "aarch64-linux"
+    "i686-linux"
+    "x86_64-linux"
+    "aarch64-darwin"
+    "x86_64-darwin"
+  ];
 }
