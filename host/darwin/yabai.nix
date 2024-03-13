@@ -33,6 +33,8 @@
             yabai -m rule --add app="^Home Assistant$" sticky=on layer=above manage=off
             yabai -m rule --add app="^Cypress$" sticky=on layer=above manage=off
             yabai -m rule --add subrole="^AXSystemDialog$" sticky=on layer=above manage=off
+            yabai -m rule --add app="^Arc$" title="^Space.*$" manage=off layer=below
+            yabai -m rule --add app="^Arc$" title="^$" manage=off layer=below
 
       # yabai -m config external_bar                 all:27:0
             yabai -m config mouse_follows_focus          off

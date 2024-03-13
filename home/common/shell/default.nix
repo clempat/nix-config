@@ -6,14 +6,16 @@
     ./direnv.nix
     ./fzf.nix
     ./git.nix
+    ./gpg.nix
     ./lazygit.nix
     ./neofetch.nix
     ./neovim.nix
     ./nnn.nix
     ./starship.nix
+    ./ssh.nix
     ./tmux.nix
     ./zsh.nix
-  ] ++ lib.optional (!isDarwin) ./xdg.nix ++ lib.optional (!isDarwin) ./gpg.nix;
+  ] ++ lib.optional (!isDarwin) ./xdg.nix;
 
   programs = {
     eza.enable = true;
@@ -23,4 +25,11 @@
   };
 
   home.packages = with pkgs; [ ];
+
+  home.sessionVariables = {
+    EDITOR = "nvim";
+    LANG = "en_US.UTF-8";
+    LC_ALL = "en_US.UTF-8";
+    LC_CTYPE = "en_US.UTF-8";
+  };
 }

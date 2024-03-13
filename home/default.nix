@@ -11,7 +11,9 @@
 
     ./common/shell
   ] ++ lib.optional (builtins.isString desktop) ./common/desktop
-    ++ lib.optional (isDarwin) ./common/dev;
+    ++ lib.optional (isDarwin) ./common/dev
+    ++ lib.optional (isDarwin) ./common/desktop/kitty.nix;
+  # ++ lib.optional (isDarwin) ./common/desktop/firefox;
 
   home = {
     inherit username stateVersion;

@@ -8,5 +8,6 @@ _: {
   };
 
   programs.ssh.startAgent = true;
+
   networking.firewall.allowedTCPPorts = [ 22 ];
 }

@@ -35,7 +35,7 @@
       cat = "bat";
       dr = "docker container run --interactive --rm --tty";
       lg = "lazygit";
-      ll = if isDarwin then "n" else "n -P K";
+      # ll = if isDarwin then "n" else "n -P K";
       nb = "nix build --json --no-link --print-build-logs";
       s = ''doppler run --config "nixos" --project "$(whoami)"'';
       wt = "git worktree";

@@ -23,7 +23,8 @@
       upgrade = false;
       cleanup = "zap";
     };
-    taps = [ "homebrew/cask" "mrkai77/cask" ];
+    taps =
+      [ "homebrew/cask" "mrkai77/cask" "heroku/brew" "homebrew/cask-fonts" ];
     brews = [ "pngpaste" ];
     masApps = {
       "tailscale" = 1475387142;
@@ -38,11 +39,20 @@
       "docker"
       "dropzone"
       "elgato-stream-deck"
+      "fantastical"
+      "font-geist-mono"
+      "font-geist"
+      "font-hack-nerd-font"
+      "font-hack"
+      "font-inter"
+      "font-jetbrains-mono-nerd-font"
+      "font-jetbrains-mono"
+      "font-roboto"
       "firefox"
       "home-assistant"
       "kitty"
       "logi-options-plus"
-      "logitech-g-hub"
+      # "logitech-g-hub"
       "logseq"
       "loop"
       "obs"
@@ -58,6 +68,7 @@
     ];
   };
 
+  # Need to add `defaults write com.apple.WindowManager EnableStandardClickToShowDesktop -bool false`
   system = { # Global macOS System Settings
 
     defaults = {

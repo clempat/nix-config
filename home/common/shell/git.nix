@@ -1,8 +1,21 @@
-{ pkgs, git, ... }: {
+{ pkgs, git, isDarwin, config, ... }: {
 
   home.packages = with pkgs; [ gh ];
 
   programs.git = pkgs.lib.recursiveUpdate git {
+    iniContent.gpg = {
+      format = "ssh";
+      ssh = { program = config.programs.git.signing.gpgPath; };
+    };
+    signing = {
+      key =
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOR4x6DZqrgy8cuxcU/2Zvjx8664hrAK+MgChuuKvbYJ";
+      signByDefault = true;
+      gpgPath = if isDarwin then
+        "/Applications/1Password.app/Contents/MacOS/op-ssh-sign"
+      else
+        "${pkgs._1password-gui}/bin/op-ssh-sign";
+    };
     delta = {
       enable = true;
       options = {
@@ -52,12 +65,6 @@
       pull.ff = "only";
       pull.rebase = "true";
       gpg.format = "ssh";
-      "ssh".program = "${pkgs._1password-gui}/bin/op-ssh-sign";
-      signing = {
-        key =
-          "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOR4x6DZqrgy8cuxcU/2Zvjx8664hrAK+MgChuuKvbYJ";
-        signByDefault = true;
-      };
     };
 
   };
