@@ -1,9 +1,9 @@
-{ pkgs, config, ... }:
+{ pkgs, config, username, ... }:
 let
   ifExists = groups:
     builtins.filter (group: builtins.hasAttr group config.users.groups) groups;
 in {
-  users.users.jon = {
+  users.users.${username} = {
     isNormalUser = true;
     shell = pkgs.zsh;
     extraGroups = [ "audio" "networkmanager" "users" "video" "wheel" ]
@@ -17,5 +17,10 @@ in {
   };
 
   # This is a workaround for not seemingly being able to set $EDITOR in home-manager
-  environment.sessionVariables = { EDITOR = "nvim"; };
+  environment.sessionVariables = {
+    EDITOR = "nvim";
+    NODE_VERSIONS = "$HOME/.nvm/versions/node";
+    GDAL_LIBRARY_PATH = "${pkgs.gdal}/lib/libgdal.dylib";
+    GEOS_LIBRARY_PATH = "${pkgs.geos}/lib/libgeos_c.dylib";
+  };
 }

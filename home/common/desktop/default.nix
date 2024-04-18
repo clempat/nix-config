@@ -5,7 +5,8 @@
     ../dev
 
     ./firefox
-    ./kitty.nix
+    ./kitty
+    ./alacritty.nix
     ./gtk.nix
     ./qt.nix
     ./xdg.nix

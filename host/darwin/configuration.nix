@@ -23,12 +23,26 @@
       upgrade = false;
       cleanup = "zap";
     };
-    taps =
-      [ "homebrew/cask" "mrkai77/cask" "heroku/brew" "homebrew/cask-fonts" ];
-    brews = [ "pngpaste" ];
+    taps = [ "mrkai77/cask" "heroku/brew" "homebrew/cask-fonts" ];
+    brews = [
+      "pngpaste"
+
+      # TODO: Move this to backend flake
+      # "gdal"
+      "libgeoip"
+      "libxml2"
+      "mailhog"
+      "nvm"
+      "pkg-config"
+      "shellcheck"
+      "xmlsec1"
+    ];
     masApps = {
       "tailscale" = 1475387142;
       "paste" = 967805235;
+      "toggl" = 1291898086;
+      "timery" = 1425368544;
+      "drafts" = 1435957248;
     };
     casks = [
       "1password"
@@ -36,35 +50,41 @@
       "arc"
       "bartender"
       "cleanshot"
-      "docker"
+      # "docker" # Changed for orbstack
       "dropzone"
       "elgato-stream-deck"
       "fantastical"
-      "font-geist-mono"
-      "font-geist"
-      "font-hack-nerd-font"
-      "font-hack"
-      "font-inter"
-      "font-jetbrains-mono-nerd-font"
-      "font-jetbrains-mono"
-      "font-roboto"
+      "figma"
       "firefox"
+      "font-geist"
+      "font-geist-mono"
+      "font-geist-mono-nerd-font"
+      "font-hack"
+      "font-hack-nerd-font"
+      "font-inter"
+      "font-jetbrains-mono"
+      "font-jetbrains-mono-nerd-font"
+      "font-roboto"
       "home-assistant"
       "kitty"
       "logi-options-plus"
-      # "logitech-g-hub"
       "logseq"
       "loop"
+      "nextcloud"
       "obs"
       "obsidian"
+      "ollama"
+      "orbstack"
       "pgadmin4"
       "raindropio"
       "raycast"
       "sequel-ace"
       "sizzy"
+      "spotify"
       "todoist"
       "utm"
       "warp"
+      # "logitech-g-hub"
     ];
   };
 

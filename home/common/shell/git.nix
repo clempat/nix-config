@@ -1,6 +1,6 @@
 { pkgs, git, isDarwin, config, ... }: {
 
-  home.packages = with pkgs; [ gh ];
+  home.packages = with pkgs; [ gh gh-dash ];
 
   programs.git = pkgs.lib.recursiveUpdate git {
     iniContent.gpg = {
@@ -65,6 +65,8 @@
       pull.ff = "only";
       pull.rebase = "true";
       gpg.format = "ssh";
+      # issues with lazyvim
+      # remote.origin.fetch = "+refs/heads/*:refs/remotes/origin/*";
     };
 
   };

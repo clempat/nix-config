@@ -5,10 +5,12 @@
     k9s
     ripgrep
     postman
+    wget
 
     # Import Scripts
     (import ./../../../scripts/tmux-sessionizer.nix { inherit pkgs; })
     (import ./../../../scripts/kn.nix { inherit pkgs; })
+    (import ./../../../scripts/clone-for-worktrees.nix { inherit pkgs; })
 
     # Container tooling
     dive
@@ -25,10 +27,9 @@
     # Nix tooling
     deadnix
     nix-init
-    nixfmt
+    nixfmt-classic
     nixpkgs-fmt
     nurl
-    rnix-lsp
     statix
 
     # Python tooling

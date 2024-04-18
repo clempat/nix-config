@@ -75,7 +75,7 @@
     enable = true;
     skhdConfig = ''
       # open terminal
-      cmd - return : /Applications/Kitty.app/Contents/MacOS/kitty --single-instance -d ~
+      # cmd - return : /Applications/Kitty.app/Contents/MacOS/kitty --single-instance -d ~
       # focus window
       alt - j : yabai -m window --focus west
       alt - k : yabai -m window --focus south
@@ -172,7 +172,7 @@
       # mirror tree x-axis
       alt - x : yabai -m space --mirror x-axis
       # toggle desktop offset
-      alt - a : yabai -m space --toggle padding; yabai -m space --toggle gap
+      # alt - a : yabai -m space --toggle padding; yabai -m space --toggle gap
       # toggle window parent zoom
       alt - d : yabai -m window --toggle zoom-parent
       # toggle window fullscreen zoom
@@ -182,7 +182,7 @@
       # toggle window border
       shift + alt - b : yabai -m window --toggle border
       # toggle window split type
-      alt - e : yabai -m window --toggle split
+      # alt - e : yabai -m window --toggle split
       # float / unfloat window and center on screen
       alt - t : yabai -m window --toggle float;\
                 yabai -m window --grid 4:4:1:1:2:2

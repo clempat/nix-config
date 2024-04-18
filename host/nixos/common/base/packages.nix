@@ -1,6 +1,7 @@
 { pkgs, ... }: {
   basePackages = with pkgs; [
     _1password
+    alacritty
     bat
     binutils
     curl
@@ -15,6 +16,7 @@
     neovim
     nfs-utils
     ntfs3g
+    openai
     pciutils
     ripgrep
     rsync

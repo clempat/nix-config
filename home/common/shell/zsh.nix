@@ -1,8 +1,10 @@
 { pkgs, isDarwin ? false, ... }: {
 
+  home.sessionVariables.ZVM_VI_ESCAPE_BINDKEY = "jk";
+
   programs.zsh = {
     enable = true;
-    enableAutosuggestions = true;
+    autosuggestion.enable = true;
     enableCompletion = true;
 
     sessionVariables.SSH_AUTH_SOCK = "~/.1password.agent.sock";
@@ -23,7 +25,18 @@
           rm -f "$NNN_TMPFILE" > /dev/null
         fi
       }
+
+      eval "$(atuin init zsh --disable-up-arrow)"
     '';
+
+    # @TODO: Does not work yet
+    zplug = {
+      enable = true;
+      plugins = [
+        { name = "jeffreytse/zsh-vi-mode"; }
+        { name = "tom-doerr/zsh_codex"; }
+      ];
+    };
 
     oh-my-zsh = {
       enable = true;

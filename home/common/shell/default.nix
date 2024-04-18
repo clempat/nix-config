@@ -13,7 +13,7 @@
     ./nnn.nix
     ./starship.nix
     ./ssh.nix
-    ./tmux.nix
+    ./tmux
     ./zsh.nix
   ] ++ lib.optional (!isDarwin) ./xdg.nix;
 
@@ -22,14 +22,32 @@
     git.enable = true;
     home-manager.enable = true;
     jq.enable = true;
+    pyenv.enable = true;
   };
 
-  home.packages = with pkgs; [ ];
+  programs.zoxide = {
+    enable = true;
+    enableZshIntegration = true;
+  };
+
+  home.packages = with pkgs; [
+    sesh
+    _1password
+    nodejs
+    # To move to project later
+    # FIX: Do not know which one to install
+    gdal
+    heroku
+    postgresql
+  ];
 
   home.sessionVariables = {
     EDITOR = "nvim";
     LANG = "en_US.UTF-8";
     LC_ALL = "en_US.UTF-8";
     LC_CTYPE = "en_US.UTF-8";
+    NODE_VERSIONS = "$HOME/.nvm/versions/node";
+    GDAL_LIBRARY_PATH = "${pkgs.gdal}/lib/libgdal.dylib";
+    GEOS_LIBRARY_PATH = "${pkgs.geos}/lib/libgeos_c.dylib";
   };
 }
