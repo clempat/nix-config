@@ -50,7 +50,6 @@
       "arc"
       "bartender"
       "cleanshot"
-      # "docker" # Changed for orbstack
       "dropzone"
       "elgato-stream-deck"
       "fantastical"
@@ -65,7 +64,10 @@
       "font-jetbrains-mono"
       "font-jetbrains-mono-nerd-font"
       "font-roboto"
+      "github"
+      "handbrake"
       "home-assistant"
+      "karabiner-elements"
       "kitty"
       "logi-options-plus"
       "logseq"
@@ -83,7 +85,9 @@
       "spotify"
       "todoist"
       "utm"
+      "vlc"
       "warp"
+      # "docker" # Changed for orbstack
       # "logitech-g-hub"
     ];
   };
