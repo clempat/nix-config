@@ -21,14 +21,14 @@ in {
   environment = {
     variables.NIXOS_OZONE_WL = "1";
 
-    systemPackages = with pkgs; [ polkit_gnome gnome.nautilus gnome.zenity ];
+    systemPackages = with pkgs; [ polkit_gnome nautilus zenity ];
   };
 
   services = {
     dbus = {
       enable = true;
       # Make the gnome keyring work properly
-      packages = [ pkgs.gnome3.gnome-keyring pkgs.gcr ];
+      packages = with pkgs; [ gnome-keyring gcr ];
     };
 
     gnome = {

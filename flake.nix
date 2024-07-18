@@ -5,30 +5,21 @@
     unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
-    nix-darwin.inputs.nixpkgs.follows = "unstable";
+    nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
     nix-darwin.url = "github:LnL7/nix-darwin";
 
-    hypridle.url = "github:hyprwm/hypridle";
-    hypridle.inputs.nixpkgs.follows = "unstable";
-    hyprland.url = "github:hyprwm/Hyprland";
-    hyprland.inputs.nixpkgs.follows = "unstable";
-    hyprland-contrib.url = "github:hyprwm/contrib";
-    hyprland-contrib.inputs.nixpkgs.follows = "unstable";
-    hyprlock.url = "github:hyprwm/hyprlock";
-    hyprlock.inputs.nixpkgs.follows = "unstable";
-
     disko.url = "github:nix-community/disko";
-    disko.inputs.nixpkgs.follows = "unstable";
-
-    lanzaboote.url = "github:nix-community/lanzaboote";
-    lanzaboote.inputs.nixpkgs.follows = "unstable";
+    disko.inputs.nixpkgs.follows = "nixpkgs";
 
     home-manager.url = "github:nix-community/home-manager";
-    home-manager.inputs.nixpkgs.follows = "unstable";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     nur.url = "github:nix-community/NUR";
     clement-nvim.url = "github:clempat/nvim-config";
     tmux-sessionx.url = "github:omerxx/tmux-sessionx";
+
+    tuxedo-nixos.url = "github:blitz/tuxedo-nixos";
+    tuxedo-nixos.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = { self, nixpkgs, unstable, ... }@inputs:
@@ -55,7 +46,7 @@
         # Desktop machines
         "${username}@tuxedo" = libx.mkHome {
           hostname = "tuxedo";
-          desktop = "hyprland";
+          desktop = "kde";
         };
       };
 
@@ -64,7 +55,7 @@
         # Desktop machines
         tuxedo = libx.mkHost {
           hostname = "tuxedo";
-          desktop = "hyprland";
+          desktop = "kde";
         };
       };
 

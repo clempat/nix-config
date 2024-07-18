@@ -19,8 +19,6 @@ in {
     extraConfig = ''
       font-size=14
 
-      xkb-layout=gb
-
       palette=custom
       palette-black=${hexToRgb colours.surface1}
       palette-red=${hexToRgb colours.red}

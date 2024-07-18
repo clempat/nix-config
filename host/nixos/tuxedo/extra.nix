@@ -6,7 +6,7 @@
   };
 
   # OpenGL
-  hardware.opengl = {
+  hardware.graphics = {
     enable = true;
     extraPackages = with pkgs; [
       intel-media-driver
@@ -14,8 +14,7 @@
       vaapiVdpau
       libvdpau-va-gl
     ];
-    driSupport = true;
-    driSupport32Bit = true;
+    enable32Bit = true;
   };
 
   services.xserver.videoDrivers = [ "nvidia" ];

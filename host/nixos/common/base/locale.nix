@@ -2,7 +2,11 @@ _: {
   time.timeZone = "Europe/Berlin";
 
   console.keyMap = "us";
-  services.xserver.xkb.layout = "altgr-intl";
+
+  services.xserver.xkb = {
+    layout = "us,fr,de";
+    variant = "altgr-intl";
+  };
 
   i18n = {
     defaultLocale = "en_US.utf8";

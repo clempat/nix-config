@@ -59,11 +59,7 @@ in {
       extraSpecialArgs = {
         inherit self inputs outputs stateVersion hostname desktop username git;
       };
-      modules = [
-        inputs.hypridle.homeManagerModules.default
-        inputs.hyprlock.homeManagerModules.default
-        ../home
-      ];
+      modules = [ ../home ];
     };
 
   # Helper function for generating host configs
@@ -73,7 +69,7 @@ in {
       specialArgs = {
         inherit self inputs outputs stateVersion username hostname desktop;
       };
-      modules = [ inputs.lanzaboote.nixosModules.lanzaboote ../host/nixos ];
+      modules = [ ../host/nixos ];
     };
 
   forAllSystems = inputs.nixpkgs.lib.genAttrs [

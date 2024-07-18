@@ -1,21 +1,21 @@
 { self, config, pkgs, lib, hostname, desktop, ... }:
 let
   # If this is a laptop, then include network/battery controls
-  modules =
-    if hostname == "tuxedo" then [
-      "network"
-      "battery"
-      "wireplumber"
-      "pulseaudio#source"
-      "bluetooth"
-      "group/group-power"
-    ]
-    else [
-      "wireplumber"
-      "pulseaudio#source"
-      "bluetooth"
-      "group/group-power"
-    ];
+  modules = if hostname == "tuxedo" then [
+    inputs.tuxedo-nixos.nixosModules.default
+    { hardware.tuxedo-control-center.enable = true; }
+    "network"
+    "battery"
+    "wireplumber"
+    "pulseaudio#source"
+    "bluetooth"
+    "group/group-power"
+  ] else [
+    "wireplumber"
+    "pulseaudio#source"
+    "bluetooth"
+    "group/group-power"
+  ];
 
   bluetoothToggle = pkgs.writeShellApplication {
     name = "bluetooth-toggle";
@@ -32,14 +32,11 @@ let
 
   theme = import "${self}/lib/theme" { inherit pkgs; };
   inherit ((import ../rofi/lib.nix { inherit lib; })) toRasi;
-in
-{
+in {
   programs.waybar = {
     enable = true;
 
-    systemd = {
-      enable = true;
-    };
+    systemd = { enable = true; };
 
     settings = [{
       exclusive = true;
@@ -73,7 +70,8 @@ in
         format-disconnected = "";
         tooltip-format = "{ifname} / {essid} ({signalStrength}%) / {ipaddr}";
         max-length = 15;
-        on-click = "${pkgs.alacritty}/bin/alacritty -e ${pkgs.networkmanager}/bin/nmtui";
+        on-click =
+          "${pkgs.alacritty}/bin/alacritty -e ${pkgs.networkmanager}/bin/nmtui";
       };
 
       "idle_inhibitor" = {
@@ -105,12 +103,8 @@ in
           transition-duration = 500;
           transition-left-to-right = false;
         };
-        modules = [
-          "custom/power"
-          "custom/quit"
-          "custom/lock"
-          "custom/reboot"
-        ];
+        modules =
+          [ "custom/power" "custom/quit" "custom/lock" "custom/reboot" ];
       };
 
       "custom/quit" = {
@@ -168,10 +162,11 @@ in
     # This is a bit of a hack. Rasi turns out to be basically CSS, and there is
     # a handy helper to convert nix -> rasi in the home-manager module for rofi,
     # so I'm using that here to render the stylesheet for waybar
-    style = toRasi (import ./theme.nix { inherit config pkgs lib theme; }).theme;
+    style =
+      toRasi (import ./theme.nix { inherit config pkgs lib theme; }).theme;
   };
 
   # This is a hack to ensure that hyprctl ends up in the PATH for the waybar service on hyprland
-  systemd.user.services.waybar.Service.Environment = lib.mkForce
-    "PATH=${lib.makeBinPath [pkgs."${desktop}"]}";
+  systemd.user.services.waybar.Service.Environment =
+    lib.mkForce "PATH=${lib.makeBinPath [ pkgs."${desktop}" ]}";
 }

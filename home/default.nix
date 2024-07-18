@@ -36,11 +36,6 @@
       outputs.overlays.modifications
       outputs.overlays.unstable-packages
 
-    ] ++ lib.optionals (desktop == "hyprland") [
-      inputs.hypridle.overlays.default
-      inputs.hyprland.overlays.default
-      inputs.hyprland-contrib.overlays.default
-      inputs.hyprlock.overlays.default
     ];
 
     config = {
