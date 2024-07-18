@@ -3,7 +3,7 @@
     catpuccin-frappe = pkgs.fetchurl {
       url =
         "https://raw.githubusercontent.com/catppuccin/alacritty/main/catppuccin-frappe.toml";
-      hash = "sha256-Rhr5XExaY0YF2t+PVwxBRIXQ58TH1+kMue7wkKNaSJI=";
+      hash = "sha256-DmZRJtlogPUBYw06JLAa5vePAjYuikT5sAL4juEIXeU=";
     };
   in {
     enable = true;
