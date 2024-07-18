@@ -57,7 +57,6 @@
         tuxedo = libx.mkHost {
           hostname = "tuxedo";
           desktop = "kde";
-          system = "x86_64-linux";
         };
       };
 
