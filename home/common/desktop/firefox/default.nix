@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ pkgs, inputs, ... }: {
   programs.firefox = {
     enable = true;
     profiles = {
@@ -54,27 +54,27 @@
           };
         };
 
-        extensions = with pkgs.nur.repos.rycee.firefox-addons; [
-          aria2-integration
-          buster-captcha-solver
-          clearurls
-          container-tabs-sidebar
-          decentraleyes
-          libredirect
-          no-pdf-download
-          react-devtools
-          reduxdevtools
-          #tridactyl
-          ublock-origin
-          omnivore
-          darkreader
-          languagetool
-          tabcenter-reborn
-          onepassword-password-manager
-          ecosia
-          fediact
-          raindropio
-        ];
+        # extensions = with pkgs.nur.repos.rycee.firefox-addons; [
+        #   aria2-integration
+        #   buster-captcha-solver
+        #   clearurls
+        #   container-tabs-sidebar
+        #   decentraleyes
+        #   libredirect
+        #   no-pdf-download
+        #   react-devtools
+        #   reduxdevtools
+        #   #tridactyl
+        #   ublock-origin
+        #   omnivore
+        #   darkreader
+        #   languagetool
+        #   tabcenter-reborn
+        #   onepassword-password-manager
+        #   ecosia
+        #   fediact
+        #   raindropio
+        # ];
 
         userChrome = builtins.readFile ./userChrome.css;
       };

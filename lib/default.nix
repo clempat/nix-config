@@ -52,25 +52,31 @@ in {
   };
 
   # Helper function for generating home-manager configs
-  mkHome =
-    { hostname, username ? defaultUsername, desktop ? null, git ? defaultGit }:
-    inputs.home-manager.lib.homeManagerConfiguration {
-      pkgs = inputs.unstable.legacyPackages.x86_64-linux;
-      extraSpecialArgs = {
-        inherit self inputs outputs stateVersion hostname desktop username git;
-      };
-      modules = [ ../home ];
+  mkHome = let isDarwin = false;
+  in { hostname, username ? defaultUsername, desktop ? null, git ? defaultGit
+  , system }:
+  inputs.home-manager.lib.homeManagerConfiguration {
+    pkgs = import inputs.nixpkgs {
+      inherit system;
+      config.allowUnfree = true;
     };
+    extraSpecialArgs = {
+      inherit self inputs isDarwin desktop git stateVersion outputs username
+        system;
+    };
+    modules = [ ../home ];
+  };
 
   # Helper function for generating host configs
-  mkHost = { hostname, desktop ? null, pkgsInput ? inputs.unstable
-    , username ? defaultUsername }:
-    pkgsInput.lib.nixosSystem {
-      specialArgs = {
-        inherit self inputs outputs stateVersion username hostname desktop;
-      };
-      modules = [ ../host/nixos ];
+  mkHost = let isDarwin = false;
+  in { hostname, desktop ? null, pkgsInput ? inputs.unstable
+  , username ? defaultUsername }:
+  pkgsInput.lib.nixosSystem {
+    specialArgs = {
+      inherit self inputs outputs stateVersion username hostname desktop;
     };
+    modules = [ ../host/nixos ];
+  };
 
   forAllSystems = inputs.nixpkgs.lib.genAttrs [
     "aarch64-linux"

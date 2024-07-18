@@ -17,7 +17,6 @@
     audacity
     catppuccin-gtk
     desktop-file-utils
-    ght
     libnotify
     loupe
     mumble

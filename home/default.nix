@@ -16,16 +16,18 @@
     ++ lib.optional (isDarwin) ./common/desktop/alacritty.nix;
   # ++ lib.optional (isDarwin) ./common/desktop/firefox;
 
-  home = {
-    inherit username stateVersion;
-    # @todo: Check why this conflicts
-    # homeDirectory = "/home/${username}";
-    activation.report-changes = config.lib.dag.entryAnywhere ''
-      if [[ -n "$oldGenPath" && -n "$newGenPath" ]]; then
-        ${pkgs.nvd}/bin/nvd diff $oldGenPath $newGenPath
-      fi
-    '';
-  };
+  home = lib.mkMerge [
+    (lib.mkIf (!isDarwin) { homeDirectory = "/home/${username}"; })
+    {
+      inherit username stateVersion;
+      activation.report-changes = config.lib.dag.entryAnywhere ''
+        if [[ -n "$oldGenPath" && -n "$newGenPath" ]]; then
+          ${pkgs.nvd}/bin/nvd diff $oldGenPath $newGenPath
+        fi
+      '';
+    }
+
+  ];
 
   nixpkgs = if isDarwin then
     { }

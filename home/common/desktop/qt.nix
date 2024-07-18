@@ -3,7 +3,7 @@ let theme = import "${self}/lib/theme" { inherit pkgs; };
 in {
   qt = {
     enable = true;
-    platformTheme = "gtk";
+    platformTheme.name = "gtk";
   };
 
   home = {
