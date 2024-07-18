@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ pkgs, isDarwin, ... }: {
   home.packages = with pkgs; [
     fd
     jq
@@ -11,6 +11,7 @@
     (import ./../../../scripts/tmux-sessionizer.nix { inherit pkgs; })
     (import ./../../../scripts/kn.nix { inherit pkgs; })
     (import ./../../../scripts/clone-for-worktrees.nix { inherit pkgs; })
+    (import ./../../../scripts/recording.nix { inherit pkgs isDarwin; })
 
     # Container tooling
     dive
@@ -34,7 +35,8 @@
 
     # Python tooling
     ruff
-    (pkgs.python3.withPackages (p: with p; [ tox virtualenv ]))
+    # (pkgs.python3.withPackages (p: with p; [ tox virtualenv ]))
+    # pipx
 
     # Shell tooling
     shellcheck

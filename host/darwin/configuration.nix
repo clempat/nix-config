@@ -36,13 +36,15 @@
       "pkg-config"
       "shellcheck"
       "xmlsec1"
+      "libb2"
     ];
     masApps = {
-      "tailscale" = 1475387142;
-      "paste" = 967805235;
-      "toggl" = 1291898086;
-      "timery" = 1425368544;
       "drafts" = 1435957248;
+      "parcel" = 639968404;
+      "paste" = 967805235;
+      "tailscale" = 1475387142;
+      "timery" = 1425368544;
+      "toggl" = 1291898086;
     };
     casks = [
       "1password"
@@ -51,6 +53,7 @@
       "bartender"
       "cleanshot"
       "dropzone"
+      "deskpad"
       "elgato-stream-deck"
       "fantastical"
       "figma"
@@ -72,6 +75,8 @@
       "logi-options-plus"
       "logseq"
       "loop"
+      "moonlight"
+      "mockoon"
       "nextcloud"
       "obs"
       "obsidian"

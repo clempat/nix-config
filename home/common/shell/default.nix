@@ -1,4 +1,4 @@
-{ pkgs, isDarwin, lib, ... }: {
+{ pkgs, isDarwin, lib, config, ... }: {
   imports = [
     ./atuin.nix
     ./bat.nix
@@ -39,6 +39,8 @@
     gdal
     heroku
     postgresql
+
+    ffmpeg
   ];
 
   home.sessionVariables = {

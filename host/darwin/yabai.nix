@@ -81,7 +81,7 @@
       # focus window
       alt - j : yabai -m window --focus west
       alt - k : yabai -m window --focus south
-      alt - i : yabai -m window --focus north
+      # alt - i : yabai -m window --focus north
       alt - l : yabai -m window --focus east
       # swap window
       shift + alt - j : yabai -m window --swap west
@@ -191,7 +191,7 @@
       # toggle sticky (show on all spaces)
       alt - s : yabai -m window --toggle sticky
       # toggle topmost (keep above other windows)
-      alt - o : yabai -m window --toggle topmost
+      # alt - o : yabai -m window --toggle topmost
       # toggle sticky, topmost and resize to picture-in-picture size
       alt - p : yabai -m window --toggle sticky;\
                 yabai -m window --toggle topmost;\
