@@ -20,6 +20,7 @@
     pciutils
     ripgrep
     rsync
+    sesh
     tpm2-tss
     traceroute
     tree
