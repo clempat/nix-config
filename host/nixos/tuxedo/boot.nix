@@ -6,7 +6,6 @@
 
     initrd = {
       availableKernelModules = [
-        "i915"
         "xhci_pci"
         "thunderbolt"
         "nvme"

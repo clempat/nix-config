@@ -9,10 +9,9 @@
     ../services/avahi.nix
     ../services/firewall.nix
     ../services/openssh.nix
-    ../services/tailscale.nix
+    # ../services/tailscale.nix
     ../services/network.nix
 
-    ../hardware/yubikey.nix
     ../hardware/bluetooth.nix
     ../hardware/audioengine.nix
   ];

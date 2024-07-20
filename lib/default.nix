@@ -62,9 +62,11 @@ in {
     };
     extraSpecialArgs = {
       inherit self inputs isDarwin desktop git stateVersion outputs username
-        system;
+        system hostname;
     };
-    modules = [ ../home ];
+    modules = [
+      ../home 
+    ];
   };
 
   # Helper function for generating host configs
@@ -75,7 +77,9 @@ in {
     specialArgs = {
       inherit self inputs outputs stateVersion username hostname desktop;
     };
-    modules = [ ../host/nixos ];
+    modules = [ 
+      ../host/nixos 
+    ];
   };
 
   forAllSystems = inputs.nixpkgs.lib.genAttrs [

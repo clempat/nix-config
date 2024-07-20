@@ -8,4 +8,6 @@
     konsole
     oxygen
   ];
+  
+  environment.systemPackages = with pkgs; [ polkit_gnome ];
 }

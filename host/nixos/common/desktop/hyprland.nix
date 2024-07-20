@@ -11,7 +11,6 @@ let
     ${pkgs.hyprland}/bin/hyperctl dispatch exit
   '';
 in {
-
   programs = {
     dconf.enable = true;
     file-roller.enable = true;

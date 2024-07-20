@@ -1,9 +1,7 @@
-{ self, config, pkgs, lib, hostname, desktop, ... }:
+{ inputs, self, config, pkgs, lib, hostname, desktop, ... }:
 let
   # If this is a laptop, then include network/battery controls
   modules = if hostname == "tuxedo" then [
-    inputs.tuxedo-nixos.nixosModules.default
-    { hardware.tuxedo-control-center.enable = true; }
     "network"
     "battery"
     "wireplumber"

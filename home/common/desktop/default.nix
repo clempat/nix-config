@@ -7,10 +7,10 @@
     ./firefox
     ./kitty
     ./alacritty.nix
-    ./gtk.nix
-    ./qt.nix
-    ./xdg.nix
-    ./zathura.nix
+    # ./gtk.nix
+    # ./qt.nix
+    # ./xdg.nix
+    # ./zathura.nix
   ];
 
   home.packages = with pkgs; [
@@ -25,7 +25,9 @@
     pavucontrol
     rambox
     signal-desktop
+    sqlite
     todoist-electron
+    vlc
     xdg-utils
     xorg.xlsclients
   ];

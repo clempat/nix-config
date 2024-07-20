@@ -17,9 +17,6 @@
     nur.url = "github:nix-community/NUR";
     clement-nvim.url = "github:clempat/nvim-config";
     tmux-sessionx.url = "github:omerxx/tmux-sessionx";
-
-    tuxedo-nixos.url = "github:blitz/tuxedo-nixos";
-    tuxedo-nixos.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = { self, nixpkgs, unstable, ... }@inputs:
