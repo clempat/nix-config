@@ -18,6 +18,7 @@
     catppuccin-gtk
     desktop-file-utils
     libnotify
+    logseq
     loupe
     mumble
     obsidian

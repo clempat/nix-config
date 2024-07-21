@@ -14,7 +14,13 @@
     home-manager.url = "github:nix-community/home-manager/release-24.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
+    rycee-nurpkgs = {
+      url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     nur.url = "github:nix-community/NUR";
+
     clement-nvim.url = "github:clempat/nvim-config";
     tmux-sessionx.url = "github:omerxx/tmux-sessionx";
   };

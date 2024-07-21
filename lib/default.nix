@@ -59,14 +59,13 @@ in {
     pkgs = import inputs.nixpkgs {
       inherit system;
       config.allowUnfree = true;
+      overlays = [ inputs.nur.overlay ];
     };
     extraSpecialArgs = {
       inherit self inputs isDarwin desktop git stateVersion outputs username
         system hostname;
     };
-    modules = [
-      ../home 
-    ];
+    modules = [ ../home ];
   };
 
   # Helper function for generating host configs
@@ -77,9 +76,7 @@ in {
     specialArgs = {
       inherit self inputs outputs stateVersion username hostname desktop;
     };
-    modules = [ 
-      ../host/nixos 
-    ];
+    modules = [ ../host/nixos ];
   };
 
   forAllSystems = inputs.nixpkgs.lib.genAttrs [
