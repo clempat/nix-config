@@ -24,7 +24,7 @@
     tpm2-tss
     traceroute
     tree
-    unstable.eza
+    eza
     unzip
     usbutils
     wget

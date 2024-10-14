@@ -18,6 +18,7 @@
     kubectl
     skopeo
     lazydocker
+    docker
 
     # Go tooling
     go
@@ -27,6 +28,8 @@
 
     # Nix tooling
     deadnix
+    devenv
+    devbox
     nix-init
     nixfmt-classic
     nixpkgs-fmt

@@ -70,7 +70,7 @@ in {
 
   # Helper function for generating host configs
   mkHost = let isDarwin = false;
-  in { hostname, desktop ? null, pkgsInput ? inputs.unstable
+  in { hostname, desktop ? null, pkgsInput ? inputs.nixpkgs
   , username ? defaultUsername }:
   pkgsInput.lib.nixosSystem {
     specialArgs = {

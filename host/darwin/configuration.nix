@@ -7,6 +7,7 @@
       builders-use-substitutes = true;
       experimental-features = [ "nix-command" "flakes" ];
       warn-dirty = false;
+      trusted-users = [ "root" "${username}" ];
     };
   };
 
@@ -28,7 +29,7 @@
       "pngpaste"
 
       # TODO: Move this to backend flake
-      # "gdal"
+      "gdal"
       "libgeoip"
       "libxml2"
       "mailhog"
@@ -37,14 +38,15 @@
       "shellcheck"
       "xmlsec1"
       "libb2"
+      "python@3.11"
     ];
     masApps = {
       "drafts" = 1435957248;
       "parcel" = 639968404;
       "paste" = 967805235;
-      "tailscale" = 1475387142;
       "timery" = 1425368544;
       "toggl" = 1291898086;
+      "wireguard" = 1451685025;
     };
     casks = [
       "1password"
@@ -55,6 +57,7 @@
       "dropzone"
       "deskpad"
       "elgato-stream-deck"
+      "eloston-chromium"
       "fantastical"
       "figma"
       "firefox"
@@ -72,7 +75,7 @@
       "home-assistant"
       "karabiner-elements"
       "kitty"
-      "logi-options-plus"
+      "logi-options+"
       "logseq"
       "loop"
       "moonlight"

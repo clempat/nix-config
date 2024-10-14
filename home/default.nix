@@ -29,15 +29,17 @@
 
   ];
 
-  nixpkgs = if isDarwin then
-    { }
-  else {
+  nixpkgs = if isDarwin then {
     overlays = [
       # Add overlays your own flake exports (from overlays and pkgs dir):
       outputs.overlays.additions
       outputs.overlays.modifications
-      outputs.overlays.unstable-packages
-
+    ];
+  } else {
+    overlays = [
+      # Add overlays your own flake exports (from overlays and pkgs dir):
+      outputs.overlays.additions
+      outputs.overlays.modifications
     ];
 
     config = {
