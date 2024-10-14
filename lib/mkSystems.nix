@@ -69,13 +69,34 @@ in {
 
   # Helper function for generating host configs
   mkHost = let isDarwin = false;
-  in { hostname, desktop ? null, pkgsInput ? inputs.nixpkgs
+  in { hostname, desktop ? null, pkgsInput ? inputs.nixpkgs, git ? defaultGit
   , username ? defaultUsername, system }:
   pkgsInput.lib.nixosSystem {
+    pkgs = import inputs.nixpkgs {
+      inherit system;
+      config.allowUnfree = true;
+      config.joypixels.acceptLicense = true;
+      overlays = [ inputs.nur.overlay ];
+    };
+
     specialArgs = {
       inherit self inputs outputs stateVersion username hostname desktop;
     };
 
+    modules = [
+      (import ../host/nixos)
+
+      inputs.home-manager.nixosModules.home-manager
+      {
+        home-manager.useGlobalPkgs = true;
+        home-manager.useUserPackages = true;
+        home-manager.extraSpecialArgs = {
+          inherit self inputs isDarwin desktop git stateVersion outputs username
+            system;
+        };
+        home-manager.users.${username} = import ../home;
+      }
+    ];
   };
 
   forAllSystems = inputs.nixpkgs.lib.genAttrs [
