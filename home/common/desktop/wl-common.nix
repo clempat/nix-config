@@ -2,12 +2,10 @@
   services = {
     avizo.enable = true;
 
-    clipman.enable = true;
-
     wlsunset = {
       enable = true;
-      latitude = "51.51";
-      longitude = "-2.53";
+      latitude = "52.44";
+      longitude = "13.35";
     };
   };
 

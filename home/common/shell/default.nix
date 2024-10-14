@@ -4,6 +4,7 @@
     ./bat.nix
     ./bottom.nix
     ./direnv.nix
+    ./eza.nix
     ./fzf.nix
     ./git.nix
     ./gpg.nix
@@ -18,7 +19,6 @@
   ] ++ lib.optional (!isDarwin) ./xdg.nix;
 
   programs = {
-    eza.enable = true;
     git.enable = true;
     home-manager.enable = true;
     jq.enable = true;
@@ -39,6 +39,7 @@
     gdal
     heroku
     postgresql
+    nfs-utils
 
     ffmpeg
   ];

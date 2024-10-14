@@ -1,4 +1,4 @@
-{ pkgs, desktop, ... }: {
+{ pkgs, desktop, inputs, system, ... }: {
   imports = [
     (./. + "/${desktop}")
 
@@ -15,7 +15,9 @@
 
   home.packages = with pkgs; [
     audacity
+    brave
     catppuccin-gtk
+    chromium
     desktop-file-utils
     libnotify
     logseq
@@ -31,6 +33,8 @@
     vlc
     xdg-utils
     xorg.xlsclients
+    warp-terminal
+    inputs.zen-browser.packages."${system}".default
   ];
 
   fonts.fontconfig.enable = true;

@@ -1,18 +1,24 @@
-{ pkgs, ... }:
+{ pkgs, inputs, ... }:
 
 {
-  # OpenGL
+  imports = [
+    inputs.nixos-hardware.nixosModules.tuxedo-infinitybook-pro14-gen7
+  ];
+
   hardware.graphics = {
     enable = true;
     extraPackages = with pkgs; [
       intel-media-driver
-      vaapiVdpau
       libvdpau-va-gl
+      libglvnd
+      mesa
     ];
     enable32Bit = true;
   };
 
-  services.xserver.videoDrivers = [ "nvidia" ];
+  environment.sessionVariables = { LIBVA_DRIVER_NAME = "iHD"; };
+
+  services.xserver.videoDrivers = [ "nvidia" "intel" ];
 
   hardware.nvidia = {
     modesetting.enable = true;
@@ -30,4 +36,6 @@
       nvidiaBusId = "PCI:1:0:0";
     };
   };
+
+  programs.steam.enable = true;
 }

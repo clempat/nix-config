@@ -10,7 +10,7 @@
     disko.url = "github:nix-community/disko";
     disko.inputs.nixpkgs.follows = "nixpkgs";
 
-    home-manager.url = "github:nix-community/home-manager";
+    home-manager.url = "github:nix-community/home-manager/master";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     rycee-nurpkgs = {
@@ -22,6 +22,8 @@
 
     clement-nvim.url = "github:clempat/nvim-config";
     tmux-sessionx.url = "github:omerxx/tmux-sessionx";
+
+    zen-browser.url = "github:MarceColl/zen-browser-flake";
   };
 
   outputs = { self, nixpkgs, ... }@inputs:
@@ -42,12 +44,12 @@
         };
       };
 
-      # nix build .#homeConfigurations."clement@tuxedo".activationPackage
+      # nix run home-manager -- switch --flake .
       homeConfigurations = {
         # Desktop machines
         "${username}@tuxedo" = mkSystems.mkHome {
           hostname = "tuxedo";
-          desktop = "kde";
+          desktop = "gnome";
           system = "x86_64-linux";
         };
       };
@@ -57,8 +59,10 @@
         # Desktop machines
         tuxedo = mkSystems.mkHost {
           hostname = "tuxedo";
-          desktop = "kde";
+          desktop = "gnome";
+          system = "x86_64-linux";
         };
+        sparrow = mkSystems.mkHost { hostname = "sparrow"; };
       };
 
       # Custom packages; acessible via 'nix build', 'nix shell', etc

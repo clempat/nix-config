@@ -11,7 +11,6 @@
     };
   };
 
-  nixpkgs.config.allowUnfree = true;
   programs.zsh.enable = true;
   services.nix-daemon.enable = true;
   system.stateVersion = 4;

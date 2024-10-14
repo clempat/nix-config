@@ -5,6 +5,7 @@
     bat
     binutils
     curl
+    devbox
     dig
     dua
     duf

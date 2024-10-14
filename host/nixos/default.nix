@@ -12,25 +12,6 @@
     # Include desktop config if a desktop is defined
     ++ lib.optional (builtins.isString desktop) ./common/desktop;
 
-  nixpkgs = {
-    overlays = [
-      # Add overlays your own flake exports (from overlays and pkgs dir):
-      outputs.overlays.additions
-      outputs.overlays.modifications
-
-      # You can also add overlays exported from other flakes:
-      # neovim-nightly-overlay.overlays.default
-
-      # Or just specify overlays directly here, for example:
-      # (_: _: { embr = inputs.embr.packages."${pkgs.system}".embr; })
-    ];
-
-    config = {
-      joypixels.acceptLicense = true;
-      allowUnfree = true;
-    };
-  };
-
   nix = {
     gc = {
       automatic = true;

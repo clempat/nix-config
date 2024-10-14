@@ -13,7 +13,6 @@ in {
     stdenvNoCC.mkDerivation {
       pname = "geist-mono";
       version = "3.1.1";
-
       src = fetchzip {
         hash = "sha256-GzWly6hGshy8DYZNweejvPymcxQSIU7oGUmZEhreMCM=";
         stripRoot = false;
@@ -71,12 +70,12 @@ in {
   # Helper function for generating host configs
   mkHost = let isDarwin = false;
   in { hostname, desktop ? null, pkgsInput ? inputs.nixpkgs
-  , username ? defaultUsername }:
+  , username ? defaultUsername, system }:
   pkgsInput.lib.nixosSystem {
     specialArgs = {
       inherit self inputs outputs stateVersion username hostname desktop;
     };
-    modules = [ ../host/nixos ];
+
   };
 
   forAllSystems = inputs.nixpkgs.lib.genAttrs [
