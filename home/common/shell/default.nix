@@ -39,7 +39,6 @@
     gdal
     heroku
     postgresql
-    nfs-utils
 
     ffmpeg
   ];

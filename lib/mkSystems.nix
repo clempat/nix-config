@@ -30,6 +30,12 @@ in {
   , desktop ? null }:
   inputs.nix-darwin.lib.darwinSystem {
     inherit system;
+    pkgs = import inputs.nixpkgs {
+      inherit system;
+      config.allowUnfree = true;
+      config.joypixels.acceptLicense = true;
+      overlays = [ inputs.nur.overlay ];
+    };
     specialArgs = {
       inherit self inputs outputs stateVersion hostname username git desktop
         isDarwin;
