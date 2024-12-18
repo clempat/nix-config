@@ -1,6 +1,6 @@
 { pkgs, ... }: {
   basePackages = with pkgs; [
-    _1password
+    _1password-cli
     alacritty
     bat
     binutils

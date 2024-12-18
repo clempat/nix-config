@@ -8,8 +8,8 @@
       blur-my-shell 
       pop-shell 
       pip-on-top
-      firefox-pip-always-on-top
       clipboard-indicator
+      gsconnect
     ]) ++ (with pkgs;[ 
       polkit_gnome 
       nordic 

@@ -15,7 +15,7 @@ let
 in {
   home.packages = with pkgs; [
     fzf
-    gitmux
+    # gitmux
     sesh
     (import ./tmux-sesh.nix { inherit pkgs; })
   ];

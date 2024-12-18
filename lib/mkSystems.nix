@@ -83,6 +83,9 @@ in {
       config.allowUnfree = true;
       config.joypixels.acceptLicense = true;
       overlays = [ inputs.nur.overlay ];
+      config.permittedInsecurePackages = [
+        "electron-27.3.11"
+      ];
     };
 
     specialArgs = {

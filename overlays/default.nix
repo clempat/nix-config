@@ -4,6 +4,7 @@
 
   modifications = _final: prev:
     {
+      { discord = prev.discord.overrideAttrs (_: { src = builtins.fetchTarball https://stable.dl2.discordapp.net/apps/linux/0.0.71/discord-0.0.71.tar.gz; })
       # example = prev.example.overrideAttrs (oldAttrs: rec {
       # ...
       # });

@@ -9,7 +9,7 @@
     ../services/avahi.nix
     ../services/firewall.nix
     ../services/openssh.nix
-    # ../services/tailscale.nix
+    ../services/tailscale.nix
     ../services/network.nix
 
     ../hardware/bluetooth.nix

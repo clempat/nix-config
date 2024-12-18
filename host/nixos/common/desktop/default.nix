@@ -6,6 +6,7 @@ in {
     ../hardware/yubikey.nix
     ../services/pipewire.nix
     ../virt
+    ./piper.nix
   ];
 
   # Enable Plymouth and surpress some logs by default.

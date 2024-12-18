@@ -10,6 +10,7 @@ _: {
 
   i18n = {
     defaultLocale = "en_US.utf8";
+    inputMethod.type = "ibus";
     extraLocaleSettings = {
       LC_ADDRESS = "de_DE.utf8";
       LC_IDENTIFICATION = "de_DE.utf8";

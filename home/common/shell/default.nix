@@ -31,8 +31,11 @@
   };
 
   home.packages = with pkgs; [
+    devpod
+    devpod-desktop
+
     sesh
-    _1password
+    _1password-cli
     nodejs
     # To move to project later
     # FIX: Do not know which one to install

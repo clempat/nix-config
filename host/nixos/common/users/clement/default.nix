@@ -7,7 +7,7 @@ in {
     isNormalUser = true;
     shell = pkgs.zsh;
     extraGroups = [ "audio" "networkmanager" "users" "video" "wheel" ]
-      ++ ifExists [ "docker" "plugdev" "render" "lxd" ];
+      ++ ifExists [ "docker" "plugdev" "render" "lxd" "games" ];
 
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPdCgvYn1SSEVlUd7XZo3jTJashU3aTWwH9SvzvQfP8M"

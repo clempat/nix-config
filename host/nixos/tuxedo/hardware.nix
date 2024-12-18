@@ -39,5 +39,5 @@
     enable = lib.mkDefault true;
     tailor-gui.enable = true;
   };
-  hardware.tuxedo-keyboard.enable = lib.mkForce false;
+  # hardware.tuxedo-drivers.enable = lib.mkForce false;
 }
