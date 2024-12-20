@@ -42,6 +42,7 @@
     gdal
     heroku
     postgresql
+    tmuxinator
 
     ffmpeg
   ];

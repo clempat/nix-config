@@ -4,11 +4,14 @@
     alacritty
     bat
     binutils
+    code-cursor
     curl
     devbox
     dig
     dua
     duf
+    eza
+    fabric-ai
     fd
     file
     git
@@ -18,17 +21,21 @@
     nfs-utils
     ntfs3g
     openai
+    openai-whisper
+    pam_reattach
     pciutils
     ripgrep
     rsync
     sesh
+    tailscale
+    terminal-notifier
     tpm2-tss
     traceroute
     tree
-    eza
     unzip
     usbutils
     wget
+    yazi
     yq-go
   ];
 }

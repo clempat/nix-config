@@ -50,8 +50,21 @@ in {
     ];
 
     extraConfig = ''
+      set -gu default-command
+      set -g default-shell "$SHELL"
+
       ${builtins.readFile ./tmux.conf}
       bind-key "k" run-shell "tmux-sesh"
+      # Enable vi mode
+      set-window-option -g mode-keys vi
+      
+      # Search settings
+      bind-key / copy-mode \; send-key ?
+      bind-key ? copy-mode \; send-key ?
+      
+      # Make search case insensitive
+      set-window-option -g wrap-search on
+      set-window-option -g mode-keys vi
     '';
   };
 

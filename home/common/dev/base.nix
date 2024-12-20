@@ -44,5 +44,6 @@
     # Shell tooling
     shellcheck
     shfmt
+    yazi
   ];
 }

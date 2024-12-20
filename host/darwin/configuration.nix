@@ -2,8 +2,8 @@
   imports = [ ./yabai.nix ];
 
   nix = {
+    optimise.automatic = true;
     settings = {
-      auto-optimise-store = true;
       builders-use-substitutes = true;
       experimental-features = [ "nix-command" "flakes" ];
       warn-dirty = false;
@@ -15,6 +15,9 @@
   services.nix-daemon.enable = true;
   system.stateVersion = 4;
   users.users.${username}.home = "/Users/${username}";
+
+  environment.shells = [ pkgs.zsh ];
+  security.pam.enableSudoTouchIdAuth = true;
 
   homebrew = { # Homebrew Package Manager
     enable = true;
@@ -28,6 +31,7 @@
       "pngpaste"
 
       # TODO: Move this to backend flake
+      "zlib"
       "gdal"
       "libgeoip"
       "libxml2"
@@ -53,6 +57,7 @@
       "arc"
       "bartender"
       "cleanshot"
+      "cursor"
       "dropzone"
       "deskpad"
       "elgato-stream-deck"
@@ -90,6 +95,7 @@
       "sequel-ace"
       "sizzy"
       "spotify"
+      "tailscale"
       "todoist"
       "utm"
       "vlc"

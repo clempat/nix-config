@@ -37,6 +37,7 @@
             yabai -m rule --add app="^Arc$" title="^Space.*$" manage=off layer=below
             yabai -m rule --add app="^Arc$" title="^$" manage=off layer=below
             yabai -m rule --add app="^CleanShot X$" sticky=on layer=above manage=off
+            yabai -m rule --add app="^Todoist$" sticky=on layer=above manage=off
 
       # yabai -m config external_bar                 all:27:0
             yabai -m config mouse_follows_focus          off
