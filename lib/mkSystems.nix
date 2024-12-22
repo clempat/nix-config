@@ -34,7 +34,7 @@ in {
       inherit system;
       config.allowUnfree = true;
       config.joypixels.acceptLicense = true;
-      overlays = [ inputs.nur.overlay ];
+      overlays = [ inputs.nur.overlays.default ];
     };
     specialArgs = {
       inherit self inputs outputs stateVersion hostname username git desktop
@@ -64,7 +64,7 @@ in {
     pkgs = import inputs.nixpkgs {
       inherit system;
       config.allowUnfree = true;
-      overlays = [ inputs.nur.overlay ];
+      overlays = [ inputs.nur.overlays.default ];
     };
     extraSpecialArgs = {
       inherit self inputs isDarwin desktop git stateVersion outputs username
@@ -82,7 +82,7 @@ in {
       inherit system;
       config.allowUnfree = true;
       config.joypixels.acceptLicense = true;
-      overlays = [ inputs.nur.overlay ];
+      overlays = [ inputs.nur.overlays.default ];
       config.permittedInsecurePackages = [
         "electron-27.3.11"
       ];

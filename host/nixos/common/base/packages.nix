@@ -15,6 +15,8 @@
     fd
     file
     git
+    gcc
+    gnumake
     jq
     killall
     neovim

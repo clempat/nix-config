@@ -18,7 +18,7 @@
 
   environment.sessionVariables = { LIBVA_DRIVER_NAME = "iHD"; };
 
-  services.xserver.videoDrivers = [ "nvidia" "intel" ];
+  services.xserver.videoDrivers = [ "nvidia" ];
 
   hardware.nvidia = {
     package = config.boot.kernelPackages.nvidiaPackages.beta;
