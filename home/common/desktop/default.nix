@@ -21,6 +21,7 @@
     catppuccin-gtk
     chromium
     desktop-file-utils
+    devpod-desktop
     discord
     element-desktop
     inputs.zen-browser.packages."${system}".default

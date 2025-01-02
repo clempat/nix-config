@@ -32,7 +32,6 @@
 
   home.packages = with pkgs; [
     devpod
-    devpod-desktop
 
     sesh
     _1password-cli
