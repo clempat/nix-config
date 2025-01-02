@@ -17,7 +17,19 @@
   users.users.${username}.home = "/Users/${username}";
 
   environment.shells = [ pkgs.zsh ];
-  security.pam.enableSudoTouchIdAuth = true;
+  # security.pam.enableSudoTouchIdAuth = true;
+
+  # Following will allow to use touch id in tmux
+  # See: https://github.com/LnL7/nix-darwin/issues/985
+  environment.systemPackages = [
+    pkgs.pam-reattach
+  ];
+
+  environment.etc."pam.d/sudo_local".text = ''
+    # Managed by Nix Darwin
+    auth       optional       ${pkgs.pam-reattach}/lib/pam/pam_reattach.so ignore_ssh
+    auth       sufficient     pam_tid.so
+  '';
 
   homebrew = { # Homebrew Package Manager
     enable = true;
