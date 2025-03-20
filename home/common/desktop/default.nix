@@ -17,6 +17,7 @@
     # rambox
     alpaca
     audacity
+    beeper
     brave
     catppuccin-gtk
     chromium
@@ -24,10 +25,12 @@
     devpod-desktop
     discord
     element-desktop
+    figma-linux
     inputs.zen-browser.packages."${system}".default
     libnotify
     libreoffice
-    logseq
+    # using EOL electron
+    # logseq
     loupe
     mumble
     nextcloud-client
@@ -35,11 +38,13 @@
     pamixer
     pavucontrol
     signal-desktop
+    ultrastar-manager
+    ultrastardx
     sqlite
-    tailscale-systray
     todoist-electron
     vlc
     warp-terminal
+    wireguard-ui
     xdg-utils
     xorg.xlsclients
   ];

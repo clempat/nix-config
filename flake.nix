@@ -1,7 +1,8 @@
 {
   description = "clement's nixos configuration";
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/d3c42f187194c26d9f0309a8ecc469d6c878ce33";
+    nixpkgs-unstable.url="github:nixos/nixpkgs/nixos-unstable";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
@@ -11,7 +12,7 @@
     disko.inputs.nixpkgs.follows = "nixpkgs";
 
     home-manager.url = "github:nix-community/home-manager/master";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs-unstable";
 
     rycee-nurpkgs = {
       url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
@@ -26,7 +27,7 @@
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
   };
 
-  outputs = { self, nixpkgs, ... }@inputs:
+  outputs = { self, nixpkgs, nixpkgs-unstable, ... }@inputs:
     let
       inherit (self) outputs;
       stateVersion = "23.11";
@@ -49,7 +50,7 @@
         # Desktop machines
         "${username}@tuxedo" = mkSystems.mkHome {
           hostname = "tuxedo";
-          desktop = "gnome";
+          desktop = "kde";
           system = "x86_64-linux";
         };
       };
@@ -59,7 +60,7 @@
         # Desktop machines
         tuxedo = mkSystems.mkHost {
           hostname = "tuxedo";
-          desktop = "gnome";
+          desktop = "kde";
           system = "x86_64-linux";
         };
         sparrow = mkSystems.mkHost { hostname = "sparrow"; };

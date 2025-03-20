@@ -7,33 +7,29 @@
 
   hardware.graphics = {
     enable = true;
-    extraPackages = with pkgs; [
-      intel-media-driver
-      libvdpau-va-gl
-      libglvnd
-      mesa
-    ];
     enable32Bit = true;
   };
 
   environment.sessionVariables = { LIBVA_DRIVER_NAME = "iHD"; };
 
   services.xserver.videoDrivers = [ "nvidia" ];
-
+  services.flatpak.enable = true;
   hardware.nvidia = {
-    package = config.boot.kernelPackages.nvidiaPackages.beta;
+    package = config.boot.kernelPackages.nvidiaPackages.stable;
     modesetting.enable = true;
-    powerManagement.enable = false;
-    powerManagement.finegrained = false;
+    powerManagement = {
+      enable = true;
+      finegrained = true;
+    };
     open = false;
     nvidiaSettings = true;
 
     prime = {
-      # offload = {
-      #   enable = true;
-      #   enableOffloadCmd = true;
-      # };
-      sync.enable = true;
+      offload = {
+        enable = true;
+        enableOffloadCmd = true;
+      };
+      # sync.enable = true; # Removed as offload is generally better for laptops
       intelBusId = "PCI:0:2:0";
       nvidiaBusId = "PCI:1:0:0";
     };

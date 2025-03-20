@@ -2,6 +2,7 @@
   basePackages = with pkgs; [
     _1password-cli
     alacritty
+    alsa-utils
     bat
     binutils
     code-cursor
@@ -19,18 +20,19 @@
     gnumake
     jq
     killall
+    libcec
     neovim
+    sox
     nfs-utils
     ntfs3g
     openai
-    openai-whisper
-    pam_reattach
+    # openai-whisper
     pciutils
     ripgrep
     rsync
+    rclone
     sesh
-    tailscale
-    terminal-notifier
+    # terminal-notifier
     tpm2-tss
     traceroute
     tree

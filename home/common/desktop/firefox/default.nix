@@ -20,9 +20,20 @@
         };
         search = {
           force = true;
-          default = "Ecosia";
-          order = [ "Ecosia" "DuckDuckGo" ];
+          default = "searchxng";
+          order = [ "searchxng" "ecosia" "ddg" ];
           engines = {
+            "searchxng" = {
+              template = "https://search.patout.xyz/search";
+              icon = "https://search.patout.xyz/favicon.ico";
+              definedAliases = [ "@s" ];
+              params = [
+                {
+                  name = "q";
+                  value = "{searchTerms}";
+                }
+              ];
+            };
             "Nix Packages" = {
               urls = [{
                 template = "https://search.nixos.org/packages";
@@ -41,20 +52,20 @@
                 "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
               definedAliases = [ "@np" ];
             };
-            "Ecosia" = {
+            "ecosia" = {
               urls = [{
                 template = "https://www.ecosia.org/search?q={searchTerms}";
               }];
-              iconUpdateURL = "https://www.ecosia.org/static/icons/favicon.ico";
+              icon = "https://www.ecosia.org/static/icons/favicon.ico";
               definedAliases = [ "@eco" ];
             };
-            "Bing".metaData.hidden = true;
-            "DuckDuckGo".metaData.alias =
+            "bing".metaData.hidden = true;
+            "ddg".metaData.alias =
               "@d"; # builtin engines only support specifying one additional alias
           };
         };
 
-        extensions = with pkgs.nur.repos.rycee.firefox-addons; [
+        extensions.packages = with pkgs.nur.repos.rycee.firefox-addons; [
           aria2-integration
           buster-captcha-solver
           clearurls

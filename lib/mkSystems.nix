@@ -82,7 +82,15 @@ in {
       inherit system;
       config.allowUnfree = true;
       config.joypixels.acceptLicense = true;
-      overlays = [ inputs.nur.overlays.default ];
+      overlays = [ 
+        inputs.nur.overlays.default 
+        (final: prev: {
+          unstable = import inputs.nixpkgs-unstable {
+            inherit system;
+            config.allowUnfree = true;
+          };
+        })
+      ];
       config.permittedInsecurePackages = [
         "electron-27.3.11"
       ];

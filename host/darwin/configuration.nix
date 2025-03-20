@@ -107,7 +107,6 @@
       "sequel-ace"
       "sizzy"
       "spotify"
-      "tailscale"
       "todoist"
       "utm"
       "vlc"

@@ -9,7 +9,6 @@
     ../services/avahi.nix
     ../services/firewall.nix
     ../services/openssh.nix
-    ../services/tailscale.nix
     ../services/network.nix
 
     ../hardware/bluetooth.nix
@@ -32,6 +31,7 @@
   services = {
     chrony.enable = true;
     journald.extraConfig = "SystemMaxUse=250M";
+    flatpak.enable = true;
   };
 
   security = {
