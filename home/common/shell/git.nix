@@ -5,16 +5,16 @@
   programs.git = pkgs.lib.recursiveUpdate git {
     iniContent.gpg = {
       format = lib.mkForce "ssh";
-      ssh = { program = config.programs.git.signing.signer; };
+      ssh = { program = config.programs.git.signing.gpgPath; };
     };
     signing = {
       key =
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOR4x6DZqrgy8cuxcU/2Zvjx8664hrAK+MgChuuKvbYJ";
       signByDefault = true;
-      signer = if isDarwin then
+      gpgPath = if isDarwin then
         "/Applications/1Password.app/Contents/MacOS/op-ssh-sign"
       else
-        "${pkgs._1password-gui}/bin/op-ssh-sign";
+        "${pkgs.unstable._1password-gui}/bin/op-ssh-sign";
     };
     delta = {
       enable = true;

@@ -13,7 +13,7 @@
   environment.sessionVariables = { LIBVA_DRIVER_NAME = "iHD"; };
 
   services.xserver.videoDrivers = [ "nvidia" ];
-  services.flatpak.enable = true;
+
   hardware.nvidia = {
     package = config.boot.kernelPackages.nvidiaPackages.stable;
     modesetting.enable = true;

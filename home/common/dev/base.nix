@@ -1,5 +1,5 @@
 { pkgs, isDarwin, ... }: {
-  home.packages = with pkgs; [
+  home.packages = with pkgs.unstable; [
     fd
     jq
     k9s
@@ -8,12 +8,10 @@
     wget
 
     # Import Scripts
-    (import ./../../../scripts/tmux-sessionizer.nix { inherit pkgs; })
-    (import ./../../../scripts/kn.nix { inherit pkgs; })
-    (import ./../../../scripts/clone-for-worktrees.nix { inherit pkgs; })
-    (import ./../../../scripts/recording.nix { inherit pkgs isDarwin; })
-
-    # Container tooling
+    (import ./../../../scripts/tmux-sessionizer.nix { pkgs = pkgs.unstable; })
+    (import ./../../../scripts/kn.nix { pkgs = pkgs.unstable; })
+    (import ./../../../scripts/clone-for-worktrees.nix { pkgs = pkgs.unstable; })
+    (import ./../../../scripts/recording.nix { pkgs = pkgs.unstable; inherit isDarwin; })
     dive
     kubectl
     skopeo

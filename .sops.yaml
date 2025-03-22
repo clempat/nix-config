@@ -1,0 +1,10 @@
+keys:
+  - &host_tuxedo age1yz8ds3w3acr7m2jxdl8zry8ag7ky49t0yrgkl740afc8ca05tetqd4d8zf
+  - &user_clement age14j54lgffclaaet4v7gx0m0wvc5n9r50wjt7uuxz4knkx470qxs2shpwrus
+
+creation_rules:
+  - path_regex: secrets/secrets.yaml
+    key_groups:
+      - age:
+          - *host_tuxedo
+          - *user_clement

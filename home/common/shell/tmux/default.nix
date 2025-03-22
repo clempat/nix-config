@@ -13,11 +13,11 @@ let
   };
 
 in {
-  home.packages = with pkgs; [
+  home.packages = with pkgs.unstable; [
     fzf
     # gitmux
     sesh
-    (import ./tmux-sesh.nix { inherit pkgs; })
+    (import ./tmux-sesh.nix { pkgs = pkgs.unstable; })
   ];
 
   home.file.".config/tmux/gitmux.conf".source = ./gitmux.conf;
@@ -29,7 +29,9 @@ in {
     clock24 = true;
     shell = "${pkgs.zsh}/bin/zsh";
 
-    plugins = with pkgs.tmuxPlugins; [
+    package = pkgs.unstable.tmux;
+
+    plugins = with pkgs.unstable.tmuxPlugins; [
       {
         plugin = continuum;
         extraConfig = ''

@@ -21,7 +21,10 @@
   programs = {
     git.enable = true;
     home-manager.enable = true;
-    jq.enable = true;
+    jq ={
+      enable = true;
+      package = pkgs.unstable.jq;
+    };
     pyenv.enable = true;
   };
 
@@ -30,7 +33,7 @@
     enableZshIntegration = true;
   };
 
-  home.packages = with pkgs; [
+  home.packages = with pkgs.unstable; [
     devpod
 
     sesh

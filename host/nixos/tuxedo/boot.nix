@@ -29,6 +29,6 @@
     extraModulePackages = [ config.boot.kernelPackages.v4l2loopback ];
 
     # Use the latest Linux kernel, rather than the default LTS
-    kernelPackages = pkgs.linuxPackages_latest;
+    kernelPackages = pkgs.unstable.linuxPackages_latest;
   };
 }

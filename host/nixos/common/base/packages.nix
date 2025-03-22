@@ -1,5 +1,5 @@
 { pkgs, ... }: {
-  basePackages = with pkgs; [
+  basePackages = with pkgs.unstable; [
     _1password-cli
     alacritty
     alsa-utils

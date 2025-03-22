@@ -1,4 +1,9 @@
-{ pkgs, desktop, inputs, system, ... }: {
+{ pkgs, desktop, config, inputs, system, lib, ... }: 
+let oi_icon = builtins.fetchurl {
+  url = "https://github.com/open-webui/open-webui/blob/main/backend/open_webui/static/logo.png?raw=true";
+  sha256 = "sha256:066vxl00g5zlcyljv42s671ld8iy063id623690g8131jqswkgii";
+  };
+in {
   imports = [
     (./. + "/${desktop}")
 
@@ -13,7 +18,9 @@
     # ./zathura.nix
   ];
 
-  home.packages = with pkgs; [
+  home.file.".config/xdg/icons/openwebui.png".source = oi_icon;
+
+  home.packages = with pkgs.unstable; [
     # rambox
     alpaca
     audacity
@@ -26,7 +33,6 @@
     discord
     element-desktop
     figma-linux
-    inputs.zen-browser.packages."${system}".default
     libnotify
     libreoffice
     # using EOL electron
@@ -34,20 +40,28 @@
     loupe
     mumble
     nextcloud-client
-    obsidian
     pamixer
     pavucontrol
     signal-desktop
     ultrastar-manager
     ultrastardx
     sqlite
-    todoist-electron
     vlc
     warp-terminal
     wireguard-ui
     xdg-utils
     xorg.xlsclients
-  ];
+   ] ++ [
+      # From flake inputs
+      inputs.zen-browser.packages.${system}.default
+    ];
 
   fonts.fontconfig.enable = true;
+
+  xdg.desktopEntries.openwebui = {
+    name = "Open Web UI";
+    genericName = "Open Web UI";
+    exec = "${lib.getExe pkgs.chromium} --app=https://chat.patout.app";
+    icon = "${config.home.homeDirectory}/.config/xdg/icons/openwebui.png";
+  };
 }

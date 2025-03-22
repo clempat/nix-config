@@ -3,6 +3,7 @@ let theme = import "${self}/lib/theme" { inherit pkgs; };
 in {
   programs.fzf = {
     enable = true;
+    package = pkgs.unstable.fzf;
     enableZshIntegration = true;
 
     changeDirWidgetOptions = [ "--preview 'tree -C {} | head -200'" ];

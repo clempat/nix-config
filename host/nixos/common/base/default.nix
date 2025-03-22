@@ -10,6 +10,7 @@
     ../services/firewall.nix
     ../services/openssh.nix
     ../services/network.nix
+    ../services/sops.nix
 
     ../hardware/bluetooth.nix
     ../hardware/audioengine.nix
@@ -25,7 +26,10 @@
 
   programs = {
     zsh.enable = true;
-    _1password.enable = true;
+    _1password = {
+      enable = true;
+      package = pkgs.unstable._1password-cli;
+    };
   };
 
   services = {

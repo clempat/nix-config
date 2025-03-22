@@ -7,6 +7,7 @@ in {
     ../services/pipewire.nix
     ../virt
     ./piper.nix
+    ./flatpak.nix
   ];
 
   # Enable Plymouth and surpress some logs by default.

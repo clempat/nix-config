@@ -24,7 +24,7 @@
           order = [ "searchxng" "ecosia" "ddg" ];
           engines = {
             "searchxng" = {
-              template = "https://search.patout.xyz/search";
+              template = "https://search.patout.app/search";
               icon = "https://search.patout.xyz/favicon.ico";
               definedAliases = [ "@s" ];
               params = [
@@ -65,7 +65,7 @@
           };
         };
 
-        extensions.packages = with pkgs.nur.repos.rycee.firefox-addons; [
+        extensions = with pkgs.nur.repos.rycee.firefox-addons; [
           aria2-integration
           buster-captcha-solver
           clearurls
