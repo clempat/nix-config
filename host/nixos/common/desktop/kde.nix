@@ -14,5 +14,8 @@
   environment.systemPackages = with pkgs; [
     polkit_gnome
     kdePackages.filelight
+
+    wl-clipboard
+    xclip
   ];
 }

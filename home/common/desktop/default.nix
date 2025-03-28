@@ -64,4 +64,10 @@ in {
     exec = "${lib.getExe pkgs.chromium} --app=https://chat.patout.app";
     icon = "${config.home.homeDirectory}/.config/xdg/icons/openwebui.png";
   };
+
+  xdg.desktopEntries.penpot = {
+    name = "Penpot";
+    genericName = "Penpot";
+    exec = "${lib.getExe pkgs.chromium} --app=https://penpot.patout.app";
+  };
 }

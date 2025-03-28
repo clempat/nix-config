@@ -69,7 +69,6 @@
           aria2-integration
           buster-captcha-solver
           clearurls
-          container-tabs-sidebar
           decentraleyes
           libredirect
           no-pdf-download
@@ -80,14 +79,10 @@
           omnivore
           darkreader
           languagetool
-          tabcenter-reborn
           onepassword-password-manager
           ecosia
           fediact
-          raindropio
         ];
-
-        userChrome = builtins.readFile ./userChrome.css;
       };
     };
   };
