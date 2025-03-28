@@ -1,5 +1,7 @@
 { pkgs, isDarwin, ... }: {
   home.packages = with pkgs.unstable; [
+    actionlint
+    unstable.buf
     fd
     jq
     k9s
@@ -23,6 +25,8 @@
     go-tools
     gofumpt
     gopls
+    jira-cli-go
+    gollama
 
     # Nix tooling
     deadnix

@@ -42,6 +42,7 @@
     # To move to project later
     # FIX: Do not know which one to install
     gdal
+    gcalcli
     heroku
     postgresql
     tmuxinator

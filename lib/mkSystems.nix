@@ -66,6 +66,7 @@ in {
         inherit self inputs outputs stateVersion hostname username git desktop isDarwin;
       };
       modules = [
+        inputs.sops-nix.nixosModules.sops
         (import ../host/darwin/configuration.nix)
         inputs.home-manager.darwinModules.home-manager
         { home-manager = mkHomeManagerConfig { inherit pkgs username isDarwin desktop git system hostname; }; }

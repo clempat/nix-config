@@ -42,6 +42,9 @@
       enable = true;
       plugins = [ "git" ];
       theme = "robbyrussell";
+      extraConfig = ''
+        bindkey '^X' create_completion
+      '';
     };
 
     shellAliases = {

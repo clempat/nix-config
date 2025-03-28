@@ -12,7 +12,6 @@
   };
 
   programs.zsh.enable = true;
-  services.nix-daemon.enable = true;
   system.stateVersion = 4;
   users.users.${username}.home = "/Users/${username}";
 
@@ -60,7 +59,7 @@
       "parcel" = 639968404;
       "paste" = 967805235;
       "timery" = 1425368544;
-      "toggl" = 1291898086;
+      # "toggl" = 1291898086;
       "wireguard" = 1451685025;
     };
     casks = [
@@ -68,9 +67,11 @@
       "1password-cli"
       "arc"
       "bartender"
+      "beeper"
       "cleanshot"
       "cursor"
       "dropzone"
+      "dropbox"
       "deskpad"
       "elgato-stream-deck"
       "eloston-chromium"
@@ -121,7 +122,9 @@
 
     defaults = {
       NSGlobalDomain = {
-        KeyRepeat = 1;
+        ApplePressAndHoldEnabled = false;
+        InitialKeyRepeat = 15;
+        KeyRepeat = 2;
         NSAutomaticCapitalizationEnabled = false;
         NSAutomaticSpellingCorrectionEnabled = false;
         "com.apple.swipescrolldirection" = false;
