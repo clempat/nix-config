@@ -1,7 +1,6 @@
 { pkgs, isDarwin, ... }: {
   home.packages = with pkgs.unstable; [
     actionlint
-    unstable.buf
     fd
     jq
     k9s
