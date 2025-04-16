@@ -10,7 +10,6 @@
     ./gpg.nix
     ./lazygit.nix
     ./neofetch.nix
-    ./neovim.nix
     ./nnn.nix
     ./starship.nix
     ./ssh.nix
@@ -21,7 +20,7 @@
   programs = {
     git.enable = true;
     home-manager.enable = true;
-    jq ={
+    jq = {
       enable = true;
       package = pkgs.unstable.jq;
     };
@@ -58,5 +57,6 @@
     NODE_VERSIONS = "$HOME/.nvm/versions/node";
     GDAL_LIBRARY_PATH = "${pkgs.gdal}/lib/libgdal.dylib";
     GEOS_LIBRARY_PATH = "${pkgs.geos}/lib/libgeos_c.dylib";
+    OLLAMA_HOST = "0.0.0.0:11434";
   };
 }

@@ -16,6 +16,10 @@
   users.users.${username}.home = "/Users/${username}";
 
   environment.shells = [ pkgs.zsh ];
+  environment.variables = {
+    EDITOR="nvim";
+    OLLAMA_HOST="0.0.0.0:11434";
+  };
   # security.pam.enableSudoTouchIdAuth = true;
 
   # Following will allow to use touch id in tmux
@@ -33,8 +37,8 @@
   homebrew = { # Homebrew Package Manager
     enable = true;
     onActivation = {
-      autoUpdate = false;
-      upgrade = false;
+      autoUpdate = true;
+      upgrade = true;
       cleanup = "zap";
     };
     taps = [ "mrkai77/cask" "heroku/brew" "homebrew/cask-fonts" ];
@@ -64,7 +68,6 @@
     };
     casks = [
       "1password"
-      "1password-cli"
       "arc"
       "bartender"
       "beeper"

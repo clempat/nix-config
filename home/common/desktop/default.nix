@@ -38,6 +38,7 @@ in {
     # using EOL electron
     # logseq
     loupe
+    lmstudio
     mumble
     nextcloud-client
     pamixer

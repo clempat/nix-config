@@ -19,6 +19,7 @@ in {
   # This is a workaround for not seemingly being able to set $EDITOR in home-manager
   environment.sessionVariables = {
     EDITOR = "nvim";
+    OLLAMA_HOST = "0.0.0.0:11434";
     NODE_VERSIONS = "$HOME/.nvm/versions/node";
     GDAL_LIBRARY_PATH = "${pkgs.gdal}/lib/libgdal.dylib";
     GEOS_LIBRARY_PATH = "${pkgs.geos}/lib/libgeos_c.dylib";
