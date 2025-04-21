@@ -17,16 +17,14 @@
 
   environment.shells = [ pkgs.zsh ];
   environment.variables = {
-    EDITOR="nvim";
-    OLLAMA_HOST="0.0.0.0:11434";
+    EDITOR = "nvim";
+    OLLAMA_HOST = "0.0.0.0:11434";
   };
   # security.pam.enableSudoTouchIdAuth = true;
 
   # Following will allow to use touch id in tmux
   # See: https://github.com/LnL7/nix-darwin/issues/985
-  environment.systemPackages = [
-    pkgs.pam-reattach
-  ];
+  environment.systemPackages = [ pkgs.pam-reattach ];
 
   environment.etc."pam.d/sudo_local".text = ''
     # Managed by Nix Darwin
@@ -131,6 +129,7 @@
         NSAutomaticCapitalizationEnabled = false;
         NSAutomaticSpellingCorrectionEnabled = false;
         "com.apple.swipescrolldirection" = false;
+        NSWindowShouldDragOnGesture = true;
       };
       dock = {
         autohide = true;
