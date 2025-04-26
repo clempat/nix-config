@@ -33,6 +33,7 @@ in {
     discord
     element-desktop
     figma-linux
+    orca-slicer
     libnotify
     libreoffice
     # using EOL electron
@@ -45,9 +46,10 @@ in {
     pavucontrol
     signal-desktop
     ultrastar-manager
-    ultrastardx
+    # ultrastardx
     sqlite
     vlc
+    vesktop
     warp-terminal
     wireguard-ui
     xdg-utils

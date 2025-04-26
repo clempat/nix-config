@@ -29,7 +29,8 @@ in {
     "1password/custom_allowed_browsers" = {
       text = ''
         vivaldi-bin
-        .zen-wrapped
+        zen
+        zen-beta
       '';
       mode = "0755";
     };
