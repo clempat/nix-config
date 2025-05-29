@@ -1,17 +1,17 @@
 {
   description = "clement's nixos configuration";
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
-    nixpkgs-unstable.url="github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
-    nix-darwin.url = "github:LnL7/nix-darwin/nix-darwin-24.11";
+    nix-darwin.url = "github:LnL7/nix-darwin/nix-darwin-25.05";
 
     disko.url = "github:nix-community/disko";
     disko.inputs.nixpkgs.follows = "nixpkgs";
 
-    home-manager.url = "github:nix-community/home-manager/release-24.11";
+    home-manager.url = "github:nix-community/home-manager/release-25.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     nix-flatpak.url = "github:gmodena/nix-flatpak/";
@@ -27,7 +27,7 @@
     tmux-sessionx.url = "github:omerxx/tmux-sessionx";
 
     zen-browser.url = "github:0xc000022070/zen-browser-flake";
-    
+
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -40,7 +40,9 @@
       stateVersion = "23.11";
       username = "clement";
 
-      mkSystems = import ./lib/mkSystems.nix { inherit self inputs outputs stateVersion username; };
+      mkSystems = import ./lib/mkSystems.nix {
+        inherit self inputs outputs stateVersion username;
+      };
     in {
 
       darwinConfigurations = let username = "clementpatout";
@@ -87,7 +89,7 @@
         let pkgs = nixpkgs.legacyPackages.${system};
         in import ./shell.nix { inherit pkgs; });
 
-      formatter =
-        mkSystems.forAllSystems (system: self.packages.${system}.nixfmt-classic);
+      formatter = mkSystems.forAllSystems
+        (system: self.packages.${system}.nixfmt-classic);
     };
 }

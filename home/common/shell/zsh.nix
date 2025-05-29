@@ -9,7 +9,7 @@
 
     sessionVariables.SSH_AUTH_SOCK = "~/.1password.agent.sock";
 
-    initExtra = ''
+    initContent = ''
       n () {
         if [ -n $NNNLVL ] && [ "$NNNLVL" -ge 1 ]; then
           echo "nnn is already running"

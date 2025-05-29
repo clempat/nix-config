@@ -27,12 +27,10 @@
               template = "https://search.patout.app/search";
               icon = "https://search.patout.xyz/favicon.ico";
               definedAliases = [ "@s" ];
-              params = [
-                {
-                  name = "q";
-                  value = "{searchTerms}";
-                }
-              ];
+              params = [{
+                name = "q";
+                value = "{searchTerms}";
+              }];
             };
             "Nix Packages" = {
               urls = [{
@@ -65,7 +63,7 @@
           };
         };
 
-        extensions = with pkgs.nur.repos.rycee.firefox-addons; [
+        extensions.packages = with pkgs.nur.repos.rycee.firefox-addons; [
           aria2-integration
           buster-captcha-solver
           clearurls
