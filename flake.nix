@@ -34,7 +34,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, ... }@inputs:
+  outputs = { self, nixpkgs, ... }@inputs:
     let
       inherit (self) outputs;
       stateVersion = "23.11";
@@ -51,16 +51,6 @@
           inherit username;
           hostname = "MONDO-1325.local";
           system = "aarch64-darwin";
-        };
-      };
-
-      # nix run home-manager -- switch --flake .
-      homeConfigurations = {
-        # Desktop machines
-        "${username}@tuxedo" = mkSystems.mkHome {
-          hostname = "tuxedo";
-          desktop = "kde";
-          system = "x86_64-linux";
         };
       };
 

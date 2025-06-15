@@ -25,14 +25,6 @@
     lazydocker
     docker
 
-    # Go tooling
-    go
-    go-tools
-    gofumpt
-    gopls
-    jira-cli-go
-    gollama
-
     # Nix tooling
     deadnix
     devenv
@@ -42,11 +34,6 @@
     nixpkgs-fmt
     nurl
     statix
-
-    # Python tooling
-    ruff
-    # (pkgs.python3.withPackages (p: with p; [ tox virtualenv ]))
-    # pipx
 
     # Shell tooling
     shellcheck

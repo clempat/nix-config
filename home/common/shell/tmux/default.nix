@@ -1,4 +1,4 @@
-{ inputs, pkgs, isDarwin ? false, ... }:
+{ pkgs, ... }:
 let
   tmux-nerd-font-window-name = pkgs.tmuxPlugins.mkTmuxPlugin {
     pluginName = "tmux-nerd-font-window-name.tmux";
@@ -59,11 +59,11 @@ in {
       bind-key "k" run-shell "tmux-sesh"
       # Enable vi mode
       set-window-option -g mode-keys vi
-      
+
       # Search settings
       bind-key / copy-mode \; send-key ?
       bind-key ? copy-mode \; send-key ?
-      
+
       # Make search case insensitive
       set-window-option -g wrap-search on
       set-window-option -g mode-keys vi

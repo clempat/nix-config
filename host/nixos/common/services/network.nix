@@ -1,51 +1,50 @@
-{ lib, pkgs, config, ... }: {
+# Any way to make it simple?
+{ pkgs, config, ... }: {
   networking = {
     networkmanager = {
       enable = true;
       wifi = { backend = "iwd"; };
       # Define trusted networks where VPN should not be active
-      dispatcherScripts = [
-        {
-          source = pkgs.writeText "vpn-control" ''
-            #!/bin/sh
-            TRUSTED_SSIDS="Famille Patout"
-            INTERFACE=$1
-            STATUS=$2
+      dispatcherScripts = [{
+        source = pkgs.writeText "vpn-control" ''
+          #!/bin/sh
+          TRUSTED_SSIDS="Famille Patout"
+          INTERFACE=$1
+          STATUS=$2
+
+          if [ "$INTERFACE" = "wg0" ]; then
+            # Don't do anything when WireGuard interface changes
+            exit 0
+          fi
+
+          if [ "$STATUS" = "up" ] || [ "$STATUS" = "down" ]; then
+            CURRENT_SSID=$(${pkgs.networkmanager}/bin/nmcli -t -f active,ssid dev wifi | grep '^yes' | cut -d':' -f2)
             
-            if [ "$INTERFACE" = "wg0" ]; then
-              # Don't do anything when WireGuard interface changes
-              exit 0
-            fi
-            
-            if [ "$STATUS" = "up" ] || [ "$STATUS" = "down" ]; then
-              CURRENT_SSID=$(${pkgs.networkmanager}/bin/nmcli -t -f active,ssid dev wifi | grep '^yes' | cut -d':' -f2)
-              
-              # Check if connected to a trusted SSID
-              for SSID in $TRUSTED_SSIDS; do
-                if [ "$CURRENT_SSID" = "$SSID" ]; then
-                  echo "Connected to trusted network $CURRENT_SSID, disabling WireGuard"
-                  ${pkgs.networkmanager}/bin/nmcli connection down wg0 || true
-                  exit 0
-                fi
-              done
-              
-              # Not on trusted network, enable WireGuard
-              if [ "$STATUS" = "up" ]; then
-                echo "Connected to untrusted network, enabling WireGuard"
-                ${pkgs.networkmanager}/bin/nmcli connection up wg0 || true
+            # Check if connected to a trusted SSID
+            for SSID in $TRUSTED_SSIDS; do
+              if [ "$CURRENT_SSID" = "$SSID" ]; then
+                echo "Connected to trusted network $CURRENT_SSID, disabling WireGuard"
+                ${pkgs.networkmanager}/bin/nmcli connection down wg0 || true
+                exit 0
               fi
+            done
+            
+            # Not on trusted network, enable WireGuard
+            if [ "$STATUS" = "up" ]; then
+              echo "Connected to untrusted network, enabling WireGuard"
+              ${pkgs.networkmanager}/bin/nmcli connection up wg0 || true
             fi
-          '';
-          type = "basic";
-        }
-      ];
+          fi
+        '';
+        type = "basic";
+      }];
     };
     nameservers = [ "192.168.40.254" ];
   };
 
   services.resolved = {
     enable = true;
-    fallbackDns = ["1.1.1.1" "9.9.9.9"];
+    fallbackDns = [ "1.1.1.1" "9.9.9.9" ];
   };
 
   sops.templates."wg0.conf" = {
@@ -65,8 +64,6 @@
   };
 
   networking.wg-quick.interfaces = {
-    wg0 = {
-      configFile = config.sops.templates."wg0.conf".path;
-    };
+    wg0 = { configFile = config.sops.templates."wg0.conf".path; };
   };
 }

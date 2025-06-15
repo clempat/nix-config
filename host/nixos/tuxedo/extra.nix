@@ -1,10 +1,6 @@
-{ pkgs, inputs, lib, config, ... }:
+{ inputs, lib, config, ... }:
 
 {
-  imports = [
-    inputs.nixos-hardware.nixosModules.tuxedo-infinitybook-pro14-gen7
-  ];
-
   hardware.graphics = {
     enable = true;
     enable32Bit = true;
@@ -15,7 +11,7 @@
   services.xserver.videoDrivers = [ "nvidia" ];
 
   hardware.nvidia = {
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
+    package = config.boot.kernelPackages.nvidiaPackages.beta;
     modesetting.enable = true;
     powerManagement = {
       enable = true;
@@ -45,7 +41,4 @@
       };
     };
   };
-
-
-  programs.steam.enable = true;
 }

@@ -1,4 +1,4 @@
-{ pkgs, lib, config, ... }: {
+{ pkgs, ... }: {
   boot = {
     # Secure boot configuration
     bootspec.enable = true;
@@ -40,6 +40,6 @@
     # '';
 
     # Use the latest Linux kernel, rather than the default LTS
-    kernelPackages = pkgs.unstable.linuxPackages_6_14;
+    kernelPackages = pkgs.unstable.linuxPackages_6_15;
   };
 }

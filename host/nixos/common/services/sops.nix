@@ -1,13 +1,13 @@
-{ config, lib, pkgs, ... }:
+_:
 
 {
   sops = {
     # This will automatically import SSH keys as age keys
     age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
-    
+
     # Path to the default sops file
     defaultSopsFile = ../../../../secrets/secrets.yaml;
-    
+
     # Secrets for WireGuard
     secrets = {
       "wireguard/private_key" = {

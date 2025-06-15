@@ -1,5 +1,5 @@
 { config, desktop, hostname, inputs, lib, modulesPath, outputs, stateVersion
-, username, pkgs, ... }: {
+, username, ... }: {
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
     (./. + "/${hostname}/boot.nix")
@@ -29,18 +29,8 @@
         config.nix.registry);
 
     optimise.automatic = true;
-    settings = {
-      experimental-features = [ "nix-command" "flakes" ];
-    };
+    settings = { experimental-features = [ "nix-command" "flakes" ]; };
   };
 
-  system = {
-    inherit stateVersion;
-    # activationScripts.diff = {
-    #   supportsDryActivation = true;
-    #   text = ''
-    #     ${pkgs.nvd}/bin/nvd --nix-bin-dir=${pkgs.nix}/bin diff /run/current-system "$systemConfig"
-    #   '';
-    # };
-  };
+  system = { inherit stateVersion; };
 }

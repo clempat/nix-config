@@ -1,10 +1,8 @@
 { hostname, pkgs, lib, username, ... }: {
   imports = [
     ./boot.nix
-    ./console.nix
     ./hardware.nix
     ./locale.nix
-    ./zramswap.nix
 
     ../services/avahi.nix
     ../services/firewall.nix

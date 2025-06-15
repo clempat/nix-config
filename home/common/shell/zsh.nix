@@ -1,4 +1,4 @@
-{ pkgs, isDarwin ? false, ... }: {
+_: {
 
   home.sessionVariables.ZVM_VI_ESCAPE_BINDKEY = "jk";
 
