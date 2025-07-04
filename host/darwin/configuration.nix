@@ -1,6 +1,8 @@
 { pkgs, username, ... }: {
   imports = [ ./yabai.nix ];
 
+  system.primaryUser = username;
+
   nix = {
     optimise.automatic = true;
     settings = {
@@ -89,7 +91,7 @@
       "font-jetbrains-mono-nerd-font"
       "font-roboto"
       "github"
-      "handbrake"
+      "handbrake-app"
       "home-assistant"
       "karabiner-elements"
       "kitty"
@@ -108,6 +110,7 @@
       "raycast"
       "sequel-ace"
       "sizzy"
+      "tailscale-app"
       "spotify"
       "todoist"
       "utm"
