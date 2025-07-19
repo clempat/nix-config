@@ -1,5 +1,6 @@
 { pkgs, username, ... }: {
-  imports = [ ./yabai.nix ];
+  # imports = [ ./yabai.nix ];
+  imports = [ ./aerospace.nix ./sketchybar.nix ];
 
   system.primaryUser = username;
 
@@ -41,7 +42,7 @@
       upgrade = true;
       cleanup = "zap";
     };
-    taps = [ "mrkai77/cask" "heroku/brew" "homebrew/cask-fonts" ];
+    taps = [ "mrkai77/cask" "heroku/brew" "sst/tap" ];
     brews = [
       "pngpaste"
 
@@ -57,6 +58,7 @@
       "xmlsec1"
       "libb2"
       "python@3.11"
+      "opencode"
     ];
     masApps = {
       "drafts" = 1435957248;
