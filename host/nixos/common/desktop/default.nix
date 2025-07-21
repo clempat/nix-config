@@ -53,6 +53,8 @@ in {
       theme.fonts.emoji.package
       theme.fonts.iconFont.package
       theme.fonts.monospace.package
+
+      geist-font
     ];
 
     # Use fonts specified by user rather than default ones

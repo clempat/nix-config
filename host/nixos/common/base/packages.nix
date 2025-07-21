@@ -1,5 +1,7 @@
 { pkgs, ... }: {
   basePackages = with pkgs.unstable; [
+    # openai-whisper
+    # terminal-notifier
     _1password-cli
     alacritty
     alsa-utils
@@ -15,24 +17,22 @@
     fabric-ai
     fd
     file
-    git
     gcc
+    git
     gnumake
     jq
     killall
     libcec
     neovim
-    sox
     nfs-utils
     ntfs3g
     openai
-    # openai-whisper
     pciutils
+    rclone
     ripgrep
     rsync
-    rclone
     sesh
-    # terminal-notifier
+    sox
     tpm2-tss
     traceroute
     tree

@@ -32,6 +32,9 @@
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    opencode.url = "github:sst/opencode/v0.3.54";
+    opencode.flake = false;
   };
 
   outputs = { self, nixpkgs, ... }@inputs:

@@ -33,6 +33,7 @@ let
     , git ? defaultGit, system, hostname }: {
       useGlobalPkgs = true;
       useUserPackages = true;
+      backupFileExtension = "backup";
       extraSpecialArgs = {
         inherit self inputs isDarwin desktop git stateVersion outputs username
           system hostname;
