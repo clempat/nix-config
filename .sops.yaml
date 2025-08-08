@@ -1,5 +1,6 @@
 keys:
-  - &host_tuxedo age1yz8ds3w3acr7m2jxdl8zry8ag7ky49t0yrgkl740afc8ca05tetqd4d8zf
+  - &host_tuxedo age1ckt4xaegpy7yn77trhsde3mpznhfjwa23xddkcd2d9lm0psf2dkq2knl9x
+  - &host_tuxedo_ssh age1yz8ds3w3acr7m2jxdl8zry8ag7ky49t0yrgkl740afc8ca05tetqd4d8zf
   - &user_clement age14j54lgffclaaet4v7gx0m0wvc5n9r50wjt7uuxz4knkx470qxs2shpwrus
   - &host_darwin_thermondo age1j0g7z3hptlyd5ndfd9206cldqpjqj9uvju03pewdjdyzhsl2afwqgjym20
 
@@ -8,5 +9,6 @@ creation_rules:
     key_groups:
       - age:
           - *host_tuxedo
+          - *host_tuxedo_ssh
           - *user_clement
           - *host_darwin_thermondo

@@ -1,6 +1,9 @@
 { inputs, lib, config, ... }:
 
 {
+  # Thermal management for quieter fans
+  services.thermald.enable = true;
+  powerManagement.powertop.enable = true;
   hardware.graphics = {
     enable = true;
     enable32Bit = true;

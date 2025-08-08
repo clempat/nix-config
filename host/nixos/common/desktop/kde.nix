@@ -11,7 +11,7 @@
     oxygen
   ];
 
-  environment.systemPackages = with pkgs; [
+  environment.systemPackages = with pkgs.unstable; [
     polkit_gnome
     kdePackages.filelight
 

@@ -9,6 +9,8 @@
     ../services/openssh.nix
     ../services/network.nix
     ../services/sops.nix
+    ../services/wireguard.nix
+    ../services/tailscale.nix
 
     ../hardware/bluetooth.nix
     ../hardware/audioengine.nix

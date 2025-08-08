@@ -8,7 +8,7 @@ _:
     # Path to the default sops file
     defaultSopsFile = ../../../../secrets/secrets.yaml;
 
-    # Secrets for WireGuard
+    # Secrets for VPN services
     secrets = {
       "wireguard/private_key" = {
         owner = "root";
@@ -16,6 +16,16 @@ _:
         mode = "0400";
       };
       "wireguard/server" = {
+        owner = "root";
+        group = "root";
+        mode = "0400";
+      };
+      "tailscale/headscale_url" = {
+        owner = "root";
+        group = "root";
+        mode = "0400";
+      };
+      "tailscale/auth_key" = {
         owner = "root";
         group = "root";
         mode = "0400";

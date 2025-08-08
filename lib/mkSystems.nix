@@ -19,6 +19,7 @@ let
       };
       overlays = [
         inputs.nur.overlays.default
+        outputs.overlays.modifications
         (final: prev: {
           unstable = import inputs.nixpkgs-unstable {
             inherit system;

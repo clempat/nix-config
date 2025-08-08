@@ -13,10 +13,10 @@
         version = "0.3.54";
         src = inputs.opencode;
         node_modules = old.node_modules.overrideAttrs (nmOld: {
-          outputHash = "sha256-1ZxetDrrRdNNOfDOW2uMwMwpEs5S3BLF+SejWcRdtik=";
+          outputHash = "sha256-XIRV1QrgRHnpJyrgK9ITxH61dve7nWfVoCPs3Tc8nuU=";
         });
         tui = old.tui.overrideAttrs (tuiOld: {
-          vendorHash = "sha256-Qvn59PU95TniPy7JaZDJhn/wUCfFYM+7bzav1jxNv34=";
+          vendorHash = "sha256-MZAKEXA34dHiH4XYUlLq6zo8ppG8JD3nj7fhZMrr+TI=";
         });
       });
     # example = prev.example.overrideAttrs (oldAttrs: rec {

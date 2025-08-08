@@ -39,5 +39,8 @@
     enable = lib.mkDefault true;
     tailor-gui.enable = true;
   };
+
+  # Additional fan control via kernel parameters
+  boot.kernelParams = [ "acpi_osi=Linux" "acpi_backlight=vendor" ];
   # hardware.tuxedo-drivers.enable = lib.mkForce false;
 }

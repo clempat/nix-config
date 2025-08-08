@@ -6,7 +6,7 @@ in {
   users.users.${username} = {
     isNormalUser = true;
     shell = pkgs.zsh;
-    extraGroups = [ "audio" "networkmanager" "users" "video" "wheel" ]
+    extraGroups = [ "audio" "networkmanager" "users" "video" "wheel" "dialout" ]
       ++ ifExists [ "docker" "plugdev" "render" "lxd" "games" ];
 
     openssh.authorizedKeys.keys = [
