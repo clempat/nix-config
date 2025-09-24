@@ -1,9 +1,17 @@
-{ inputs, pkgs, isDarwin, system, ... }: {
+{
+  inputs,
+  pkgs,
+  isDarwin,
+  system,
+  ...
+}:
+{
   home.packages = with pkgs.unstable; [
     inputs.clement-nvim.packages.${system}.nvim
     actionlint
     fd
     jq
+    ktailctl
     k9s
     ripgrep
     postman

@@ -2,4 +2,6 @@
 # Build them using 'nix build .#example' or (legacy) 'nix-build -A example'
 
 { pkgs ? (import ../nixpkgs.nix) { } }:
-{ }
+{
+  tuxedo-tray = pkgs.callPackage ../scripts/tuxedo-tray.nix { };
+}

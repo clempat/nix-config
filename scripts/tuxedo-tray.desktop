@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Tuxedo Fan Control
+Comment=Quick fan profile switching for Tuxedo laptops
+Exec=tuxedo-tray menu
+Icon=fan
+Type=Application
+Categories=System;Settings;
+Keywords=fan;cooling;tuxedo;tailor;
+NoDisplay=false

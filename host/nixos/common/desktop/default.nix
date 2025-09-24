@@ -1,6 +1,14 @@
-{ desktop, pkgs, self, username, ... }:
-let theme = import "${self}/lib/theme" { inherit pkgs; };
-in {
+{
+  desktop,
+  pkgs,
+  self,
+  username,
+  ...
+}:
+let
+  theme = import "${self}/lib/theme" { inherit pkgs; };
+in
+{
   imports = [
     (./. + "/${desktop}.nix")
     ../hardware/yubikey.nix
@@ -42,6 +50,7 @@ in {
       package = pkgs.unstable._1password-gui;
       polkitPolicyOwners = [ "${username}" ];
     };
+    kdeconnect.enable = true;
   };
 
   fonts = {
@@ -63,9 +72,14 @@ in {
     fontconfig = {
       enable = true;
       defaultFonts = {
-        serif = [ "${theme.fonts.default.name}" "${theme.fonts.emoji.name}" ];
-        sansSerif =
-          [ "${theme.fonts.default.name}" "${theme.fonts.emoji.name}" ];
+        serif = [
+          "${theme.fonts.default.name}"
+          "${theme.fonts.emoji.name}"
+        ];
+        sansSerif = [
+          "${theme.fonts.default.name}"
+          "${theme.fonts.emoji.name}"
+        ];
         monospace = [ "${theme.fonts.monospace.name}" ];
         emoji = [ "${theme.fonts.emoji.name}" ];
       };

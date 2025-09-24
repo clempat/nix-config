@@ -1,5 +1,10 @@
 # Tailscale client configuration for headscale server
-{ pkgs, config, lib, ... }: {
+{
+  pkgs,
+  config,
+  ...
+}:
+{
   services.tailscale = {
     enable = true;
     package = pkgs.tailscale;
@@ -41,8 +46,14 @@
   # Optional: Auto-connect script using auth key
   systemd.services.tailscale-autoconnect = {
     description = "Automatic connection to Tailscale/Headscale";
-    after = [ "network-online.target" "tailscaled.service" ];
-    wants = [ "network-online.target" "tailscaled.service" ];
+    after = [
+      "network-online.target"
+      "tailscaled.service"
+    ];
+    wants = [
+      "network-online.target"
+      "tailscaled.service"
+    ];
     wantedBy = [ "multi-user.target" ];
     serviceConfig = {
       Type = "oneshot";
@@ -73,3 +84,4 @@
     '';
   };
 }
+

@@ -33,29 +33,40 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    opencode.url = "github:sst/opencode/v0.3.54";
+    opencode.url = "github:sst/opencode";
     opencode.flake = false;
   };
 
-  outputs = { self, nixpkgs, ... }@inputs:
+  outputs =
+    { self, nixpkgs, ... }@inputs:
     let
       inherit (self) outputs;
       stateVersion = "23.11";
       username = "clement";
 
       mkSystems = import ./lib/mkSystems.nix {
-        inherit self inputs outputs stateVersion username;
+        inherit
+          self
+          inputs
+          outputs
+          stateVersion
+          username
+          ;
       };
-    in {
+    in
+    {
 
-      darwinConfigurations = let username = "clementpatout";
-      in {
-        "${username}@mondo" = mkSystems.mkDarwin {
-          inherit username;
-          hostname = "MONDO-1325.local";
-          system = "aarch64-darwin";
+      darwinConfigurations =
+        let
+          username = "clementpatout";
+        in
+        {
+          "${username}@mondo" = mkSystems.mkDarwin {
+            inherit username;
+            hostname = "MONDO-1325.local";
+            system = "aarch64-darwin";
+          };
         };
-      };
 
       # nix build .#nixosConfigurations.clement.config.system.build.toplevel
       nixosConfigurations = {
@@ -65,24 +76,34 @@
           desktop = "kde";
           system = "x86_64-linux";
         };
-        sparrow = mkSystems.mkHost { hostname = "sparrow"; };
+        sparrow = mkSystems.mkHost {
+          hostname = "sparrow";
+          system = "x86_64-linux";
+        };
       };
 
       # Custom packages; acessible via 'nix build', 'nix shell', etc
-      packages = mkSystems.forAllSystems (system:
-        let pkgs = nixpkgs.legacyPackages.${system};
-        in import ./pkgs { inherit pkgs; });
+      packages = mkSystems.forAllSystems (
+        system:
+        let
+          pkgs = nixpkgs.legacyPackages.${system};
+        in
+        import ./pkgs { inherit pkgs; }
+      );
 
       # Custom overlays
       overlays = import ./overlays { inherit inputs; };
 
       # Devshell for bootstrapping
       # Accessible via 'nix develop' or 'nix-shell' (legacy)
-      devShells = mkSystems.forAllSystems (system:
-        let pkgs = nixpkgs.legacyPackages.${system};
-        in import ./shell.nix { inherit pkgs; });
+      devShells = mkSystems.forAllSystems (
+        system:
+        let
+          pkgs = nixpkgs.legacyPackages.${system};
+        in
+        import ./shell.nix { inherit pkgs; }
+      );
 
-      formatter = mkSystems.forAllSystems
-        (system: self.packages.${system}.nixfmt-classic);
+      formatter = mkSystems.forAllSystems (system: self.packages.${system}.nixfmt-classic);
     };
 }

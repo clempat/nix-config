@@ -67,7 +67,7 @@ in {
 
   # Helper function for generating host configs
   mkHost = { hostname, desktop ? null, git ? defaultGit
-    , username ? defaultUsername, system }:
+    , username ? defaultUsername, system ? "x86_64-linux" }:
     let
       isDarwin = false;
       pkgs = mkPkgs { inherit system; };

@@ -1,4 +1,11 @@
-{ hostname, pkgs, lib, username, ... }: {
+{
+  hostname,
+  pkgs,
+  lib,
+  username,
+  ...
+}:
+{
   imports = [
     ./boot.nix
     ./hardware.nix
@@ -11,6 +18,8 @@
     ../services/sops.nix
     ../services/wireguard.nix
     ../services/tailscale.nix
+    ../services/jellyfin.nix
+    ../services/hotspot.nix
 
     ../hardware/bluetooth.nix
     ../hardware/audioengine.nix
@@ -21,8 +30,7 @@
     useDHCP = lib.mkDefault true;
   };
 
-  environment.systemPackages =
-    (import ./packages.nix { inherit pkgs; }).basePackages;
+  environment.systemPackages = (import ./packages.nix { inherit pkgs; }).basePackages;
 
   programs = {
     zsh.enable = true;
@@ -30,12 +38,27 @@
       enable = true;
       package = pkgs.unstable._1password-cli;
     };
+    nix-ld = {
+      enable = true;
+      libraries = with pkgs; [
+        stdenv.cc.cc.lib
+        glibc
+        zlib
+        openssl
+      ];
+    };
+    # Enable captive browser for dedicated captive portal handling
+    captive-browser = {
+      enable = true;
+      interface = "wlan0"; # Your WiFi interface
+    };
   };
 
   services = {
     chrony.enable = true;
     journald.extraConfig = "SystemMaxUse=250M";
     flatpak.enable = true;
+    power-profiles-daemon.enable = false;
   };
 
   security = {
@@ -44,6 +67,5 @@
   };
 
   # Create dirs for home-manager
-  systemd.tmpfiles.rules =
-    [ "d /nix/var/nix/profiles/per-user/${username} 0755 ${username} root" ];
+  systemd.tmpfiles.rules = [ "d /nix/var/nix/profiles/per-user/${username} 0755 ${username} root" ];
 }

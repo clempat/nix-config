@@ -23,6 +23,5 @@ in {
     NODE_VERSIONS = "$HOME/.nvm/versions/node";
     GDAL_LIBRARY_PATH = "${pkgs.gdal}/lib/libgdal.dylib";
     GEOS_LIBRARY_PATH = "${pkgs.geos}/lib/libgeos_c.dylib";
-    RES_OPTIONS = "nameserver 192.168.40.254";
   };
 }

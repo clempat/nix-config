@@ -1,11 +1,12 @@
 # Network configuration
-{ pkgs, config, ... }: {
+{ pkgs, config, lib, ... }: {
   networking = {
     networkmanager = {
       enable = true;
       wifi = { backend = "iwd"; };
+      dns = lib.mkForce "none";
     };
-    nameservers = [ "192.168.40.254" ];
+    nameservers = [ "192.168.40.29" ];
   };
 
   services.resolved = {

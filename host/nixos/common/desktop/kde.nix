@@ -9,6 +9,7 @@
     plasma-browser-integration
     konsole
     oxygen
+    powerdevil  # Disable PowerDevil to prevent CPU governor conflicts
   ];
 
   environment.systemPackages = with pkgs.unstable; [

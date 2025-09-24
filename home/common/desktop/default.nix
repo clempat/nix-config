@@ -32,7 +32,7 @@ in {
       catppuccin-gtk
       chromium
       desktop-file-utils
-      devpod-desktop
+      # devpod-desktop # Temporarily disabled due to Tauri version conflicts
       discord
       element-desktop
       figma-linux
