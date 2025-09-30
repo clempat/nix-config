@@ -129,11 +129,12 @@ in {
         #   '';
         # in "exec-and-forget osascript ${script}";
 
-        cmd-w = "close";
+        cmd-q = "close";
 
-        # See: https://nikitabobko.github.io/AeroSpace/commands#layout
-        cmd-slash = "layout tiles horizontal vertical";
-        cmd-comma = "layout accordion horizontal vertical";
+        # See: https://nikitabobko.github.io/AeroSpace/commands#mode
+        alt-f = [ "layout tiles floating" ];
+        alt-q = [ "layout tiles accordion" ];
+        alt-v = [ "join-with left" ];
 
         # See: https://nikitabobko.github.io/AeroSpace/commands#focus
         cmd-left = "focus left";
