@@ -5,7 +5,6 @@
       actionlint
       fd
       jq
-      ktailctl
       k9s
       ripgrep
       postman
@@ -45,5 +44,5 @@
       shellcheck
       shfmt
       yazi
-    ] ++ lib.optional (!isDarwin) pkgs.unstable.docker;
+    ] ++ lib.optional (!isDarwin) [ pkgs.unstable.docker pkgs.ktailctl ];
 }
