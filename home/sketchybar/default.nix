@@ -7,6 +7,7 @@
     text = ''
       #!/bin/bash
 
+      CONFIG_DIR="$HOME/.config/sketchybar"
       PLUGIN_DIR="$CONFIG_DIR/plugins"
 
       ##### Bar Appearance #####
@@ -14,14 +15,15 @@
 
       ##### Events #####
       sketchybar --add event aerospace_workspace_change
+      sketchybar --add event aerospace_focus_change
 
       ##### Defaults #####
-      sketchybar --default icon.font="SF Pro:Bold:14.0" \
-                           label.font="SF Pro:Medium:13.0" \
+      sketchybar --default icon.font="GeistMono Nerd Font:Bold:14.0" \
+                           label.font="GeistMono Nerd Font:Medium:14.0" \
                            icon.color=0xffffffff \
                            label.color=0xffffffff \
                            padding_left=5 \
-                           padding_right=5
+                           padding_right=15
 
        ##### Workspaces #####
        for i in {1..8}; do
@@ -46,17 +48,31 @@
       sketchybar --add item front_app left \
                  --set front_app icon.drawing=off \
                                  script="$PLUGIN_DIR/front_app.sh" \
-                 --subscribe front_app front_app_switched
+                 --subscribe front_app front_app_switched aerospace_focus_change
 
       ##### Right Items #####
       sketchybar --add item clock right \
                  --set clock update_freq=1 \
                              icon="󰥔" \
+                             icon.padding_right=4 \
                              script="$PLUGIN_DIR/clock.sh" \
                  --add item battery right \
                  --set battery update_freq=120 \
+                               icon.padding_right=4 \
                                script="$PLUGIN_DIR/battery.sh" \
                  --subscribe battery system_woke power_source_change
+
+        # CPU and Memory
+        sketchybar --add item cpu right \
+                   --set cpu update_freq=5 \
+                               icon="" \
+                               icon.padding_right=4 \
+                               script="$PLUGIN_DIR/cpu.sh" \
+                   --add item mem right \
+                   --set mem update_freq=5 \
+                               icon="󰍛" \
+                               icon.padding_right=4 \
+                               script="$PLUGIN_DIR/mem.sh"
 
       # Initialize all items on startup
       "$PLUGIN_DIR/init.sh" &
@@ -73,8 +89,11 @@
 
       # Update all workspaces when triggered
       if [ "$SENDER" = "aerospace_workspace_change" ]; then
-        # Get current focused workspace
-        CURRENT_WORKSPACE=$(aerospace list-workspaces --focused)
+        # Use passed environment variable or fallback to aerospace command
+        CURRENT_WORKSPACE="''${FOCUSED_WORKSPACE:-$(aerospace list-workspaces --focused 2>/dev/null)}"
+        
+        # Exit if we can't determine current workspace
+        [ -z "$CURRENT_WORKSPACE" ] && exit 0
         
         for i in {1..8}; do
           if [ "$i" = "$CURRENT_WORKSPACE" ]; then
@@ -82,7 +101,8 @@
                                         background.color=0xffffffff \
                                         icon.color=0xff000000
           else
-            if aerospace list-windows --workspace "$i" 2>/dev/null | grep -q .; then
+            # Check if workspace has windows with error handling
+            if command -v aerospace >/dev/null 2>&1 && aerospace list-windows --workspace "$i" 2>/dev/null | grep -q .; then
               sketchybar --set workspace.$i background.drawing=on \
                                           background.color=0x40ffffff \
                                           icon.color=0xffffffff
@@ -95,14 +115,18 @@
       else
         # Handle individual workspace updates
         WORKSPACE_NAME="''${NAME#workspace.}"
-        CURRENT_WORKSPACE=$(aerospace list-workspaces --focused)
+        CURRENT_WORKSPACE=$(aerospace list-workspaces --focused 2>/dev/null)
+        
+        # Exit if we can't determine current workspace
+        [ -z "$CURRENT_WORKSPACE" ] && exit 0
 
         if [ "$WORKSPACE_NAME" = "$CURRENT_WORKSPACE" ]; then
           sketchybar --set $NAME background.drawing=on \
                              background.color=0xffffffff \
                              icon.color=0xff000000
         else
-          if aerospace list-windows --workspace "$WORKSPACE_NAME" 2>/dev/null | grep -q .; then
+          # Check if workspace has windows with error handling
+          if command -v aerospace >/dev/null 2>&1 && aerospace list-windows --workspace "$WORKSPACE_NAME" 2>/dev/null | grep -q .; then
             sketchybar --set $NAME background.drawing=on \
                                background.color=0x40ffffff \
                                icon.color=0xffffffff
@@ -127,7 +151,7 @@
   home.file.".config/sketchybar/plugins/clock.sh" = {
     text = ''
       #!/bin/bash
-      sketchybar --set $NAME label=" $(date '+%H:%M')"
+      sketchybar --set $NAME label="$(date '+%H:%M')"
     '';
     executable = true;
   };
@@ -155,7 +179,26 @@
         ICON="󰁺"
       fi
 
-      sketchybar --set $NAME icon="$ICON" label=" $PERCENTAGE%"
+      sketchybar --set $NAME icon="$ICON" label="$PERCENTAGE%"
+    '';
+    executable = true;
+  };
+
+  home.file.".config/sketchybar/plugins/cpu.sh" = {
+    text = ''
+      #!/bin/bash
+      CPU_USAGE=$(ps -A -o %cpu | awk '{s+=$1} END {print s}')
+      CPU_LABEL=$(printf "%.1f%%" "$CPU_USAGE")
+      sketchybar --set $NAME label="$CPU_LABEL"
+    '';
+    executable = true;
+  };
+
+  home.file.".config/sketchybar/plugins/mem.sh" = {
+    text = ''
+      #!/bin/bash
+      MEM_USED=$(vm_stat | awk '/Pages active/ {active=$3} /Pages wired down/ {wired=$4} /Pages occupied by compressor/ {compressed=$5} /Pages speculative/ {speculative=$3} /Pages free/ {free=$3} END {used=active+wired+compressed+speculative; total=used+free; printf "%.1f", used/total*100}')
+      sketchybar --set $NAME label="$MEM_USED%"
     '';
     executable = true;
   };

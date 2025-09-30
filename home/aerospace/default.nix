@@ -1,4 +1,18 @@
-{ lib, pkgs, ... }: {
+{ config, lib, pkgs, ... }:
+let
+  # Script to get appropriate top gap based on display resolution
+  getTopGap = pkgs.writeShellScript "get-top-gap" ''
+    # Get main display resolution
+    RESOLUTION=$(system_profiler SPDisplaysDataType | grep Resolution | head -1 | awk '{print $2}')
+
+    # If builtin display (typical resolutions: 2560, 3024, etc.)
+    if [[ "$RESOLUTION" =~ ^(2560|3024|3456) ]]; then
+      echo "35"  # Less padding for builtin high-res display
+    else
+      echo "45"  # More padding for external displays
+    fi
+  '';
+in {
   xdg.configFile."aerospace/aerospace.toml" = let
     sketchybar = lib.getExe pkgs.sketchybar;
     aerospace-settings = {
@@ -7,7 +21,7 @@
       enable-normalization-flatten-containers = true;
       enable-normalization-opposite-orientation-for-nested-containers = true;
       accordion-padding = 30;
-      default-root-container-layout = "accordion";
+      default-root-container-layout = "tiles";
       default-root-container-orientation = "auto";
       on-focused-monitor-changed = [ "move-mouse monitor-lazy-center" ];
       key-mapping.preset = "qwerty";
@@ -18,17 +32,32 @@
         "workspace 1"
       ];
 
+      workspace-to-monitor-force-assignment = {
+        "1" = [ "dell" ];
+        "2" = [ "dell" ];
+        "3" = [ "dell" ];
+        "4" = [ "builtin" ];
+        "5" = [ "builtin" ];
+        "6" = [ "builtin" ];
+      };
+
       exec-on-workspace-change = [
         "/bin/bash"
         "-c"
         "${sketchybar} --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE"
+        "&"
+        "/bin/bash"
+        "-c"
+        "${config.xdg.configFile."aerospace/pip-move.sh".source}"
       ];
+
       on-focus-changed =
         [ "exec-and-forget ${sketchybar} --trigger aerospace_focus_change" ];
       on-window-detected = [
         {
           "if".app-name-regex-substring =
             "zen|arc|dia|firefox|brave|chromium|google-chrome";
+          "if".window-title-regex-substring = "(?!Picture-in-Picture)";
           run = [ "move-node-to-workspace 2" ];
         }
         {
@@ -44,14 +73,27 @@
           "if".app-name-regex-substring = "home assistant";
           run = [ "move-node-to-workspace 8" ];
         }
+        {
+          "if".app-name-regex-substring = "1password";
+          run = [ "layout floating" ];
+        }
+        {
+          "if".app-id = "com.raycast.macos";
+          "if".window-title-regex-substring = "AI Chat";
+          run = [ "layout tiling" ];
+        }
+        {
+          "if".window-title-regex-substring = "Picture-in-Picture";
+          run = [ "layout floating" ];
+        }
       ];
 
       gaps = {
         inner.horizontal = 10;
         inner.vertical = 10;
         outer.left = 5;
-        outer.bottom = 45;
-        outer.top = 5;
+        outer.bottom = 5;
+        outer.top = 40; # Reduced from 45 - better for builtin display
         outer.right = 5;
       };
       # 'main' binding mode declaration
@@ -74,60 +116,59 @@
 
         # All possible commands: https://nikitabobko.github.io/AeroSpace/commands
 
-        cmd-enter = let
-          script = pkgs.writeText "ghostty.applescript" ''
-            tell application "Ghostty"
-              if it is running then
-                activate
-                tell application "System Events" to keystroke "n" using {command down}
-              else
-                activate
-              end if
-            end tell
-          '';
-        in "exec-and-forget osascript ${script}";
+        # cmd-enter = let
+        #   script = pkgs.writeText "ghostty.applescript" ''
+        #     tell application "Ghostty"
+        #       if it is running then
+        #         activate
+        #         tell application "System Events" to keystroke "n" using {command down}
+        #       else
+        #         activate
+        #       end if
+        #     end tell
+        #   '';
+        # in "exec-and-forget osascript ${script}";
 
-        alt-w = "close";
+        cmd-w = "close";
 
         # See: https://nikitabobko.github.io/AeroSpace/commands#layout
-        alt-slash = "layout tiles horizontal vertical";
-        alt-comma = "layout accordion horizontal vertical";
+        cmd-slash = "layout tiles horizontal vertical";
+        cmd-comma = "layout accordion horizontal vertical";
 
         # See: https://nikitabobko.github.io/AeroSpace/commands#focus
-        alt-h = "focus left";
-        alt-j = "focus down";
-        alt-k = "focus up";
-        alt-l = "focus right";
+        cmd-left = "focus left";
+        cmd-down = "focus down";
+        cmd-up = "focus up";
+        cmd-right = "focus right";
 
         # See: https://nikitabobko.github.io/AeroSpace/commands#move
-        alt-shift-h = "move left";
-        alt-shift-j = "move down";
-        alt-shift-k = "move up";
-        alt-shift-l = "move right";
+        cmd-shift-h = "move left";
+        cmd-shift-j = "move down";
+        cmd-shift-k = "move up";
+        cmd-shift-l = "move right";
 
-        alt-m = "focus-monitor --wrap-around next";
-        alt-shift-m = "move-node-to-monitor --wrap-around next";
+        cmd-m = "focus-monitor --wrap-around next";
+        cmd-shift-m = "move-node-to-monitor --wrap-around next";
 
         # See: https://nikitabobko.github.io/AeroSpace/commands#resize
-        alt-shift-minus = "resize smart -50";
-        alt-shift-equal = "resize smart +50";
+        cmd-shift-minus = "resize smart -50";
+        cmd-shift-equal = "resize smart +50";
 
         # See: https://nikitabobko.github.io/AeroSpace/commands#workspace-back-and-forth
-        alt-tab = "workspace-back-and-forth";
+        cmd-tab = "workspace-back-and-forth";
         # See: https://nikitabobko.github.io/AeroSpace/commands#move-workspace-to-monitor
-        alt-shift-tab = "move-workspace-to-monitor --wrap-around next";
+        cmd-shift-tab = "move-workspace-to-monitor --wrap-around next";
 
         # See: https://nikitabobko.github.io/AeroSpace/commands#mode
-        alt-shift-semicolon = "mode service";
+        cmd-shift-semicolon = "mode service";
       } // (lib.lists.foldl' (acc: letter:
         acc // {
           # See: https://nikitabobko.github.io/AeroSpace/commands#workspace
-          "alt-${lib.strings.toLower letter}" = "workspace ${letter}";
+          "cmd-${lib.strings.toLower letter}" = "workspace ${letter}";
           # See: https://nikitabobko.github.io/AeroSpace/commands#move-node-to-workspace
-          "alt-shift-${lib.strings.toLower letter}" =
+          "cmd-shift-${lib.strings.toLower letter}" =
             "move-node-to-workspace ${letter}";
-        }) { }
-        (lib.strings.stringToCharacters "123456789ABCDEFGINOPQRSTUVXYZ"));
+        }) { } (lib.strings.stringToCharacters "123456789"));
 
       # 'service' binding mode declaration.
       # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
@@ -143,11 +184,29 @@
         # sticky is not yet supported https://github.com/nikitabobko/AeroSpace/issues/2
         # s = ["layout sticky tiling" "mode main"];
 
-        alt-shift-h = [ "join-with left" "mode main" ];
-        alt-shift-j = [ "join-with down" "mode main" ];
-        alt-shift-k = [ "join-with up" "mode main" ];
-        alt-shift-l = [ "join-with right" "mode main" ];
-        alt-shift-f = [ "fullscreen" "mode main" ];
+        cmd-shift-h = [ "join-with left" "mode main" ];
+        cmd-shift-j = [ "join-with down" "mode main" ];
+        cmd-shift-k = [ "join-with up" "mode main" ];
+        cmd-shift-l = [ "join-with right" "mode main" ];
+        cmd-shift-f = [ "fullscreen" "mode main" ];
+
+        # 1080p streaming window
+        s = let
+          script = pkgs.writeText "resize-1080p.applescript" ''
+            tell application "System Events"
+              set frontApp to name of first application process whose frontmost is true
+              tell application process frontApp
+                set frontWindow to front window
+                set position of frontWindow to {100, 100}
+                set size of frontWindow to {1920, 1080}
+              end tell
+            end tell
+          '';
+        in [
+          "layout floating"
+          "exec-and-forget osascript ${script}"
+          "mode main"
+        ];
 
         down = "volume down";
         up = "volume up";
@@ -158,5 +217,16 @@
   in {
     source = (format.generate "aerospace.toml" aerospace-settings);
     onChange = "${lib.getExe pkgs.aerospace} reload-config";
+  };
+  xdg.configFile."aerospace/pip-move.sh" = {
+    text = ''
+      #!/bin/bash
+      # Move Picture-in-Picture window to the current focused workspace
+      CURRENT_WORKSPACE="''${AEROSPACE_FOCUSED_WORKSPACE:-$(aerospace list-workspaces --focused 2>/dev/null)}"
+
+      # Move the Picture-in-Picture window to the current workspace
+      "${pkgs.aerospace}/bin/aerospace" move-node-to-workspace "$CURRENT_WORKSPACE" --window-title-regex-substring "Picture-in-Picture"
+    '';
+    executable = true;
   };
 }

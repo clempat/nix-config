@@ -27,7 +27,7 @@
 
   # Following will allow to use touch id in tmux
   # See: https://github.com/LnL7/nix-darwin/issues/985
-  environment.systemPackages = [ pkgs.pam-reattach ];
+  environment.systemPackages = [ pkgs.pam-reattach pkgs.tailscale ];
 
   environment.etc."pam.d/sudo_local".text = ''
     # Managed by Nix Darwin
@@ -75,11 +75,12 @@
       "beeper"
       "cleanshot"
       "cursor"
+      "docker-desktop"
       "dropzone"
       "dropbox"
       "deskpad"
       "elgato-stream-deck"
-      "eloston-chromium"
+      "ungoogled-chromium"
       "fantastical"
       "figma"
       "firefox"
@@ -105,16 +106,15 @@
       "nextcloud"
       "obs"
       "obsidian"
-      "ollama"
-      "orbstack"
+      "ollama-app"
+      # "orbstack"
       "pgadmin4"
       "raindropio"
       "raycast"
       "sequel-ace"
       "sizzy"
-      "tailscale-app"
       "spotify"
-      "todoist"
+      "todoist-app"
       "utm"
       "vlc"
       "warp"

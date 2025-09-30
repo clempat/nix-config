@@ -27,6 +27,11 @@ _: {
       }
 
       eval "$(atuin init zsh --disable-up-arrow)"
+
+      if [ -z "$TMUX" ] && [ "$TERM" = "xterm-kitty" ]; then
+        tmux attach-session -t main || tmux new-session -s main
+        exit
+      fi
     '';
 
     # @TODO: Does not work yet
