@@ -14,13 +14,6 @@
       pre-commit
       yamllint
       sops
-      # Add C++ standard library and other common dependencies
-      stdenv.cc.cc.lib
-      glibc
     ];
-    shellHook = ''
-      # Ensure C++ standard library is available
-      export LD_LIBRARY_PATH="${pkgs.stdenv.cc.cc.lib}/lib:${pkgs.glibc}/lib:$LD_LIBRARY_PATH"
-    '';
   };
 }

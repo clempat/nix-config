@@ -13,11 +13,15 @@
 
   services.jankyborders = {
     enable = true;
-    active_color = "0xccf52891";
-    inactive_color = "0xff494d64";
+    style = "round";
+    # Aqua/Cyan glow
+    active_color = "glow(0xff00FFFF)";
+    # Pink glow (vibrant)
+    # active_color = "glow(0xfff5c2e7)";
+    inactive_color = "0xffa1a1a1";
     ax_focus = true;
     hidpi = true;
-    width = 7.5;
+    width = 5.0;
   };
 
   system.defaults = {

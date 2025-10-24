@@ -36,9 +36,9 @@ in {
         "1" = [ "dell" ];
         "2" = [ "dell" ];
         "3" = [ "dell" ];
-        "4" = [ "builtin" ];
-        "5" = [ "builtin" ];
-        "6" = [ "builtin" ];
+        "4" = [ "Built-in Retina Display" ];
+        "5" = [ "Built-in Retina Display" ];
+        "6" = [ "Built-in Retina Display" ];
       };
 
       exec-on-workspace-change = [
@@ -57,7 +57,7 @@ in {
         {
           "if".app-name-regex-substring =
             "zen|arc|dia|firefox|brave|chromium|google-chrome";
-          "if".window-title-regex-substring = "(?!Picture-in-Picture)";
+          "if".window-title-regex-substring = "^(?!.*Picture-in-Picture).*$";
           run = [ "move-node-to-workspace 2" ];
         }
         {
@@ -80,9 +80,15 @@ in {
         {
           "if".app-id = "com.raycast.macos";
           "if".window-title-regex-substring = "AI Chat";
-          run = [ "layout tiling" ];
+          run = [ "layout floating" ];
         }
         {
+          "if".app-id = "com.anthropic.claudefordesktop";
+          run = [ "layout floating" ];
+        }
+        {
+          "if".app-name-regex-substring =
+            "zen|arc|dia|firefox|brave|chromium|google-chrome";
           "if".window-title-regex-substring = "Picture-in-Picture";
           run = [ "layout floating" ];
         }
@@ -93,7 +99,10 @@ in {
         inner.vertical = 10;
         outer.left = 5;
         outer.bottom = 5;
-        outer.top = 40; # Reduced from 45 - better for builtin display
+        outer.top = [
+          { monitor."Built-in Retina Display" = 8; }
+          32
+        ]; # 0 gap for builtin (notch), 32 for external displays
         outer.right = 5;
       };
       # 'main' binding mode declaration
@@ -137,10 +146,10 @@ in {
         alt-v = [ "join-with left" ];
 
         # See: https://nikitabobko.github.io/AeroSpace/commands#focus
-        cmd-left = "focus left";
-        cmd-down = "focus down";
-        cmd-up = "focus up";
-        cmd-right = "focus right";
+        alt-left = "focus left";
+        alt-down = "focus down";
+        alt-up = "focus up";
+        alt-right = "focus right";
 
         # See: https://nikitabobko.github.io/AeroSpace/commands#move
         cmd-shift-h = "move left";
@@ -194,18 +203,25 @@ in {
         # 1080p streaming window
         s = let
           script = pkgs.writeText "resize-1080p.applescript" ''
+            delay 0.1
             tell application "System Events"
-              set frontApp to name of first application process whose frontmost is true
-              tell application process frontApp
-                set frontWindow to front window
-                set position of frontWindow to {100, 100}
-                set size of frontWindow to {1920, 1080}
-              end tell
+              try
+                set frontApp to name of first application process whose frontmost is true
+                tell application process frontApp
+                  if exists front window then
+                    set frontWindow to front window
+                    set position of frontWindow to {100, 100}
+                    set size of frontWindow to {1920, 1080}
+                  end if
+                end tell
+              on error errMsg
+                display notification "Failed to resize window: " & errMsg
+              end try
             end tell
           '';
         in [
           "layout floating"
-          "exec-and-forget osascript ${script}"
+          "exec-and-forget sleep 0.1 && osascript ${script}"
           "mode main"
         ];
 

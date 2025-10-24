@@ -11,7 +11,7 @@
       PLUGIN_DIR="$CONFIG_DIR/plugins"
 
       ##### Bar Appearance #####
-      sketchybar --bar position=top height=32 blur_radius=30 color=0x40000000
+      sketchybar --bar position=top height=38 blur_radius=50 color=0x30000000
 
       ##### Events #####
       sketchybar --add event aerospace_workspace_change
@@ -26,13 +26,16 @@
                            padding_right=15
 
        ##### Workspaces #####
+       WORKSPACE_ICONS=("" "" "3" "4" "󰭹" "6" "7" "8")
+       
        for i in {1..8}; do
+         icon_index=$((i-1))
          sketchybar --add item workspace.$i left \
-                    --set workspace.$i icon="$i" \
+                    --set workspace.$i icon="''${WORKSPACE_ICONS[$icon_index]}" \
                                       icon.padding_left=8 \
                                       icon.padding_right=8 \
-                                      background.corner_radius=6 \
-                                      background.height=24 \
+                                      background.corner_radius=8 \
+                                      background.height=28 \
                                       background.drawing=off \
                                       script="$PLUGIN_DIR/workspace.sh" \
                                       click_script="aerospace workspace $i" \
@@ -44,11 +47,17 @@
                   --set workspace_listener drawing=off \
                                           script="$PLUGIN_DIR/workspace.sh" \
                   --subscribe workspace_listener aerospace_workspace_change
-      ##### Left Items #####
-      sketchybar --add item front_app left \
-                 --set front_app icon.drawing=off \
-                                 script="$PLUGIN_DIR/front_app.sh" \
-                 --subscribe front_app front_app_switched aerospace_focus_change
+       ##### Left Items #####
+       sketchybar --add item separator_left left \
+                  --set separator_left icon="│" \
+                                      icon.color=0x60ffffff \
+                                      background.drawing=off \
+                                      label.drawing=off
+                                      
+       sketchybar --add item front_app left \
+                  --set front_app icon.drawing=off \
+                                  script="$PLUGIN_DIR/front_app.sh" \
+                  --subscribe front_app front_app_switched aerospace_focus_change
 
       ##### Right Items #####
       sketchybar --add item clock right \
@@ -98,7 +107,7 @@
         for i in {1..8}; do
           if [ "$i" = "$CURRENT_WORKSPACE" ]; then
             sketchybar --set workspace.$i background.drawing=on \
-                                        background.color=0xffffffff \
+                                        background.color=0xff00FFFF \
                                         icon.color=0xff000000
           else
             # Check if workspace has windows with error handling
@@ -122,7 +131,7 @@
 
         if [ "$WORKSPACE_NAME" = "$CURRENT_WORKSPACE" ]; then
           sketchybar --set $NAME background.drawing=on \
-                             background.color=0xffffffff \
+                             background.color=0xff00FFFF \
                              icon.color=0xff000000
         else
           # Check if workspace has windows with error handling

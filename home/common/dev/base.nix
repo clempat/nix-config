@@ -2,13 +2,14 @@
   home.packages = with pkgs.unstable;
     [
       inputs.clement-nvim.packages.${system}.nvim
-      actionlint
+      pkgs.actionlint  # Use stable version instead of unstable
       fd
       jq
       k9s
       ripgrep
       postman
       wget
+      age-plugin-yubikey
 
       # Import Scripts
       (import ./../../../scripts/tmux-sessionizer.nix { pkgs = pkgs.unstable; })
@@ -44,5 +45,8 @@
       shellcheck
       shfmt
       yazi
-    ] ++ lib.optional (!isDarwin) [ pkgs.unstable.docker pkgs.ktailctl ];
+    ] ++ lib.optionals (!isDarwin) [
+      pkgs.unstable.docker
+      pkgs.unstable.ktailctl
+    ];
 }
