@@ -14,6 +14,7 @@
       pre-commit
       yamllint
       sops
+      ssh-to-age
     ];
   };
 }

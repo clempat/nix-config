@@ -3,9 +3,13 @@ let
   # Common configuration
   stateVersion = "23.11";
   defaultGit = {
-    extraConfig.github.user = "clempat";
-    userEmail = "2178406+clempat@users.noreply.github.com";
-    userName = "Clément Patout";
+    settings = {
+      github.user = "clempat";
+      user = {
+        email = "2178406+clempat@users.noreply.github.com";
+        name = "Clément Patout";
+      };
+    };
   };
   defaultUsername = "clement";
 

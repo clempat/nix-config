@@ -1,6 +1,9 @@
 { config, lib, outputs, stateVersion, username, inputs, pkgs, isDarwin, desktop
 , ... }: {
-  imports = [ ./common/shell ] ++ lib.optional (builtins.isString desktop)
+  imports = [
+    inputs.sops-nix.homeManagerModules.sops
+    ./common/shell
+  ] ++ lib.optional (builtins.isString desktop)
     ./common/desktop
     # Include in desktop:
     ++ lib.optional (isDarwin) ./common/dev

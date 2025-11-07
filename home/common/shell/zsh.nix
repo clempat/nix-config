@@ -10,6 +10,13 @@ _: {
     sessionVariables.SSH_AUTH_SOCK = "~/.1password.agent.sock";
 
     initContent = ''
+      # Source sops-encrypted environment variables
+      if [ -f "$HOME/.config/environment.d/sops-env" ]; then
+        set -a
+        source "$HOME/.config/environment.d/sops-env"
+        set +a
+      fi
+
       n () {
         if [ -n $NNNLVL ] && [ "$NNNLVL" -ge 1 ]; then
           echo "nnn is already running"

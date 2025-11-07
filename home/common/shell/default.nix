@@ -1,8 +1,16 @@
-{ pkgs, isDarwin, lib, config, ... }: {
+{
+  pkgs,
+  isDarwin,
+  lib,
+  config,
+  ...
+}:
+{
   imports = [
     ./atuin.nix
     ./bat.nix
     ./bottom.nix
+    ./claude
     ./direnv.nix
     ./eza.nix
     ./fzf.nix
@@ -11,11 +19,13 @@
     ./lazygit.nix
     ./neofetch.nix
     ./nnn.nix
+    ./sops.nix
     ./starship.nix
     ./ssh.nix
     ./tmux
     ./zsh.nix
-  ] ++ lib.optional (!isDarwin) ./xdg.nix;
+  ]
+  ++ lib.optional (!isDarwin) ./xdg.nix;
 
   programs = {
     git.enable = true;

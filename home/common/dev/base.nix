@@ -1,8 +1,17 @@
-{ inputs, lib, pkgs, isDarwin, system, ... }: {
-  home.packages = with pkgs.unstable;
+{
+  inputs,
+  lib,
+  pkgs,
+  isDarwin,
+  system,
+  ...
+}:
+{
+  home.packages =
+    with pkgs.unstable;
     [
       inputs.clement-nvim.packages.${system}.nvim
-      pkgs.actionlint  # Use stable version instead of unstable
+      pkgs.actionlint # Use stable version instead of unstable
       fd
       jq
       k9s
@@ -38,14 +47,14 @@
 
       # AI
       gemini-cli-bin
-      claude-code
       amp-cli
 
       # Shell tooling
       shellcheck
       shfmt
       yazi
-    ] ++ lib.optionals (!isDarwin) [
+    ]
+    ++ lib.optionals (!isDarwin) [
       pkgs.unstable.docker
       pkgs.unstable.ktailctl
     ];
