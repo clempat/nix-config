@@ -104,6 +104,6 @@
         import ./shell.nix { inherit pkgs; }
       );
 
-      formatter = mkSystems.forAllSystems (system: self.packages.${system}.nixfmt-classic);
+      formatter = mkSystems.forAllSystems (system: nixpkgs.legacyPackages.${system}.nixfmt-classic);
     };
 }

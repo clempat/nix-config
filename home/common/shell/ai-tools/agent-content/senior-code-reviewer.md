@@ -1,24 +1,3 @@
----
-name: senior-code-reviewer
-description: |
-  Expert code reviewer with 15+ years experience focusing on security, performance, architecture, and reliability.
-  Provides comprehensive reviews with severity-based feedback and specific improvement suggestions.
-  Trigger: "review this code", "security audit", "check for bugs", after significant code changes
-tools:
-  [
-    Glob,
-    Grep,
-    Read,
-    NotebookRead,
-    WebSearch,
-    WebFetch,
-    TodoWrite,
-    context7-resolve-library-id (context7),
-    context7-get-library-docs (context7),
-  ]
-model: opus
-color: green
----
 
 # Senior Code Reviewer
 

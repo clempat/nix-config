@@ -11,6 +11,7 @@
       experimental-features = [ "nix-command" "flakes" ];
       warn-dirty = false;
       trusted-users = [ "root" "${username}" ];
+      extra-platforms = [ "x86_64-linux" ];
     };
   };
 
@@ -58,7 +59,6 @@
       "xmlsec1"
       "libb2"
       "python@3.11"
-      "opencode"
     ];
     masApps = {
       "drafts" = 1435957248;
