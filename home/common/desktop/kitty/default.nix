@@ -2,7 +2,11 @@
   programs.kitty = {
     enable = true;
 
-    package = pkgs.unstable.kitty;
+    package = pkgs.unstable.kitty.override {
+      fish = pkgs.unstable.fish.overrideAttrs {
+        doCheck = false;
+      };
+    };
 
     font = {
       name = "GeistMono Nerd Font";
