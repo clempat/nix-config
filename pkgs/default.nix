@@ -4,5 +4,4 @@
 { pkgs ? (import ../nixpkgs.nix) { } }:
 {
   tuxedo-tray = pkgs.callPackage ../scripts/tuxedo-tray.nix { };
-  spec-kit = pkgs.callPackage ./spec-kit.nix { };
 }

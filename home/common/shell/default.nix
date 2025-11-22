@@ -10,8 +10,7 @@
     ./atuin.nix
     ./bat.nix
     ./bottom.nix
-    ./ai-tools/module.nix  # Unified module
-    ./ai-tools/config.nix  # Configuration
+    ./ai-tools.nix
     ./direnv.nix
     ./eza.nix
     ./fzf.nix

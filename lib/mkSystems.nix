@@ -23,6 +23,7 @@ let
       };
       overlays = [
         inputs.nur.overlays.default
+        inputs.ai-tools.overlays.default
         outputs.overlays.modifications
         (final: prev: {
           unstable = import inputs.nixpkgs-unstable {
@@ -43,6 +44,7 @@ let
         inherit self inputs isDarwin desktop git stateVersion outputs username
           system hostname;
       };
+      sharedModules = [ inputs.ai-tools.homeManagerModules.default ];
       users.${username} = import ../home;
     };
 in {

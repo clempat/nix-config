@@ -54,9 +54,6 @@
       shfmt
       yazi
     ]
-    ++ [
-      inputs.self.packages.${system}.spec-kit
-    ]
     ++ lib.optionals (!isDarwin) [
       pkgs.unstable.docker
       pkgs.unstable.ktailctl

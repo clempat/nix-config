@@ -33,8 +33,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    opencode.url = "github:sst/opencode";
-    opencode.flake = false;
+    ai-tools.url = "github:clempat/ai-tools-flake";
+    ai-tools.inputs.nixpkgs.follows = "nixpkgs-unstable";
   };
 
   outputs =
