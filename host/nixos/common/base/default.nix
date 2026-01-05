@@ -13,6 +13,7 @@
 
     ../services/avahi.nix
     ../services/firewall.nix
+    ../services/kanata.nix
     ../services/openssh.nix
     ../services/network.nix
     ../services/sops.nix

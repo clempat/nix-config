@@ -1,0 +1,25 @@
+;; Kanata configuration for macOS
+;; Basic setup: Caps Lock -> Escape (tap) / Control (hold)
+
+(defcfg
+  ;; macOS specific settings
+  process-unmapped-keys yes
+  danger-enable-cmd no
+  sequence-timeout 2000
+  sequence-input-mode visible-backspaced
+  log-layer-changes no
+)
+
+(defsrc
+  caps
+)
+
+(deflayer base
+  @caps-esc
+)
+
+(defalias
+  ;; Caps Lock: tap for Escape, hold for Left Control
+  ;; 200ms tap timeout, 200ms hold timeout
+  caps-esc (tap-hold 200 200 esc lctl)
+)

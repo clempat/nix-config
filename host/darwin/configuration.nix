@@ -1,6 +1,10 @@
-{ pkgs, username, ... }: {
+{ pkgs, username, ... }:
+{
   # imports = [ ./yabai.nix ];
-  imports = [ ./aerospace.nix ./sketchybar.nix ];
+  imports = [
+    ./aerospace.nix
+    ./sketchybar.nix
+  ];
 
   system.primaryUser = username;
 
@@ -8,9 +12,15 @@
     optimise.automatic = true;
     settings = {
       builders-use-substitutes = true;
-      experimental-features = [ "nix-command" "flakes" ];
+      experimental-features = [
+        "nix-command"
+        "flakes"
+      ];
       warn-dirty = false;
-      trusted-users = [ "root" "${username}" ];
+      trusted-users = [
+        "root"
+        "${username}"
+      ];
       extra-platforms = [ "x86_64-linux" ];
     };
   };
@@ -28,7 +38,10 @@
 
   # Following will allow to use touch id in tmux
   # See: https://github.com/LnL7/nix-darwin/issues/985
-  environment.systemPackages = [ pkgs.pam-reattach pkgs.tailscale ];
+  environment.systemPackages = [
+    pkgs.pam-reattach
+    pkgs.kanata
+  ];
 
   environment.etc."pam.d/sudo_local".text = ''
     # Managed by Nix Darwin
@@ -36,23 +49,28 @@
     auth       sufficient     pam_tid.so
   '';
 
-  homebrew = { # Homebrew Package Manager
+  homebrew = {
+    # Homebrew Package Manager
     enable = true;
     onActivation = {
       autoUpdate = true;
       upgrade = true;
       cleanup = "zap";
     };
-    taps = [ "mrkai77/cask" "heroku/brew" "sst/tap" ];
+    taps = [
+      "mrkai77/cask"
+      "heroku/brew"
+      "sst/tap"
+    ];
     brews = [
       "pngpaste"
 
       # TODO: Move this to backend flake
       "zlib"
       "gdal"
-      "libgeoip"
       "libxml2"
       "mailhog"
+      "mole"
       "nvm"
       "pkg-config"
       "shellcheck"
@@ -72,6 +90,7 @@
       "1password"
       "arc"
       "bartender"
+      "tailscale"
       "beeper"
       "cleanshot"
       "cursor"
@@ -96,7 +115,6 @@
       "github"
       "handbrake-app"
       "home-assistant"
-      "karabiner-elements"
       "kitty"
       "logi-options+"
       "logseq"
@@ -124,7 +142,8 @@
   };
 
   # Need to add `defaults write com.apple.WindowManager EnableStandardClickToShowDesktop -bool false`
-  system = { # Global macOS System Settings
+  system = {
+    # Global macOS System Settings
 
     defaults = {
       NSGlobalDomain = {
@@ -143,10 +162,13 @@
         tilesize = 40;
         static-only = true;
       };
-      finder = { QuitMenuItem = false; };
-      trackpad = { Clicking = true; };
+      finder = {
+        QuitMenuItem = false;
+      };
+      trackpad = {
+        Clicking = true;
+      };
     };
-    activationScripts.postActivation.text =
-      "sudo chsh -s ${pkgs.zsh}/bin/zsh"; # Set Default Shell
+    activationScripts.postActivation.text = "sudo chsh -s ${pkgs.zsh}/bin/zsh"; # Set Default Shell
   };
 }

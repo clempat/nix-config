@@ -10,6 +10,15 @@ _: {
     sessionVariables.SSH_AUTH_SOCK = "~/.1password.agent.sock";
 
     initContent = ''
+      # -------------------------------------------
+      # 1. Edit Command Buffer
+      # -------------------------------------------
+      # Open the current command in your $EDITOR (e.g., neovim)
+      # Press Ctrl+X followed by Ctrl+E to trigger
+      autoload -Uz edit-command-line
+      zle -N edit-command-line
+      bindkey '^X^E' edit-command-line
+
       # Source sops-encrypted environment variables
       if [ -f "$HOME/.config/environment.d/sops-env" ]; then
         set -a
@@ -34,6 +43,9 @@ _: {
       }
 
       eval "$(atuin init zsh --disable-up-arrow)"
+
+      # Add pnpm to PATH
+      export PATH="$PNPM_HOME:$PATH"
 
       if [ -z "$TMUX" ] && [ "$TERM" = "xterm-kitty" ]; then
         tmux attach-session -t main || tmux new-session -s main
@@ -70,6 +82,8 @@ _: {
       k = "kubectl";
     };
 
-    syntaxHighlighting = { enable = true; };
+    syntaxHighlighting = {
+      enable = true;
+    };
   };
 }

@@ -29,6 +29,11 @@ let
           unstable = import inputs.nixpkgs-unstable {
             inherit system;
             config.allowUnfree = true;
+            overlays = [
+              (_: uprev: {
+                nix = uprev.nix.overrideAttrs (_: { doCheck = false; });
+              })
+            ];
           };
         })
       ];
@@ -36,13 +41,13 @@ let
 
   # Common home-manager configuration
   mkHomeManagerConfig = { pkgs, username, isDarwin, desktop ? null
-    , git ? defaultGit, system, hostname }: {
+    , git ? defaultGit, hostname }: {
       useGlobalPkgs = true;
       useUserPackages = true;
       backupFileExtension = "backup";
       extraSpecialArgs = {
         inherit self inputs isDarwin desktop git stateVersion outputs username
-          system hostname;
+          hostname;
       };
       sharedModules = [ inputs.ai-tools.homeManagerModules.default ];
       users.${username} = import ../home;
@@ -65,7 +70,7 @@ in {
         inputs.home-manager.darwinModules.home-manager
         {
           home-manager = mkHomeManagerConfig {
-            inherit pkgs username isDarwin desktop git system hostname;
+            inherit pkgs username isDarwin desktop git hostname;
           };
         }
       ];
@@ -89,7 +94,7 @@ in {
         inputs.home-manager.nixosModules.home-manager
         {
           home-manager = mkHomeManagerConfig {
-            inherit pkgs username isDarwin desktop git system hostname;
+            inherit pkgs username isDarwin desktop git hostname;
           };
         }
       ];

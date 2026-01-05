@@ -1,4 +1,4 @@
-{ pkgs, desktop, config, inputs, system, lib, ... }:
+{ pkgs, desktop, config, inputs, lib, ... }:
 let
   oi_icon = builtins.fetchurl {
     url =
@@ -59,7 +59,7 @@ in {
       xorg.xlsclients
     ] ++ [
       # From flake inputs
-      inputs.zen-browser.packages.${system}.default
+      inputs.zen-browser.packages.${pkgs.stdenv.hostPlatform.system}.default
     ];
 
   fonts.fontconfig.enable = true;

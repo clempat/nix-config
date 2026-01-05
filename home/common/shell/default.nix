@@ -68,5 +68,15 @@
     GDAL_LIBRARY_PATH = "${pkgs.gdal}/lib/libgdal.dylib";
     GEOS_LIBRARY_PATH = "${pkgs.geos}/lib/libgeos_c.dylib";
     OLLAMA_HOST = "0.0.0.0:11434";
+    PNPM_HOME = "$HOME/.local/share/pnpm";
   };
+
+  # Configure pnpm global settings (only affects your machine)
+  xdg.configFile."pnpm/rc".text = ''
+    store-dir=~/.pnpm-store
+    global-dir=~/.pnpm-global
+    global-bin-dir=~/.local/bin
+    auto-install-peers=true
+    dedupe-peer-dependents=false
+  '';
 }

@@ -7,8 +7,8 @@
       src = builtins.fetchTarball
         "https://stable.dl2.discordapp.net/apps/linux/0.0.71/discord-0.0.71.tar.gz";
     });
-    # example = prev.example.overrideAttrs (oldAttrs: rec {
-    # ...
-    # });
+
+    # Disable nix tests to avoid nix-functional-tests failures
+    nix = prev.nix.overrideAttrs (_: { doCheck = false; });
   };
 }

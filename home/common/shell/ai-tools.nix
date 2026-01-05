@@ -1,6 +1,10 @@
-{ inputs, ... }:
+{ inputs, pkgs, ... }:
 {
   programs.ai-tools.enable = true;
+
+  home.packages = [
+    pkgs.spec-kit
+  ];
 
   # Install Claude skills manually (until module supports them)
   home.file.".claude/skills/lint-with-conform".source =

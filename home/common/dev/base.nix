@@ -1,16 +1,7 @@
-{
-  inputs,
-  lib,
-  pkgs,
-  isDarwin,
-  system,
-  ...
-}:
-{
-  home.packages =
-    with pkgs.unstable;
+{ inputs, lib, pkgs, isDarwin, ... }: {
+  home.packages = with pkgs.unstable;
     [
-      inputs.clement-nvim.packages.${system}.nvim
+      inputs.clement-nvim.packages.${pkgs.stdenv.hostPlatform.system}.nvim
       pkgs.actionlint # Use stable version instead of unstable
       fd
       jq
@@ -19,6 +10,7 @@
       postman
       wget
       age-plugin-yubikey
+      pnpm
 
       # Import Scripts
       (import ./../../../scripts/tmux-sessionizer.nix { pkgs = pkgs.unstable; })
@@ -30,6 +22,14 @@
         pkgs = pkgs.unstable;
         inherit isDarwin;
       })
+      (import ./../../../scripts/cleanup-node-modules.nix {
+        pkgs = pkgs.unstable;
+      })
+      (import ./../../../scripts/pnpm-project-setup.nix {
+        pkgs = pkgs.unstable;
+      })
+      (import ./../../../scripts/pnpm-team-setup.nix { pkgs = pkgs.unstable; })
+      (import ./../../../scripts/worktree-cleanup.nix { pkgs = pkgs.unstable; })
       dive
       kubectl
       skopeo
@@ -53,8 +53,9 @@
       shellcheck
       shfmt
       yazi
-    ]
-    ++ lib.optionals (!isDarwin) [
+
+      uv
+    ] ++ lib.optionals (!isDarwin) [
       pkgs.unstable.docker
       pkgs.unstable.ktailctl
     ];
