@@ -1,4 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }:
+{
   basePackages = with pkgs.unstable; [
     # openai-whisper
     # terminal-notifier

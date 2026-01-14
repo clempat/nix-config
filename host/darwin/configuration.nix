@@ -40,7 +40,6 @@
   # See: https://github.com/LnL7/nix-darwin/issues/985
   environment.systemPackages = [
     pkgs.pam-reattach
-    pkgs.kanata
   ];
 
   environment.etc."pam.d/sudo_local".text = ''
@@ -57,6 +56,7 @@
       upgrade = true;
       cleanup = "zap";
     };
+    greedyCasks = true;
     taps = [
       "mrkai77/cask"
       "heroku/brew"
@@ -90,7 +90,8 @@
       "1password"
       "arc"
       "bartender"
-      "tailscale"
+      "karabiner-elements"
+      "tailscale-app"
       "beeper"
       "cleanshot"
       "cursor"
