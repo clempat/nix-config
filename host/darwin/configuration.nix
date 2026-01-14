@@ -131,7 +131,6 @@
       "raindropio"
       "raycast"
       "sequel-ace"
-      "sizzy"
       "spotify"
       "todoist-app"
       "utm"

@@ -56,6 +56,9 @@
     postgresql
     tmuxinator
 
+    nil
+    nixd
+
     ffmpeg
   ];
 
