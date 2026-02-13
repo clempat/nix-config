@@ -4,26 +4,26 @@
     enable = true;
     opencode = {
       useRecommendedRouting = false;
-      model = "anthropic/claude-sonnet-4-20250514";
+      model = "anthropic/claude-opus-4-6";
       modelByAgent = {
-        oracle = "anthropic/claude-opus-4-20250514";
-        metis = "anthropic/claude-opus-4-20250514";
-        momus = "anthropic/claude-opus-4-20250514";
-        explore = "anthropic/claude-sonnet-4-20250514";
-        librarian = "anthropic/claude-sonnet-4-20250514";
-        atlas = "anthropic/claude-sonnet-4-20250514";
-        sisyphus-junior = "anthropic/claude-sonnet-4-20250514";
-        multimodal-looker = "anthropic/claude-sonnet-4-20250514";
+        oracle = "anthropic/claude-opus-4-6";
+        metis = "anthropic/claude-opus-4-6";
+        momus = "anthropic/claude-opus-4-6";
+        explore = "anthropic/claude-haiku-4-5-20251001";
+        librarian = "anthropic/claude-haiku-4-5-20251001";
+        atlas = "anthropic/claude-haiku-4-5-20251001";
+        sisyphus-junior = "anthropic/claude-sonnet-4-5-20250929";
+        multimodal-looker = "anthropic/claude-sonnet-4-5-20250929";
       };
       modelByCategory = {
-        quick = "anthropic/claude-sonnet-4-20250514";
-        writing = "anthropic/claude-sonnet-4-20250514";
-        unspecified-low = "anthropic/claude-sonnet-4-20250514";
-        unspecified-high = "anthropic/claude-opus-4-20250514";
-        visual-engineering = "anthropic/claude-sonnet-4-20250514";
-        deep = "anthropic/claude-opus-4-20250514";
-        ultrabrain = "anthropic/claude-opus-4-20250514";
-        artistry = "anthropic/claude-opus-4-20250514";
+        quick = "anthropic/claude-sonnet-4-5-20250929";
+        writing = "anthropic/claude-sonnet-4-5-20250929";
+        unspecified-low = "anthropic/claude-sonnet-4-5-20250929";
+        unspecified-high = "anthropic/claude-opus-4-6";
+        visual-engineering = "anthropic/claude-sonnet-4-5-20250929";
+        deep = "anthropic/claude-opus-4-6";
+        ultrabrain = "anthropic/claude-opus-4-6";
+        artistry = "anthropic/claude-opus-4-6";
       };
     };
   };
