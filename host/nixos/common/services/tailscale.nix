@@ -1,10 +1,5 @@
 # Tailscale client configuration for headscale server
-{
-  pkgs,
-  config,
-  ...
-}:
-{
+{ pkgs, config, ... }: {
   services.tailscale = {
     enable = true;
     package = pkgs.tailscale;
@@ -46,14 +41,8 @@
   # Optional: Auto-connect script using auth key
   systemd.services.tailscale-autoconnect = {
     description = "Automatic connection to Tailscale/Headscale";
-    after = [
-      "network-online.target"
-      "tailscaled.service"
-    ];
-    wants = [
-      "network-online.target"
-      "tailscaled.service"
-    ];
+    after = [ "network-online.target" "tailscaled.service" ];
+    wants = [ "network-online.target" "tailscaled.service" ];
     wantedBy = [ "multi-user.target" ];
     serviceConfig = {
       Type = "oneshot";
@@ -69,7 +58,9 @@
       # Connect using auth key if available
       if [ -f "${config.sops.secrets."tailscale/auth_key".path}" ]; then
         AUTH_KEY=$(cat "${config.sops.secrets."tailscale/auth_key".path}")
-        HEADSCALE_URL=$(cat "${config.sops.secrets."tailscale/headscale_url".path}")
+        HEADSCALE_URL=$(cat "${
+          config.sops.secrets."tailscale/headscale_url".path
+        }")
         
         echo "Connecting to headscale server..."
         ${pkgs.tailscale}/bin/tailscale up \

@@ -1,11 +1,4 @@
-{
-  hostname,
-  pkgs,
-  lib,
-  username,
-  ...
-}:
-{
+{ hostname, pkgs, lib, username, ... }: {
   imports = [
     ./boot.nix
     ./hardware.nix
@@ -31,7 +24,8 @@
     useDHCP = lib.mkDefault true;
   };
 
-  environment.systemPackages = (import ./packages.nix { inherit pkgs; }).basePackages;
+  environment.systemPackages =
+    (import ./packages.nix { inherit pkgs; }).basePackages;
 
   programs = {
     zsh.enable = true;
@@ -41,12 +35,7 @@
     };
     nix-ld = {
       enable = true;
-      libraries = with pkgs; [
-        stdenv.cc.cc.lib
-        glibc
-        zlib
-        openssl
-      ];
+      libraries = with pkgs; [ stdenv.cc.cc.lib glibc zlib openssl ];
     };
     # Enable captive browser for dedicated captive portal handling
     captive-browser = {
@@ -67,5 +56,6 @@
   };
 
   # Create dirs for home-manager
-  systemd.tmpfiles.rules = [ "d /nix/var/nix/profiles/per-user/${username} 0755 ${username} root" ];
+  systemd.tmpfiles.rules =
+    [ "d /nix/var/nix/profiles/per-user/${username} 0755 ${username} root" ];
 }

@@ -4,7 +4,7 @@ _: {
     enableZshIntegration = true;
     nix-direnv.enable = true;
     config = { load_dotenv = true; };
-    stdlib=''
+    stdlib = ''
       layout_poetry() {
         if [[ ! -f pyproject.toml ]]; then
           log_error 'No pyproject.toml found. Use `poetry new` or `poetry init` to create one first.'

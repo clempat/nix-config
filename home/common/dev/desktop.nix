@@ -1,8 +1,9 @@
 { pkgs, lib, desktop, ... }: {
-  programs.vscode = { 
+  programs.vscode = {
     package = pkgs.unstable.vscode;
-    enable = true; 
+    enable = true;
   };
 
-  home.packages = lib.optional (builtins.isString desktop) pkgs.unstable.sublime-merge;
+  home.packages =
+    lib.optional (builtins.isString desktop) pkgs.unstable.sublime-merge;
 }

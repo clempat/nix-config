@@ -5,11 +5,8 @@
     location = "https://flathub.org/beta-repo/flathub-beta.flatpakrepo";
   }];
 
-  services.flatpak.packages = [
-    "com.todoist.Todoist"
-    "md.obsidian.Obsidian"
-    "com.logseq.Logseq"
-  ];
+  services.flatpak.packages =
+    [ "com.todoist.Todoist" "md.obsidian.Obsidian" "com.logseq.Logseq" ];
 
   services.flatpak.update.auto = {
     enable = true;
@@ -19,9 +16,8 @@
   services.flatpak.overrides = {
     global = {
       # Force Wayland by default
-      Context.sockets = ["wayland" "!x11" "!fallback-x11"];
+      Context.sockets = [ "wayland" "!x11" "!fallback-x11" ];
 
-      
       Environment = {
         # Fix un-themed cursor in some Wayland apps
         XCURSOR_PATH = "/run/host/user-share/icons:/run/host/share/icons";
@@ -31,7 +27,7 @@
       };
     };
 
-    "com.todoist.Todoist".Context.sockets = ["x11"]; # No Wayland support
-    "com.logseq.Logseq".Context.sockets = ["x11"]; # No Wayland support
+    "com.todoist.Todoist".Context.sockets = [ "x11" ]; # No Wayland support
+    "com.logseq.Logseq".Context.sockets = [ "x11" ]; # No Wayland support
   };
 }

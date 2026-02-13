@@ -50,10 +50,9 @@
     nodejs
     # To move to project later
     # FIX: Do not know which one to install
-    gdal
+    gdalMinimal # FIX: Minimal GDAL without PostgreSQL dependencies
     gcalcli
     heroku
-    postgresql
     tmuxinator
 
     nil
@@ -63,12 +62,8 @@
   ];
 
   home.sessionVariables = {
-    EDITOR = "nvim";
-    LANG = "en_US.UTF-8";
-    LC_ALL = "en_US.UTF-8";
-    LC_CTYPE = "en_US.UTF-8";
-    NODE_VERSIONS = "$HOME/.nvm/versions/node";
-    GDAL_LIBRARY_PATH = "${pkgs.gdal}/lib/libgdal.dylib";
+    GDAL_DATA = "${pkgs.gdalMinimal}/share/gdal";
+    GDAL_LIBRARY_PATH = "${pkgs.gdalMinimal}/lib/libgdal.dylib";
     GEOS_LIBRARY_PATH = "${pkgs.geos}/lib/libgeos_c.dylib";
     OLLAMA_HOST = "0.0.0.0:11434";
     PNPM_HOME = "$HOME/.local/share/pnpm";

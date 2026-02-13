@@ -1,7 +1,15 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
-  home.packages = with pkgs; [ sketchybar ];
+  home.packages = with pkgs; [
+    sketchybar
+    python3
+  ];
 
   home.file.".config/sketchybar/sketchybarrc" = {
     text = ''
@@ -9,6 +17,9 @@
 
       CONFIG_DIR="$HOME/.config/sketchybar"
       PLUGIN_DIR="$CONFIG_DIR/plugins"
+
+      # sketchybar runs with a minimal PATH
+      export PATH="/opt/homebrew/bin:/usr/local/bin:$PATH"
 
       ##### Bar Appearance #####
       sketchybar --bar position=top height=38 blur_radius=50 color=0x30000000
@@ -212,6 +223,161 @@
     executable = true;
   };
 
+  home.file.".config/sketchybar/plugins/ai_usage.sh" = {
+    text = ''
+      #!/bin/bash
+      set -euo pipefail
+
+      # SketchyBar runs via launchd; PATH often missing brew/nix.
+      export PATH="/opt/homebrew/bin:/usr/local/bin:/etc/profiles/per-user/$USER/bin:$PATH"
+
+      provider="''${1:-}"
+      case "$provider" in
+        codex|claude|antigravity) ;;
+        *) provider="codex" ;;
+      esac
+
+      NAME="''${NAME:-ai_usage}"
+
+      codexbar_bin=""
+      if command -v codexbar >/dev/null 2>&1; then
+        codexbar_bin="$(command -v codexbar)"
+      elif [ -x "/opt/homebrew/bin/codexbar" ]; then
+        codexbar_bin="/opt/homebrew/bin/codexbar"
+      elif [ -x "/usr/local/bin/codexbar" ]; then
+        codexbar_bin="/usr/local/bin/codexbar"
+      elif command -v CodexBar >/dev/null 2>&1; then
+        codexbar_bin="$(command -v CodexBar)"
+      elif [ -x "/opt/homebrew/bin/CodexBar" ]; then
+        codexbar_bin="/opt/homebrew/bin/CodexBar"
+      elif [ -x "/Applications/CodexBar.app/Contents/MacOS/CodexBar" ]; then
+        codexbar_bin="/Applications/CodexBar.app/Contents/MacOS/CodexBar"
+      elif [ -x "$HOME/Applications/CodexBar.app/Contents/MacOS/CodexBar" ]; then
+        codexbar_bin="$HOME/Applications/CodexBar.app/Contents/MacOS/CodexBar"
+      elif [ -x "/opt/homebrew/Caskroom/codexbar/latest/CodexBar.app/Contents/MacOS/CodexBar" ]; then
+        codexbar_bin="/opt/homebrew/Caskroom/codexbar/latest/CodexBar.app/Contents/MacOS/CodexBar"
+      fi
+
+      if [ -z "$codexbar_bin" ]; then
+        sketchybar --set "$NAME" label="no-cli"
+        exit 0
+      fi
+
+      if ! command -v python3 >/dev/null 2>&1; then
+        sketchybar --set "$NAME" label="--"
+        exit 0
+      fi
+
+      label="$(python3 - "$provider" "$codexbar_bin" <<'PY'
+      import json
+      import subprocess
+      import sys
+
+      provider = sys.argv[1]
+      codexbar = sys.argv[2]
+
+
+      def fmt_num(x):
+        try:
+          if isinstance(x, str):
+            x = float(x)
+          x = float(x)
+          if abs(x - int(x)) < 1e-9:
+            return str(int(x))
+          return f"{x:.1f}"
+        except Exception:
+          return None
+
+
+      def walk(obj):
+        if isinstance(obj, dict):
+          yield obj
+          for v in obj.values():
+            yield from walk(v)
+        elif isinstance(obj, list):
+          for v in obj:
+            yield from walk(v)
+
+
+      source = "web"
+      if provider == "antigravity":
+        source = "auto"
+
+      cmd = [codexbar, "usage", "--provider", provider, "--format", "json", "--source", source]
+
+      try:
+        p = subprocess.run(cmd, capture_output=True, text=True, timeout=10)
+      except Exception:
+        print("--")
+        raise SystemExit(0)
+
+      stdout = (p.stdout or "").strip()
+      stderr = (p.stderr or "").strip().lower()
+
+      if p.returncode != 0 or not stdout:
+        if "no browser cookies" in stderr:
+          print("cookie")
+        elif "missing current session" in stderr or "please log in" in stderr or "no available fetch strategy" in stderr:
+          print("login")
+        elif "not detected" in stderr:
+          print("off")
+        else:
+          print("--")
+        raise SystemExit(0)
+
+      try:
+        data = json.loads(stdout)
+      except Exception:
+        print("--")
+        raise SystemExit(0)
+
+      best = None
+
+      for d in walk(data):
+        keys = {k.lower(): k for k in d.keys()}
+        for k in ("percent", "percentage", "pct", "usedpercent"):
+          if k in keys:
+            v = fmt_num(d[keys[k]])
+            if v is not None:
+              best = f"{v}%"
+              break
+        if best is not None:
+          break
+
+      if best is None:
+        for d in walk(data):
+          keys = {k.lower(): k for k in d.keys()}
+          k_used = next((keys[k] for k in ("used", "usage", "spent") if k in keys), None)
+          k_limit = next((keys[k] for k in ("limit", "quota", "cap") if k in keys), None)
+          if k_used and k_limit:
+            used = fmt_num(d[k_used])
+            limit = fmt_num(d[k_limit])
+            if used is not None and limit is not None:
+              best = f"{used}/{limit}"
+              break
+
+      if best is None:
+        for d in walk(data):
+          keys = {k.lower(): k for k in d.keys()}
+          k_rem = next((keys[k] for k in ("remaining", "left") if k in keys), None)
+          if k_rem:
+            rem = fmt_num(d[keys[k_rem]])
+            if rem is not None:
+              best = f"{rem} left"
+              break
+
+      if best is None:
+        best = "--"
+
+      print(best)
+      PY
+      )"
+
+      sketchybar --set "$NAME" label="$label"
+    '';
+    executable = true;
+  };
+
   home.file.".config/sketchybar/plugins/init.sh" = {
     text = ''
       #!/bin/bash
@@ -223,6 +389,9 @@
       export NAME=clock; ~/.config/sketchybar/plugins/clock.sh
       export NAME=battery; ~/.config/sketchybar/plugins/battery.sh
       export NAME=front_app; export INFO="$(osascript -e 'tell application "System Events" to get name of first application process whose frontmost is true' 2>/dev/null || echo \'\')"; ~/.config/sketchybar/plugins/front_app.sh
+      export NAME=ai_codex; ~/.config/sketchybar/plugins/ai_usage.sh codex
+      export NAME=ai_claude; ~/.config/sketchybar/plugins/ai_usage.sh claude
+      export NAME=ai_gravity; ~/.config/sketchybar/plugins/ai_usage.sh antigravity
 
       # Trigger workspace update
       sketchybar --trigger aerospace_workspace_change
@@ -230,4 +399,3 @@
     executable = true;
   };
 }
-

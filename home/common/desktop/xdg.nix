@@ -2,8 +2,7 @@
 let
   theme = import "${self}/lib/theme" { inherit pkgs; };
   inherit ((import ./file-associations.nix)) associations;
-in
-{
+in {
   xdg = {
     enable = true;
     mimeApps = {
@@ -16,7 +15,8 @@ in
       # distribution model of the Cider beta, where they drop binaries onto itch.io.
       cider = {
         name = "Cider";
-        exec = "${pkgs.appimage-run}/bin/appimage-run -- /home/jon/data/apps/Cider.AppImage";
+        exec =
+          "${pkgs.appimage-run}/bin/appimage-run -- /home/jon/data/apps/Cider.AppImage";
         terminal = false;
         icon = "cider";
         type = "Application";
@@ -84,11 +84,10 @@ in
         terminal = false;
         icon = "org.gnome.Loupe";
         type = "Application";
-        categories = [ "GNOME" "GTK" "Graphics" "2DGraphics" "RasterGraphics" "Viewer" ];
+        categories =
+          [ "GNOME" "GTK" "Graphics" "2DGraphics" "RasterGraphics" "Viewer" ];
         startupNotify = true;
-        settings = {
-          DBusActivatable = "true";
-        };
+        settings = { DBusActivatable = "true"; };
         mimeType = [
           "image/jpeg"
           "image/png"

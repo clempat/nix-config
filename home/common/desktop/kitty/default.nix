@@ -3,9 +3,7 @@
     enable = true;
 
     package = pkgs.unstable.kitty.override {
-      fish = pkgs.unstable.fish.overrideAttrs {
-        doCheck = false;
-      };
+      fish = pkgs.unstable.fish.overrideAttrs { doCheck = false; };
     };
 
     font = {

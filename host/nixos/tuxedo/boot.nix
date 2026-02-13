@@ -1,5 +1,4 @@
-{ pkgs, ... }:
-{
+{ pkgs, ... }: {
   boot = {
     # Secure boot configuration
     bootspec.enable = true;
@@ -44,9 +43,6 @@
     kernelPackages = pkgs.linuxPackages_6_12;
 
     # CPU performance optimizations
-    kernelParams = [
-      "intel_pstate=active"
-      "processor.ignore_ppc=1"
-    ];
+    kernelParams = [ "intel_pstate=active" "processor.ignore_ppc=1" ];
   };
 }

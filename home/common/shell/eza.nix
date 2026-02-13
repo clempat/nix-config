@@ -1,12 +1,9 @@
-_:
-{
+_: {
   config = {
     programs.eza = {
       enable = true;
       icons = "auto";
-      extraOptions = [
-        "--group"
-      ];
+      extraOptions = [ "--group" ];
       enableBashIntegration = true;
       enableFishIntegration = true;
     };

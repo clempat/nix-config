@@ -1,10 +1,4 @@
-{
-  inputs,
-  lib,
-  pkgs,
-  config,
-  ...
-}:
+{ inputs, lib, pkgs, config, ... }:
 
 {
   # Enhanced thermal management for optimal fan control
@@ -12,19 +6,16 @@
   # - Balanced profile provides good cooling while minimizing noise
   # - Fans stay off until 35°C, gradually increase to maintain temps
   # - Full speed available at high temps (95°C+) for safety
-  
+
   # CPU performance optimizations
   powerManagement = {
     powertop.enable = false; # Disabled - too aggressive power savings
     cpuFreqGovernor = "performance";
   };
-  
+
   # Intel P-state driver optimizations  
-  boot.kernelParams = [
-    "intel_pstate=active"
-    "processor.ignore_ppc=1"
-  ];
-  
+  boot.kernelParams = [ "intel_pstate=active" "processor.ignore_ppc=1" ];
+
   # Optimize CPU performance scaling
   systemd.services.cpu-performance = {
     description = "Set optimal CPU performance parameters";
@@ -46,9 +37,7 @@
     enable32Bit = true;
   };
 
-  environment.sessionVariables = {
-    LIBVA_DRIVER_NAME = "iHD";
-  };
+  environment.sessionVariables = { LIBVA_DRIVER_NAME = "iHD"; };
 
   services.xserver.videoDrivers = [ "nvidia" ];
 

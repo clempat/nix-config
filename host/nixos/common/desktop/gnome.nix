@@ -3,18 +3,13 @@
   services.xserver.displayManager.gdm.enable = true;
   services.xserver.desktopManager.gnome.enable = true;
 
-  environment.systemPackages = (with pkgs.gnomeExtensions;
-    [ 
-      blur-my-shell 
-      pop-shell 
-      pip-on-top
-      clipboard-indicator
-      gsconnect
-    ]) ++ (with pkgs;[ 
-      polkit_gnome 
-      nordic 
-      gnome-tweaks
-    ]);
+  environment.systemPackages = (with pkgs.gnomeExtensions; [
+    blur-my-shell
+    pop-shell
+    pip-on-top
+    clipboard-indicator
+    gsconnect
+  ]) ++ (with pkgs; [ polkit_gnome nordic gnome-tweaks ]);
 
   environment.gnome.excludePackages = (with pkgs; [
     gnome-photos

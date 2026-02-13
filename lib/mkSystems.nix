@@ -1,9 +1,4 @@
-{
-  self,
-  inputs,
-  outputs,
-  ...
-}:
+{ self, inputs, outputs, ... }:
 let
   # Common configuration
   stateVersion = "23.11";
@@ -19,8 +14,7 @@ let
   defaultUsername = "clement";
 
   # Single function to create pkgs with unstable
-  mkPkgs =
-    { system }:
+  mkPkgs = { system }:
     import inputs.nixpkgs {
       inherit system;
       config = {
@@ -37,9 +31,7 @@ let
             config.allowUnfree = true;
             overlays = [
               (_: uprev: {
-                nix = uprev.nix.overrideAttrs (_: {
-                  doCheck = false;
-                });
+                nix = uprev.nix.overrideAttrs (_: { doCheck = false; });
               })
             ];
           };
@@ -49,62 +41,28 @@ let
 
   # Common home-manager configuration
   mkHomeManagerConfig =
-    {
-      username,
-      isDarwin,
-      desktop ? null,
-      git ? defaultGit,
-      hostname,
-      ...
-    }:
-    {
+    { username, isDarwin, desktop ? null, git ? defaultGit, hostname, ... }: {
       useGlobalPkgs = true;
       useUserPackages = true;
       backupFileExtension = "backup";
       extraSpecialArgs = {
-        inherit
-          self
-          inputs
-          isDarwin
-          desktop
-          git
-          stateVersion
-          outputs
-          username
-          hostname
-          ;
+        inherit self inputs isDarwin desktop git stateVersion outputs username
+          hostname;
       };
       sharedModules = [ inputs.ai-tools.homeManagerModules.default ];
       users.${username} = import ../home;
     };
-in
-{
-  mkDarwin =
-    {
-      hostname,
-      git ? defaultGit,
-      username ? defaultUsername,
-      system,
-      desktop ? null,
-    }:
+in {
+  mkDarwin = { hostname, git ? defaultGit, username ? defaultUsername, system
+    , desktop ? null, }:
     let
       isDarwin = true;
       pkgs = mkPkgs { inherit system; };
-    in
-    inputs.nix-darwin.lib.darwinSystem {
+    in inputs.nix-darwin.lib.darwinSystem {
       inherit system pkgs;
       specialArgs = {
-        inherit
-          self
-          inputs
-          outputs
-          stateVersion
-          hostname
-          username
-          git
-          desktop
-          isDarwin
-          ;
+        inherit self inputs outputs stateVersion hostname username git desktop
+          isDarwin;
       };
       modules = [
         # inputs.sops-nix.nixosModules.sops
@@ -112,44 +70,22 @@ in
         inputs.home-manager.darwinModules.home-manager
         {
           home-manager = mkHomeManagerConfig {
-            inherit
-              pkgs
-              username
-              isDarwin
-              desktop
-              git
-              hostname
-              ;
+            inherit pkgs username isDarwin desktop git hostname;
           };
         }
       ];
     };
 
   # Helper function for generating host configs
-  mkHost =
-    {
-      hostname,
-      desktop ? null,
-      git ? defaultGit,
-      username ? defaultUsername,
-      system ? "x86_64-linux",
-    }:
+  mkHost = { hostname, desktop ? null, git ? defaultGit
+    , username ? defaultUsername, system ? "x86_64-linux", }:
     let
       isDarwin = false;
       pkgs = mkPkgs { inherit system; };
-    in
-    inputs.nixpkgs.lib.nixosSystem {
+    in inputs.nixpkgs.lib.nixosSystem {
       inherit pkgs;
       specialArgs = {
-        inherit
-          self
-          inputs
-          outputs
-          stateVersion
-          username
-          hostname
-          desktop
-          ;
+        inherit self inputs outputs stateVersion username hostname desktop;
       };
       modules = [
         inputs.nix-flatpak.nixosModules.nix-flatpak
@@ -158,14 +94,7 @@ in
         inputs.home-manager.nixosModules.home-manager
         {
           home-manager = mkHomeManagerConfig {
-            inherit
-              pkgs
-              username
-              isDarwin
-              desktop
-              git
-              hostname
-              ;
+            inherit pkgs username isDarwin desktop git hostname;
           };
         }
       ];

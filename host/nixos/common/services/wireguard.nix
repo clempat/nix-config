@@ -1,6 +1,5 @@
 # WireGuard client configuration for UniFi server
-{ pkgs, config, ... }:
-{
+{ pkgs, config, ... }: {
   # SOPS template for WireGuard configuration file
   sops.templates."wg0.conf" = {
     content = ''
@@ -38,8 +37,6 @@
   };
 
   # Ensure WireGuard tools are available
-  environment.systemPackages = with pkgs; [
-    wireguard-tools
-  ];
+  environment.systemPackages = with pkgs; [ wireguard-tools ];
 }
 

@@ -2,24 +2,24 @@
 
 pkgs.writeShellScriptBin "tuxedo-tray" ''
   #!/usr/bin/env bash
-  
+
   # Tuxedo Fan Profile System Tray Integration
   # Provides quick access to switch between fan profiles
-  
+
   get_current_profile() {
     ${pkgs.tuxedo-rs}/bin/tailor profile list | grep "(active)" | cut -d' ' -f1
   }
-  
+
   get_all_profiles() {
     ${pkgs.tuxedo-rs}/bin/tailor profile list | cut -d' ' -f1
   }
-  
+
   set_profile() {
     local profile="$1"
     ${pkgs.tuxedo-rs}/bin/tailor profile set "$profile"
     ${pkgs.libnotify}/bin/notify-send "Tuxedo Fan Profile" "Switched to: $profile" -i fan
   }
-  
+
   show_menu() {
     local current=$(get_current_profile)
     local menu=""
@@ -40,7 +40,7 @@ pkgs.writeShellScriptBin "tuxedo-tray" ''
       set_profile "$selected"
     fi
   }
-  
+
   case "''${1:-menu}" in
     menu)
       show_menu

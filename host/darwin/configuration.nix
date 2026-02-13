@@ -25,6 +25,8 @@
     };
   };
 
+  nixpkgs.config.allowBroken = true;
+
   programs.zsh.enable = true;
   system.stateVersion = 4;
   users.users.${username}.home = "/Users/${username}";
@@ -38,9 +40,7 @@
 
   # Following will allow to use touch id in tmux
   # See: https://github.com/LnL7/nix-darwin/issues/985
-  environment.systemPackages = [
-    pkgs.pam-reattach
-  ];
+  environment.systemPackages = [ pkgs.pam-reattach ];
 
   environment.etc."pam.d/sudo_local".text = ''
     # Managed by Nix Darwin
@@ -61,13 +61,13 @@
       "mrkai77/cask"
       "heroku/brew"
       "sst/tap"
+      "steipete/tap"
     ];
     brews = [
       "pngpaste"
 
       # TODO: Move this to backend flake
       "zlib"
-      "gdal"
       "libxml2"
       "mailhog"
       "mole"
@@ -88,20 +88,19 @@
     };
     casks = [
       "1password"
-      "arc"
       "bartender"
       "karabiner-elements"
       "tailscale-app"
       "beeper"
       "cleanshot"
       "cursor"
+      "steipete/tap/codexbar"
       "docker-desktop"
       "dropzone"
       "dropbox"
       "deskpad"
       "elgato-stream-deck"
       "ungoogled-chromium"
-      "fantastical"
       "figma"
       "firefox"
       "font-geist"

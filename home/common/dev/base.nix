@@ -1,13 +1,5 @@
-{
-  inputs,
-  lib,
-  pkgs,
-  isDarwin,
-  ...
-}:
-{
-  home.packages =
-    with pkgs.unstable;
+{ inputs, lib, pkgs, isDarwin, ... }: {
+  home.packages = with pkgs.unstable;
     [
       inputs.clement-nvim.packages.${pkgs.stdenv.hostPlatform.system}.nvim
       pkgs.actionlint # Use stable version instead of unstable
@@ -64,8 +56,7 @@
       yazi
 
       uv
-    ]
-    ++ lib.optionals (!isDarwin) [
+    ] ++ lib.optionals (!isDarwin) [
       pkgs.unstable.docker
       pkgs.unstable.ktailctl
     ];

@@ -1,16 +1,11 @@
 # WiFi Hotspot configuration - Manual activation required
 { pkgs, config, lib, ... }: {
-  
+
   # Install hostapd and dnsmasq packages but don't auto-enable services
-  environment.systemPackages = with pkgs; [
-    hostapd
-    dnsmasq
-  ];
+  environment.systemPackages = with pkgs; [ hostapd dnsmasq ];
 
   # Enable IP forwarding for when hotspot is manually activated
-  boot.kernel.sysctl = {
-    "net.ipv4.conf.all.forwarding" = true;
-  };
+  boot.kernel.sysctl = { "net.ipv4.conf.all.forwarding" = true; };
 
   # Create hostapd config file
   environment.etc."hostapd/hostapd.conf".text = ''
@@ -59,7 +54,7 @@
   environment.etc."hotspot-gui.sh" = {
     text = ''
       #!/run/current-system/sw/bin/bash
-      
+
       ACTION=$(kdialog --title "Jellyfin Hotspot Control" --radiolist "Choose action:" \
         "start" "Start Hotspot (disconnect WiFi)" off \
         "stop" "Stop Hotspot (reconnect WiFi)" off \
@@ -93,7 +88,7 @@
   environment.etc."hotspot-control.sh" = {
     text = ''
        #!/run/current-system/sw/bin/bash
-      
+
       case "$1" in
          start)
            echo "Starting WiFi Hotspot..."

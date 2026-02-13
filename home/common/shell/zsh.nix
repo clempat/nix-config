@@ -77,13 +77,17 @@ _: {
       lg = "lazygit";
       # ll = if isDarwin then "n" else "n -P K";
       nb = "nix build --json --no-link --print-build-logs";
+      pc = "gh pr create --fill --draft --assignee clempat && gh pr view --web";
+      po = "gh pr view --web";
+      prcreate = "gh pr create --fill --draft --assignee clempat";
+      prcropen =
+        "gh pr create --fill --draft --assignee clempat && gh pr view --web";
+      propen = "gh pr view --web";
       s = ''doppler run --config "nixos" --project "$(whoami)"'';
       wt = "git worktree";
       k = "kubectl";
     };
 
-    syntaxHighlighting = {
-      enable = true;
-    };
+    syntaxHighlighting = { enable = true; };
   };
 }
