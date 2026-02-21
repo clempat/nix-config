@@ -88,7 +88,6 @@
     };
     casks = [
       "1password"
-      "bartender"
       "karabiner-elements"
       "tailscale-app"
       "beeper"
