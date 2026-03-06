@@ -67,6 +67,9 @@ in {
       # Make search case insensitive
       set-window-option -g wrap-search on
       set-window-option -g mode-keys vi
+
+      # After plugins load — override any plugin bindings
+      bind -N "new session from cwd" S run-shell "tmux new-session -d -s '#{b:pane_current_path}' -c '#{pane_current_path}' && tmux switch-client -t '#{b:pane_current_path}'"
     '';
   };
 

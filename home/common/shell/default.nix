@@ -1,11 +1,4 @@
-{
-  pkgs,
-  isDarwin,
-  lib,
-  config,
-  ...
-}:
-{
+{ inputs, pkgs, isDarwin, lib, config, ... }: {
   imports = [
     ./atuin.nix
     ./bat.nix
@@ -24,8 +17,7 @@
     ./ssh.nix
     ./tmux
     ./zsh.nix
-  ]
-  ++ lib.optional (!isDarwin) ./xdg.nix;
+  ] ++ lib.optional (!isDarwin) ./xdg.nix;
 
   programs = {
     git.enable = true;
@@ -46,6 +38,7 @@
     devpod
 
     sesh
+    inputs.worktrunk.packages.${pkgs.stdenv.hostPlatform.system}.worktrunk-with-git-wt
     _1password-cli
     nodejs
     # To move to project later
@@ -76,5 +69,35 @@
     global-bin-dir=~/.local/bin
     auto-install-peers=true
     dedupe-peer-dependents=false
+  '';
+
+  xdg.configFile."worktrunk/config.toml".text = ''
+    worktree-path = "{{ repo_path }}/.worktrees/{{ branch | sanitize }}"
+
+    [post-switch]
+    rename_tmux_window = "[ -n \"$TMUX\" ] && tmux rename-window '{{ branch | sanitize }}'"
+
+    [post-create]
+    direnv_allow = "[ -f .envrc ] && direnv allow ."
+    rename_tmux_window = "[ -n \"$TMUX\" ] && tmux rename-window '{{ branch | sanitize }}'"
+  '';
+
+  xdg.configFile."sesh/sesh.toml".text = ''
+    [[session]]
+    name = "nix-config"
+    path = "~/workspace/clempat/nix-config"
+    startup_command = "nvim"
+
+    [[search_paths]]
+    path = "~/workspace/thermondo"
+    depth = 1
+
+    [[search_paths]]
+    path = "~/workspace/clempat"
+    depth = 1
+
+    [[search_paths]]
+    path = "~/workspace/_sandbox"
+    depth = 1
   '';
 }

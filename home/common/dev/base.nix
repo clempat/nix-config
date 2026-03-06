@@ -31,6 +31,9 @@
       })
       (import ./../../../scripts/pnpm-team-setup.nix { pkgs = pkgs.unstable; })
       (import ./../../../scripts/worktree-cleanup.nix { pkgs = pkgs.unstable; })
+      (import ./../../../scripts/organize-workspace.nix {
+        pkgs = pkgs.unstable;
+      })
       dive
       kubectl
       skopeo

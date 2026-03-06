@@ -4,26 +4,26 @@
     enable = true;
     opencode = {
       useRecommendedRouting = false;
-      model = "anthropic/claude-opus-4-6";
+      model = "anthropic/claude-sonnet-4-6";
       modelByAgent = {
         oracle = "anthropic/claude-opus-4-6";
-        metis = "anthropic/claude-opus-4-6";
-        momus = "anthropic/claude-opus-4-6";
+        metis = "anthropic/claude-sonnet-4-6";
+        momus = "anthropic/claude-sonnet-4-6";
         explore = "anthropic/claude-haiku-4-5-20251001";
         librarian = "anthropic/claude-haiku-4-5-20251001";
         atlas = "anthropic/claude-haiku-4-5-20251001";
-        sisyphus-junior = "anthropic/claude-sonnet-4-5-20250929";
-        multimodal-looker = "anthropic/claude-sonnet-4-5-20250929";
+        sisyphus-junior = "anthropic/claude-sonnet-4-6";
+        multimodal-looker = "anthropic/claude-sonnet-4-6";
       };
       modelByCategory = {
-        quick = "anthropic/claude-sonnet-4-5-20250929";
-        writing = "anthropic/claude-sonnet-4-5-20250929";
-        unspecified-low = "anthropic/claude-sonnet-4-5-20250929";
-        unspecified-high = "anthropic/claude-opus-4-6";
-        visual-engineering = "anthropic/claude-sonnet-4-5-20250929";
-        deep = "anthropic/claude-opus-4-6";
+        quick = "anthropic/claude-haiku-4-5-20251001";
+        writing = "anthropic/claude-sonnet-4-6";
+        unspecified-low = "anthropic/claude-haiku-4-5-20251001";
+        unspecified-high = "anthropic/claude-sonnet-4-6";
+        visual-engineering = "anthropic/claude-sonnet-4-6";
+        deep = "anthropic/claude-sonnet-4-6";
         ultrabrain = "anthropic/claude-opus-4-6";
-        artistry = "anthropic/claude-opus-4-6";
+        artistry = "anthropic/claude-sonnet-4-6";
       };
     };
   };

@@ -35,6 +35,9 @@
 
     ai-tools.url = "github:clempat/ai-tools-flake";
     ai-tools.inputs.nixpkgs.follows = "nixpkgs-unstable";
+
+    worktrunk.url = "github:max-sixty/worktrunk";
+    worktrunk.inputs.nixpkgs.follows = "nixpkgs-unstable";
   };
 
   outputs = { self, nixpkgs, ... }@inputs:

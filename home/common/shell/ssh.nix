@@ -12,7 +12,7 @@
     };
 
     matchBlocks."*" = {
-      forwardAgent = true;
+      identitiesOnly = true;
       extraOptions =
         if isDarwin then
           {

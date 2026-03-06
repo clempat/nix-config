@@ -47,8 +47,10 @@ _: {
       # Add pnpm to PATH
       export PATH="$PNPM_HOME:$PATH"
 
+      unalias wt 2>/dev/null # oh-my-zsh git plugin shadows worktrunk binary
+
       if [ -z "$TMUX" ] && [ "$TERM" = "xterm-kitty" ]; then
-        tmux attach-session -t main || tmux new-session -s main
+        sesh connect "main" 2>/dev/null || tmux new-session -s main
         exit
       fi
     '';
@@ -84,7 +86,10 @@ _: {
         "gh pr create --fill --draft --assignee clempat && gh pr view --web";
       propen = "gh pr view --web";
       s = ''doppler run --config "nixos" --project "$(whoami)"'';
-      wt = "git worktree";
+      gwt = "git worktree";
+      wtc = "wt switch -c -x claude";
+      wto = "wt switch -c -x opencode";
+      wts = "wt switch";
       k = "kubectl";
     };
 
