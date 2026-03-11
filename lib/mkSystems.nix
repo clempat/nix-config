@@ -41,20 +41,21 @@ let
 
   # Common home-manager configuration
   mkHomeManagerConfig =
-    { username, isDarwin, desktop ? null, git ? defaultGit, hostname, ... }: {
+    { username, isDarwin, desktop ? null, git ? defaultGit, hostname
+    , aiProfile ? "personal", ... }: {
       useGlobalPkgs = true;
       useUserPackages = true;
       backupFileExtension = "backup";
       extraSpecialArgs = {
         inherit self inputs isDarwin desktop git stateVersion outputs username
-          hostname;
+          hostname aiProfile;
       };
       sharedModules = [ inputs.ai-tools.homeManagerModules.default ];
       users.${username} = import ../home;
     };
 in {
   mkDarwin = { hostname, git ? defaultGit, username ? defaultUsername, system
-    , desktop ? null, }:
+    , desktop ? null, aiProfile ? "personal", }:
     let
       isDarwin = true;
       pkgs = mkPkgs { inherit system; };
@@ -70,7 +71,7 @@ in {
         inputs.home-manager.darwinModules.home-manager
         {
           home-manager = mkHomeManagerConfig {
-            inherit pkgs username isDarwin desktop git hostname;
+            inherit pkgs username isDarwin desktop git hostname aiProfile;
           };
         }
       ];
@@ -78,7 +79,8 @@ in {
 
   # Helper function for generating host configs
   mkHost = { hostname, desktop ? null, git ? defaultGit
-    , username ? defaultUsername, system ? "x86_64-linux", }:
+    , username ? defaultUsername, system ? "x86_64-linux"
+    , aiProfile ? "personal", }:
     let
       isDarwin = false;
       pkgs = mkPkgs { inherit system; };
@@ -94,7 +96,7 @@ in {
         inputs.home-manager.nixosModules.home-manager
         {
           home-manager = mkHomeManagerConfig {
-            inherit pkgs username isDarwin desktop git hostname;
+            inherit pkgs username isDarwin desktop git hostname aiProfile;
           };
         }
       ];
